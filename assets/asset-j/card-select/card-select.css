@@ -1,0 +1,36 @@
+.jh-card-select {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+    row-gap: 15px;
+    display: grid;
+    padding: 0 10px;
+    column-gap: 15px;
+    font-size: 14px;
+}
+.select__item {
+    padding: 20px 0;
+    cursor: pointer;
+    font-family: "Heebo", sans-serif;
+    text-align: center;
+    border-radius: 6px;
+    /* background: #eeeeee; */
+    transition: background 0.1s;
+    box-shadow: 0px 0px 4px 1px #bbbbbb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.select__item--selected {
+    background: #009578;
+    color: #ffffff;
+}
+.primary_select {
+    padding: 5px 0 0 0;
+}
+.primary_text {
+    font-size: 10px;
+}
+.item_in_range {
+    background: #00957845;
+}
