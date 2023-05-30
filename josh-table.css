@@ -1,0 +1,309 @@
+* {
+    box-sizing: border-box;
+}
+#wpcontent, #wpfooter {
+    background-color: whitesmoke;
+}
+div.table {
+    padding: 10px 5px;
+    background: white;
+    margin-top: 20px;
+    overflow-x: auto;
+    font-size: 13px;
+}
+.dataTables_wrapper .dataTables_length select {
+    width: 50px;
+}
+.summary-data {
+    margin: 10px 0;
+    display: flex;
+    column-gap: 25px;
+}
+.summary-card {
+    padding: 10px 15px;
+    background-color: white;
+    min-width: 260px;
+    font-size: 13px;
+}
+.summary-card .value {
+    font-size: 20px;
+    font-weight: 500;
+}
+.slip-tf-box {
+    display: flex;
+    justify-content: center;
+    box-sizing: unset;
+}
+img.slip-tf {
+    max-width: 35px;
+    max-height: 25px;
+    cursor: pointer;
+    transition: border .1s;
+    box-shadow: 0px 0px 3px 0px #787878;
+}
+.slip-tf:hover {
+    border: 3px solid #666bff;
+}
+.model {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin-left: -50px;
+    background: #00000066;
+    z-index: 10;
+    display: none;
+}
+.model-wrapper {
+    display: grid;
+    height: calc(100vh - 90px);
+}
+.model .left {
+    grid-column: 1;
+}
+.model .body {
+    margin-left: auto;
+    margin-right: auto;
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+}
+.model .right {
+    grid-column: 3;
+}
+.model.active {
+    display: block;
+}
+.model-header {
+    height: 50px;
+    background: transparent;
+    display: flex;
+    justify-content: end;
+    padding-right: 10px;
+}
+.model-header .icon {
+    width: 50px;
+    cursor: pointer;
+    position: absolute;
+    right: 140px;
+}
+.model-body {
+    min-height: 100px;
+    width: 100%;
+}
+#img-popup-box {
+    display: flex;
+    justify-content: center;
+}
+#img-popup {
+    max-width: 100%;
+    max-height: calc(100vh - 180px);
+    box-shadow: 0px 0px 6px #bbbbbb;
+}
+#datatables thead {
+    background: #dee2e6;
+}
+ul.pagination a.page-link {
+    font-size: 14px;
+}
+
+/* animation heart loading  src=https://loading.io/css/ */
+  @keyframes lds-heart {
+    0% {
+      transform: scale(0.95);
+    }
+    5% {
+      transform: scale(1.1);
+    }
+    39% {
+      transform: scale(0.85);
+    }
+    45% {
+      transform: scale(1);
+    }
+    60% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(0.9);
+    }
+  }
+/* end of animation heart   */
+
+#heart {
+    fill: #ff297e;
+}
+.loading-icon {
+    width: 200px;
+    animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.loading-icon.hidden {
+    display: none;
+}
+
+.float.drop-down, .float.input {
+    position: absolute;
+    margin-top: 10px;
+    padding: 10px;
+    width: 160px;
+    z-index: 5;
+    /* display: none; */
+}
+.float.drop-down .wrapper, .float.input .wrapper {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px #a1a1a1;
+}
+.float-row-title {
+    font-size: 10px;
+}
+.float.drop-down .row-list, .float.input .row-list {
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+    font-size: 14px;
+}
+.float.drop-down .option, .float.input .option {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 1px solid #dcdcde;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+.float.drop-down .option:hover {
+    background-color: whitesmoke;
+}
+.float.input .option input {
+    width: 100%;
+}
+.abi-click span {
+    cursor: pointer;
+    text-decoration: underline dashed #787878;
+}
+#float-relawan.active {
+    display: block;
+}
+.jcol-1 {
+    display: flex;
+    column-gap: 10px;
+}
+table.dataTable thead tr {
+    height: 60px;
+}
+table.dataTable tbody tr, table.dataTable tfoot tr {
+    height: 50px;
+}
+div.dataTables_processing > div:last-child > div {
+    background-color: rgb(13 110 253);
+}
+table.dataTable tbody tr.odd {
+    background-color: #fbfbfb;
+}
+table.dataTable tbody tr:hover {
+    background-color: #dae3ff;
+}
+.dtfh-floatingparent.dtfh-floatingparentfoot {
+    font-size: 14px;
+    box-shadow: 0px 0px 5px #a1a1a1;
+}
+.input.amount .button-box, .input.phone .button-box {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+.input.amount .cancelBtn, .input.amount .applyBtn, .input.phone .cancelBtn, .input.amount .applyBtn {
+    font-size: 10px;
+}
+
+.date-picker-box {
+    padding: 2px 20px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0px 0px 4px #adadad;
+    cursor: pointer;
+}
+.date-picker-box:hover {
+    box-shadow: 0px 0px 4px #575757;
+}
+.jhead {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+.jrow {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+button.btn.btn-outline-primary.btn-sm.josh1 {
+    --bs-btn-hover-bg: #efefef;
+    --bs-btn-hover-color: #565656;
+    --bs-btn-border-color:#a7a7a7;
+    --bs-btn-color:black;
+    --bs-btn-hover-border-color: #565656;
+}
+.icon-filter {
+    display: flex;
+    column-gap: 5px;
+}
+svg.icon-filter {
+    width: 20px;
+}
+.date-picker {
+    display: flex;
+    column-gap: 10px;
+}
+.icon-date {
+    width: 17px;
+}
+.date-text{
+    font-size: 14px;
+}
+.icon-date, .date-text {
+    padding: 4px 0;
+    display: flex;
+}
+.icon-drop {
+    width: 31px;
+    transition: rotate 0.2s;
+    margin-right: -6px;
+}
+.icon-drop.active {
+    rotate: 180deg;
+}
+div.dataTables_processing {
+    z-index: 1;
+}
+.float.filter{
+    padding-top: 35px;
+    font-size: 14px;
+}
+.date-picker-box.date-filter {
+    border-radius: 0.25rem;
+    box-shadow: none;
+}
+
+@media screen and (max-width: 500px) {
+    .model {
+        margin-left: -10px;
+        margin-top: -46px;
+    }
+    .model-header {
+        margin-top: 46px;
+    }
+    .model-header .icon {
+        right: 45px;
+    }
+    .model-wrapper {
+        height: calc(100vh - 100px);
+    }
+    #img-popup {
+        max-width: calc(100vw - 10px);
+        max-height: calc(100vh - 100px);
+    }
+}
