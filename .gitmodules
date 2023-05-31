@@ -1,0 +1,3 @@
+[submodule "admin/marketing-api/facebook-php-business-sdk"]
+	path = admin/marketing-api/facebook-php-business-sdk
+	url = https://github.com/facebook/facebook-php-business-sdk.git
