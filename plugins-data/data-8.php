@@ -166,16 +166,40 @@ function donasiaja_url_handler_() {
 	}
 
 	$host = $_SERVER['HTTP_HOST'];
-	$path = $_SERVER['REQUEST_URI'];
-	$path = str_ends_with('/', $path) ? substr_replace($path, '', -1, 1) : $path;
+
+	$request_uri = parse_url($_SERVER['REQUEST_URI']);
+
+	$path = $request_uri['path'];
+	$query = (isset($request_uri['query'])) ? $request_uri['query'] : null;
+
+	// remove the last "/" if there any
+	$path = (str_ends_with($path, '/')) ? substr_replace($path, '', -1, 1) : $path;
+
+	$path = explode('/', $path);
+
+	// remove the first array element
+	if(count($path) >1) {
+		array_shift($path);
+	}
+
+	// detect if run in local or dummy web
+	if($host === 'localhost') {
+		array_shift($path);
+	}
+
+	echo '<pre>'; var_dump($path); echo '</pre>';
+	if(isset($query)) {
+		echo '<pre>'; var_dump($query); echo '</pre>';
+	}
 }
+donasiaja_url_handler_();
 
 function donasiaja_url_handler() {
 
 	global $wpdb;
 	global $pagenow;
 
-	echo '<pre>'; var_dump($_SERVER); echo '</pre>';
+	// echo '<pre>'; var_dump($_SERVER); echo '</pre>';
 
 	$table_name = $wpdb->prefix . "dja_settings";
 	$table_name2 = $wpdb->prefix . "dja_donate";
