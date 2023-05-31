@@ -130,12 +130,52 @@ function angka_terbilang($x) {
     }
   }
   
+function donasiaja_url_handler_() {
+	global $wpdb;
+	global $pagenow;
 
+	$table_settings = $wpdb->prefix . 'dja_settings';
+	$table_donate = $wpdb->prefix . 'dja_donate';
+	$table_campaign = $wpdb->prefix . 'dja_campaign';
+	$table_aff_submit = $wpdb->prefix . 'dja_aff_submit';
+	$table_aff_code = $wpdb->prefix . 'dja_aff_code';
+
+	$query = "SELECT data
+	FROM $table_settings
+	WHERE type='login_setting' or type='login_text' or type='register_setting' or type='register_text' or type='page_login' or type='page_register' or type='page_donate' or type='page_typ'
+	ORDER BY id ASC";
+
+	$rows = $wpdb->get_results($query);
+
+	$login_setting 		= $rows[0]->data;
+    $login_text 		= $rows[1]->data;
+    $register_setting 	= $rows[2]->data;
+    $register_text 		= $rows[3]->data;
+    $page_login 		= $rows[4]->data;
+    $page_register 		= $rows[5]->data;
+    $page_donate		= $rows[6]->data;
+    $page_typ 			= $rows[7]->data;
+
+	/**
+	 * @todo Find out this..
+	 */
+	if($login_setting=='1'){
+		if( $pagenow == 'wp-login.php' ){
+			redirect_logged_in_user();
+		}
+	}
+
+	$host = $_SERVER['HTTP_HOST'];
+	$path = $_SERVER['REQUEST_URI'];
+	$path = str_ends_with('/', $path) ? substr_replace($path, '', -1, 1) : $path;
+}
 
 function donasiaja_url_handler() {
 
 	global $wpdb;
 	global $pagenow;
+
+	echo '<pre>'; var_dump($_SERVER); echo '</pre>';
 
 	$table_name = $wpdb->prefix . "dja_settings";
 	$table_name2 = $wpdb->prefix . "dja_donate";
