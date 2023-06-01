@@ -1,5 +1,11 @@
 <?php
+    $table_settings = $wpdb->prefix . 'dja_settings';
 
+    $query = "SELECT data
+    FROM $table_settings
+    WHERE type='waba_token'";
+
+    $waba_token = $wpdb->get_row($query)->data;
 ?>
 <div class="row">
     <div class="col-12">
@@ -26,14 +32,27 @@
                     </div><!--end col-->
                 </div><!--end row-->
 
-                <div class="row">
+                <div class="row form-group">
                     <div class="col">
-                        <div class="form-group">
-                            <label for="input-waba-token">Authorization Token</label>
-                            <input type="text" class="form-control" id="input-waba-token" value="abc" required>
-                        </div>
+                        <label for="input-waba-token">Authorization Token</label>
+                        <input type="text" class="form-control" id="input-waba-token" value="<?php echo $waba_token; ?>" required>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 30px;">
+                        <hr>
+                    </div>
+                </div>
+
+                <!-- <div class="row form-group">
+                    <div class="col">
+                        <h5 class="card-title mt-0">Category <div class="spinner-border spinner-border-sm text-primary set_category_loading" style="margin-left: 10px;display: none;"></div></h5>
+
+                        <label for=""></label>
+                        <input type="text" name="" id="">
+                    </div>
+                </div> -->
 
                 <div class="row">
                     <div class="col-md-12 col-xl-12" style="padding: 0;margin-top: -20px;">
@@ -45,7 +64,7 @@
                                         <div class="col-md-12">
                                             <hr>
                                             <br>
-                                            <button type="button" class="btn btn-primary px-5 py-2" id="update_waba">Update <div class="spinner-border spinner-border-sm text-white update_general_loading" style="margin-left: 3px;display: none;"></div></button>
+                                            <button type="button" class="btn btn-primary px-5 py-2" id="btn-update-waba">Update <div class="spinner-border spinner-border-sm text-white update_general_loading" style="margin-left: 3px;display: none;"></div></button>
                                         </div>
                                     </div>
                                     
@@ -59,3 +78,26 @@
         </div><!--end card-->
     </div><!--end col-->
 </div>
+
+<script>
+    $('#btn-update-waba').click(function (e) { 
+        e.preventDefault();
+        
+        $('.update_general_loading', e.delegateTarget).show();
+        waba_submit();
+    });
+
+    function waba_submit() {
+        let data = {
+            action: 'settings-waba',
+            waba_token: () => {return $('#input-waba-token').val();}
+        };
+
+        $.post("wp-admin/admin-ajax.php", data,
+            function (data, textStatus, jqXHR) {
+                console.log(data);
+            },
+            "json/application"
+        );
+    }
+</script>
