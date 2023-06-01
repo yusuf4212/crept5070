@@ -346,7 +346,7 @@ function donasiaja_settings() {
         'fundraising'   => 'Fundraising',
         'general'       => 'General',
         'waba'          => 'Waba',
-        // 'socialgraph'   => 'Social&nbsp;Graph'
+        'capi'          => 'CAPI'
     ];
         
     ?>
@@ -686,11 +686,11 @@ body{background:#f6faff}.boxcard-title{font-size:20px;font-weight:600;color:#303
             require_once ROOTDIR_DNA . 'admin/page/settings/settings-waba.php';
 
         } 
-        // elseif($action === 'socialgraph') {
+        elseif($action === 'capi') {
 
-        //     require_once ROOTDIR_DNA . 'admin/page/settings/settings-socialgraph.php';
+            require_once ROOTDIR_DNA . 'admin/page/settings/settings-capi.php';
 
-        // } 
+        } 
         else {
 
             require_once ROOTDIR_DNA . 'admin/page/settings/settings-license.php';

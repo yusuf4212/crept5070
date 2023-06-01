@@ -799,3 +799,38 @@ function jh_testing_waba() {
 }
 
 add_action('wp_ajax_jh_testing_waba', 'jh_testing_waba');
+
+function jh_remove_pixel() {
+	header('Content-Type: application/json');
+
+	$id = $_POST['id'];
+
+	global $wpdb;
+	$table_capi_pixel = $wpdb->prefix . 'josh_capi_pixel';
+
+	$delete = $wpdb->delete(
+		$table_capi_pixel,
+		[
+			'id'	=> $id
+		]
+	);
+
+	if($delete === false) {
+		$status = 'failed';
+		$messages = $wpdb->last_error;
+	} else {
+		$status = 'success';
+		$messages = '';
+	}
+
+	echo json_encode(
+		[
+			'status'	=> $status,
+			'messages'	=> $messages
+		]
+	);
+
+	die;
+}
+
+add_action('wp_ajax_jh_remove_pixel', 'jh_remove_pixel');
