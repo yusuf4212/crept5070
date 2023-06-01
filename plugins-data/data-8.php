@@ -226,17 +226,106 @@ function donasiaja_url_handler_() {
 		}
 		else if($path[0] === 'campaign' && $path[2] == $page_typ) {
 			$track_mode = 'thankyoupage';
-
+			
+			$invoice_id = $path[3];
+			
 			require_once ROOTDIR_DNA . 'donasiaja-typ.php';
 			die;
 		}
 		else if($path[0] === 'josh' && $path[2] == $page_typ) {
 			$track_mode = 'thankyoupage';
 
+			$invoice_id = $path[3];
+
 			require_once ROOTDIR_DNA . 'donasiaja-typ.php';
 			die;
 		}
 	} // end of isset($path[2])
+	else if(isset($path[0])) {
+		$program_quick = ['rumah-tahfizh', 'rumah-tahfidz', 'wakaf-quran', 'sedekah-subuh', 'jumat-berkah', 'tanggap-cianjur', 'bantuan-lebak', 'zakat', 'fidyah'];
+		$donasi_id = $path[1];
+
+		if(in_array($path[0], $program_quick)) {
+			$track_mode = 'landingpage';
+			require_once ROOTDIR_DNA . 'josh-redirect.php';
+			die;
+		}
+		else if($path[0] === 'webhook') {
+			require_once ROOTDIR_DNA . 'josh-waba-endpoint.php';
+			die;
+		}
+		else if($path[0] === 'josh') {
+			$track_mode = 'landingpage';
+
+			require_once ROOTDIR_DNA . 'donasiaja-campaign.php';
+			die;
+		}
+		else if($path[0] === 'f') {
+			require_once ROOTDIR_DNA . 'josh-followup.php';
+			die;
+		}
+		else if($path[0] === '_f') {
+			require_once ROOTDIR_DNA . 'josh-followup-2.php';
+			die;
+		}
+		else if($path[0] === 'slip-input') {
+			require_once ROOTDIR_DNA . 'josh-input-slip.php';
+			die;
+		}
+		else if($path[0] === 's') {
+			require_once ROOTDIR_DNA . 'josh-slip-view.php';
+			die;
+		}
+		else if($path[0] === '__glogin_crm') {
+			$direct_to = 'crm';
+			require_once ROOTDIR_DNA . 'jh-login-google.php';
+			die;
+		}
+		else if($path[0] === 'url-builder') {
+			require_once ROOTDIR_DNA . 'josh-utm-builder.php';
+			die;
+		}
+		else if($path[0] === 'input-leads') {
+			wp_die('<h2>Ooops..</h2><br><p>Halo! Demi terciptanya data yang <i>terintegrasi</i> dengan baik, leads saat ini langsung di Dashboard CRM ya!</p><p>Terimakasih!! :)</p><p><i>Mengintegrasikan data dari sumber yang banyak itu tidak mudah lho :) terimakasih atas pengertiannya.</i></p><br><br>- Developer DFR YMPB.');
+		}
+		else if($path[0] === 'preview') {
+			require_once ROOTDIR_DNA . 'donasiaja-campaign.php';
+			die;
+		}
+		else if($path[0] === 'campaign') {
+			require_once ROOTDIR_DNA . 'donasiaja-campaign.php';
+			die;
+		}
+		else if($path[0] === 'search_campaign'){
+			require_once(ROOTDIR_DNA . 'donasiaja-search.php');
+			die;
+		}
+		else if($path[0] === 'profile'){
+			require_once(ROOTDIR_DNA . 'donasiaja-profile.php');
+			die;
+		}
+		else if($path[0] === $page_login){
+			require_once(ROOTDIR_DNA . 'donasiaja-login.php');
+			die;
+		}
+		else if($path[0] === $page_register){
+			require_once(ROOTDIR_DNA . 'donasiaja-register.php');
+			die;
+		}
+		else if($path[0] === 'changepass'){
+			require_once(ROOTDIR_DNA . 'donasiaja-changepass.php');
+			die;
+		}
+		else if($path[0] === 'resetpass'){
+			require_once(ROOTDIR_DNA . 'donasiaja-resetpass.php');
+			die;
+		}
+		else if($path[0] === 'ekuitansi'){
+			require_once(ROOTDIR_DNA . 'admin/f_print_kuitansi.php');
+			die;
+		}
+
+	}
 }
 // donasiaja_url_handler_();
 
@@ -1429,7 +1518,8 @@ function donasiaja_url_handler() {
 // });
 }
 
-add_action('parse_request', 'donasiaja_url_handler');
+add_action('parse_request', 'donasiaja_url_handler_');
+// add_action('parse_request', 'donasiaja_url_handler');
 
 
 // Run the function on admin_init
