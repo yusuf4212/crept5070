@@ -199,6 +199,7 @@ function donasiaja_url_handler_() {
 		$action_id = $path[2];
 		$donasi_id = $path[1];
 		$link_code = $path[0];
+		$affcode = '';
 
 		if($path[0] === 'preview' && $path[2] == $page_donate) {
 			if(isset($path[3])) {
