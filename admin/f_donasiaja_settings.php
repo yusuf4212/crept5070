@@ -21,6 +21,8 @@ function donasiaja_settings() {
         $general = false;
         $fundraising = false;
 
+        $action = (isset($_GET['action'])) ? $_GET['action'] : null;
+
         if(isset($_GET['action'])){
             if($_GET['action']=="themes"){
                 $themes = true;
@@ -36,6 +38,10 @@ function donasiaja_settings() {
                 $fundraising = true;
             }elseif($_GET['action']=="general"){
                 $general = true;
+            }elseif($_GET['action']=='waba') {
+                //
+            }elseif($_GET['action']=='sos_graph') {
+                //
             }else{
                 // nothing
             }
@@ -358,6 +364,19 @@ function donasiaja_settings() {
     // wp_enqueue_script('jquery');
     // This will enqueue the Media Uploader script
     wp_enqueue_media();
+
+    /**
+     * Top Menu
+     */
+    $menu_arr = [
+        'themes'        => 'Themes',
+        'form'          => 'Form',
+        'payment'       => 'Payment',
+        'notification'  => 'Notification',
+        'socialproof'   => 'Social&nbsp;Proof',
+        'fundraising'   => 'Fundraising',
+        'general'       => 'General'
+    ];
         
     ?>
 
@@ -656,7 +675,7 @@ body{background:#f6faff}.boxcard-title{font-size:20px;font-weight:600;color:#303
         <div class="body-nya" style="margin-top:20px;margin-right:30px;margin-left: 20px;">
         <!-- Page Content-->
 
-        <?php if($themes==true) { ?>
+        <?php if($action === 'themes') { ?>
 
             <?php check_license(); ?>
 
@@ -666,13 +685,13 @@ body{background:#f6faff}.boxcard-title{font-size:20px;font-weight:600;color:#303
                         <div class="card-body" style="padding-bottom: 0;">                                
                             <div class="button-items mb-4">
                                 <a href="<?php echo admin_url('admin.php?page=donasiaja_settings') ?>"><button type="button" class="btn btn-outline-light">License</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=themes') ?>"><button type="button" class="btn btn-primary waves-light">Themes</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=form') ?>"><button type="button" class="btn btn-outline-light">Form</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=payment') ?>"><button type="button" class="btn btn-outline-light">Payment</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=notification') ?>"><button type="button" class="btn btn-outline-light">Notification</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=socialproof') ?>"><button type="button" class="btn btn-outline-light">Social&nbsp;Proof</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=fundraising') ?>"><button type="button" class="btn btn-outline-light">Fundraising</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=general') ?>"><button type="button" class="btn btn-outline-light">General</button></a>
+                                <?php
+                                foreach($menu_arr as $key => $val) {
+                                    $class = (($_GET['action'] == $key)) ? 'btn btn-primary waves-light' : 'btn btn-outline-light';
+
+                                    echo '<a href="' . admin_url("admin.php?page=donasiaja_settings&action=") . $key . '"><button type="button" class="' . $class . '">' . $val . '</button></a>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="card-body" style="margin-top: -10px;">
@@ -767,7 +786,7 @@ body{background:#f6faff}.boxcard-title{font-size:20px;font-weight:600;color:#303
                     </div><!--end card-->
                 </div><!--end col-->
             </div>
-        <?php } elseif($form==true) { ?>
+        <?php } elseif($action === 'form') { ?>
 
             <?php check_license(); ?>
 
@@ -777,13 +796,13 @@ body{background:#f6faff}.boxcard-title{font-size:20px;font-weight:600;color:#303
                         <div class="card-body" style="padding-bottom: 0;">                                
                             <div class="button-items mb-4">
                                 <a href="<?php echo admin_url('admin.php?page=donasiaja_settings') ?>"><button type="button" class="btn btn-outline-light">License</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=themes') ?>"><button type="button" class="btn btn-outline-light">Themes</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=form') ?>"><button type="button" class="btn btn-primary waves-light">Form</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=payment') ?>"><button type="button" class="btn btn-outline-light">Payment</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=notification') ?>"><button type="button" class="btn btn-outline-light">Notification</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=socialproof') ?>"><button type="button" class="btn btn-outline-light">Social&nbsp;Proof</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=fundraising') ?>"><button type="button" class="btn btn-outline-light">Fundraising</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=general') ?>"><button type="button" class="btn btn-outline-light">General</button></a>
+                                <?php
+                                foreach($menu_arr as $key => $val) {
+                                    $class = (($_GET['action'] == $key)) ? 'btn btn-primary waves-light' : 'btn btn-outline-light';
+
+                                    echo '<a href="' . admin_url("admin.php?page=donasiaja_settings&action=") . $key . '"><button type="button" class="' . $class . '">' . $val . '</button></a>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="card-body" style="margin-top: -10px;">
@@ -1071,7 +1090,7 @@ body{background:#f6faff}.boxcard-title{font-size:20px;font-weight:600;color:#303
                     </div><!--end card-->
                 </div><!--end col-->
             </div>
-        <?php } elseif($payment==true) { ?>
+        <?php } elseif($action === 'payment') { ?>
             <?php check_license(); ?>
             <div class="row">
                 <div class="col-12">
@@ -1079,13 +1098,13 @@ body{background:#f6faff}.boxcard-title{font-size:20px;font-weight:600;color:#303
                         <div class="card-body" style="padding-bottom: 0;">                                
                             <div class="button-items mb-4">
                                 <a href="<?php echo admin_url('admin.php?page=donasiaja_settings') ?>"><button type="button" class="btn btn-outline-light">License</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=themes') ?>"><button type="button" class="btn btn-outline-light">Themes</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=form') ?>"><button type="button" class="btn btn-outline-light">Form</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=payment') ?>"><button type="button" class="btn btn-primary waves-light">Payment</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=notification') ?>"><button type="button" class="btn btn-outline-light">Notification</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=socialproof') ?>"><button type="button" class="btn btn-outline-light">Social&nbsp;Proof</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=fundraising') ?>"><button type="button" class="btn btn-outline-light">Fundraising</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=general') ?>"><button type="button" class="btn btn-outline-light">General</button></a>
+                                <?php
+                                foreach($menu_arr as $key => $val) {
+                                    $class = (($_GET['action'] == $key)) ? 'btn btn-primary waves-light' : 'btn btn-outline-light';
+
+                                    echo '<a href="' . admin_url("admin.php?page=donasiaja_settings&action=") . $key . '"><button type="button" class="' . $class . '">' . $val . '</button></a>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="card-body" style="margin-top: -10px;">
@@ -2259,7 +2278,7 @@ body{background:#f6faff}.boxcard-title{font-size:20px;font-weight:600;color:#303
                     </div><!--end card-->
                 </div><!--end col-->
             </div>
-        <?php } elseif($notification==true) { ?>
+        <?php } elseif($action === 'notification') { ?>
             <?php check_license(); ?>
             <div class="row">
                 <div class="col-12">
@@ -2267,13 +2286,13 @@ body{background:#f6faff}.boxcard-title{font-size:20px;font-weight:600;color:#303
                         <div class="card-body" style="padding-bottom: 0;">                                
                             <div class="button-items mb-4">
                                 <a href="<?php echo admin_url('admin.php?page=donasiaja_settings') ?>"><button type="button" class="btn btn-outline-light">License</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=themes') ?>"><button type="button" class="btn btn-outline-light">Themes</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=form') ?>"><button type="button" class="btn btn-outline-light">Form</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=payment') ?>"><button type="button" class="btn btn-outline-light">Payment</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=notification') ?>"><button type="button" class="btn btn-primary waves-light">Notification</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=socialproof') ?>"><button type="button" class="btn btn-outline-light">Social&nbsp;Proof</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=fundraising') ?>"><button type="button" class="btn btn-outline-light">Fundraising</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=general') ?>"><button type="button" class="btn btn-outline-light">General</button></a>
+                                <?php
+                                foreach($menu_arr as $key => $val) {
+                                    $class = (($_GET['action'] == $key)) ? 'btn btn-primary waves-light' : 'btn btn-outline-light';
+
+                                    echo '<a href="' . admin_url("admin.php?page=donasiaja_settings&action=") . $key . '"><button type="button" class="' . $class . '">' . $val . '</button></a>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="card-body" style="margin-top: -10px;">
@@ -2949,7 +2968,7 @@ Terimakasih 😊🙏
                     </div><!--end card-->
                 </div><!--end col-->
             </div>
-        <?php } elseif($socialproof==true) { ?>
+        <?php } elseif($action === 'socialproof') { ?>
             <?php check_license(); ?>
             <div class="row">
                 <div class="col-12">
@@ -2957,13 +2976,13 @@ Terimakasih 😊🙏
                         <div class="card-body" style="padding-bottom: 0;">                                
                             <div class="button-items mb-4">
                                 <a href="<?php echo admin_url('admin.php?page=donasiaja_settings') ?>"><button type="button" class="btn btn-outline-light">License</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=themes') ?>"><button type="button" class="btn btn-outline-light">Themes</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=form') ?>"><button type="button" class="btn btn-outline-light">Form</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=payment') ?>"><button type="button" class="btn btn-outline-light">Payment</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=notification') ?>"><button type="button" class="btn btn-outline-light">Notification</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=socialproof') ?>"><button type="button" class="btn btn-primary waves-light">Social&nbsp;Proof</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=fundraising') ?>"><button type="button" class="btn btn-outline-light">Fundraising</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=general') ?>"><button type="button" class="btn btn-outline-light">General</button></a>
+                                <?php
+                                foreach($menu_arr as $key => $val) {
+                                    $class = (($_GET['action'] == $key)) ? 'btn btn-primary waves-light' : 'btn btn-outline-light';
+
+                                    echo '<a href="' . admin_url("admin.php?page=donasiaja_settings&action=") . $key . '"><button type="button" class="' . $class . '">' . $val . '</button></a>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="card-body" style="margin-top: -10px;">
@@ -3143,7 +3162,7 @@ Terimakasih 😊🙏
                     </div><!--end card-->
                 </div><!--end col-->
             </div>
-        <?php } elseif($fundraising==true) { ?>
+        <?php } elseif($action === 'fundraising') { ?>
             <?php check_license(); ?>
             <?php 
 
@@ -3191,13 +3210,13 @@ Terimakasih 😊🙏
                         <div class="card-body" style="padding-bottom: 0;">                                
                             <div class="button-items mb-4">
                                 <a href="<?php echo admin_url('admin.php?page=donasiaja_settings') ?>"><button type="button" class="btn btn-outline-light">License</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=themes') ?>"><button type="button" class="btn btn-outline-light">Themes</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=form') ?>"><button type="button" class="btn btn-outline-light">Form</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=payment') ?>"><button type="button" class="btn btn-outline-light">Payment</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=notification') ?>"><button type="button" class="btn btn-outline-light">Notification</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=socialproof') ?>"><button type="button" class="btn btn-outline-light">Social&nbsp;Proof</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=fundraising') ?>"><button type="button" class="btn btn-primary waves-light">Fundraising</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=general') ?>"><button type="button" class="btn btn-outline-light">General</button></a>
+                                <?php
+                                foreach($menu_arr as $key => $val) {
+                                    $class = (($_GET['action'] == $key)) ? 'btn btn-primary waves-light' : 'btn btn-outline-light';
+
+                                    echo '<a href="' . admin_url("admin.php?page=donasiaja_settings&action=") . $key . '"><button type="button" class="' . $class . '">' . $val . '</button></a>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="card-body" style="margin-top: -10px;">
@@ -3497,7 +3516,7 @@ Terimakasih 😊🙏
                     </div><!--end card-->
                 </div><!--end col-->
             </div>
-        <?php } elseif($general==true) { ?>
+        <?php } elseif($action === 'general') { ?>
             <?php check_license(); ?>
             <div class="row">
                 <div class="col-12">
@@ -3505,13 +3524,13 @@ Terimakasih 😊🙏
                         <div class="card-body" style="padding-bottom: 0;">                                
                             <div class="button-items mb-4">
                                 <a href="<?php echo admin_url('admin.php?page=donasiaja_settings') ?>"><button type="button" class="btn btn-outline-light">License</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=themes') ?>"><button type="button" class="btn btn-outline-light">Themes</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=form') ?>"><button type="button" class="btn btn-outline-light">Form</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=payment') ?>"><button type="button" class="btn btn-outline-light">Payment</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=notification') ?>"><button type="button" class="btn btn-outline-light">Notification</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=socialproof') ?>"><button type="button" class="btn btn-outline-light">Social&nbsp;Proof</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=fundraising') ?>"><button type="button" class="btn btn-outline-light">Fundraising</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=general') ?>"><button type="button" class="btn btn-primary waves-light">General</button></a>
+                                <?php
+                                foreach($menu_arr as $key => $val) {
+                                    $class = (($_GET['action'] == $key)) ? 'btn btn-primary waves-light' : 'btn btn-outline-light';
+
+                                    echo '<a href="' . admin_url("admin.php?page=donasiaja_settings&action=") . $key . '"><button type="button" class="' . $class . '">' . $val . '</button></a>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="card-body" style="margin-top: -10px;">
@@ -4050,13 +4069,13 @@ Terimakasih 😊🙏
                         <div class="card-body" style="padding-bottom: 0;">                                
                             <div class="button-items mb-4">
                                 <a href="<?php echo admin_url('admin.php?page=donasiaja_settings') ?>"><button type="button" class="btn btn-primary waves-light">License</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=themes') ?>"><button type="button" class="btn btn-outline-light">Themes</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=form') ?>"><button type="button" class="btn btn-outline-light">Form</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=payment') ?>"><button type="button" class="btn btn-outline-light">Payment</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=notification') ?>"><button type="button" class="btn btn-outline-light">Notification</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=socialproof') ?>"><button type="button" class="btn btn-outline-light">Social&nbsp;Proof</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=fundraising') ?>"><button type="button" class="btn btn-outline-light">Fundraising</button></a>
-                                <a href="<?php echo admin_url('admin.php?page=donasiaja_settings&action=general') ?>"><button type="button" class="btn btn-outline-light">General</button></a>
+                                <?php
+                                foreach($menu_arr as $key => $val) {
+                                    $class = 'btn btn-outline-light';
+
+                                    echo '<a href="' . admin_url("admin.php?page=donasiaja_settings&action=") . $key . '"><button type="button" class="' . $class . '">' . $val . '</button></a>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="card-body" style="margin-top: -10px;">
