@@ -611,3 +611,17 @@ function donasiaja_global_vars() {
 }
 add_action( 'parse_query', 'donasiaja_global_vars' );
 
+
+function jh_settings_waba() {
+	header('Content-Type: application/json');
+
+	echo json_encode(
+		[
+			'status'	=> 'success'
+		]
+	);
+
+	die;
+}
+
+add_action('wp_ajax_jh_settings_waba', 'jh_settings_waba');
