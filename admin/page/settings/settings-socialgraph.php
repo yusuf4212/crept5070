@@ -1,4 +1,21 @@
 <?php
+    $table_capi_pixel = $wpdb->prefix . 'josh_capi_pixel';
+    $table_settings = $wpdb->prefix . 'dja_settings';
+
+    // get pixel data
+    $query = "SELECT *
+    FROM $table_capi_pixel";
+
+    $pixels = $wpdb->get_results($query);
+
+
+    $query = "SELECT data
+    FROM $table_settings
+    WHERE type='ad_account_id' or type='social_graph_token'";
+
+    $rows = $wpdb->get_results($query);
+    $ad_account_id      = $rows[0]->data;
+    $social_graph_token = $rows[1]->data;
 
 ?>
 <div class="row">
