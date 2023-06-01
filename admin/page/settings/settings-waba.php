@@ -64,7 +64,7 @@
                                         <div class="col-md-12">
                                             <hr>
                                             <br>
-                                            <button type="button" class="btn btn-primary px-5 py-2" id="btn-update-waba">Update <div class="spinner-border spinner-border-sm text-white update_general_loading" style="margin-left: 3px;display: none;"></div></button>
+                                            <button type="button" class="btn btn-primary px-5 py-2" id="btn-update-waba">Update <div class="spinner-border spinner-border-sm text-white update_general_loading" id="btn-update-waba-spinner" style="margin-left: 3px;display: none;"></div></button>
                                         </div>
                                     </div>
                                     
@@ -83,21 +83,25 @@
     $('#btn-update-waba').click(function (e) { 
         e.preventDefault();
         
-        $('.update_general_loading', e.delegateTarget).show();
+        $('#btn-update-waba-spinner').show();
         waba_submit();
     });
 
     function waba_submit() {
-        let data = {
-            action: 'settings-waba',
+        let data_ = {
+            action: 'jh_settings_waba',
             waba_token: () => {return $('#input-waba-token').val();}
         };
-
-        $.post("wp-admin/admin-ajax.php", data,
+        
+        $.post("admin-ajax.php", data_,
             function (data, textStatus, jqXHR) {
-                console.log(data);
-            },
-            "json/application"
+                
+                if(data.status === 'success') {
+                    $('#btn-update-waba-spinner').hide();
+
+                    Swal.fire('success');
+                }
+            }
         );
     }
 </script>

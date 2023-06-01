@@ -615,9 +615,28 @@ add_action( 'parse_query', 'donasiaja_global_vars' );
 function jh_settings_waba() {
 	header('Content-Type: application/json');
 
+	$waba_token = $_POST['waba_token'];
+
+	global $wpdb;
+	$table_settings = $wpdb->prefix . 'dja_settings';
+
+	$update = $wpdb->update(
+		$table_settings,
+		[
+			'data'		=> $waba_token
+		],
+		[
+			'type'		=> 'waba_token'
+		]
+	);
+
+	$status = ($update === false) ? 'failed' : 'success';
+	$messages = ($update === false) ? $wpdb->last_error : '';
+
 	echo json_encode(
 		[
-			'status'	=> 'success'
+			'status'	=> $status,
+			'messages'	=> $messages
 		]
 	);
 
