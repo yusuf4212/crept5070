@@ -62,7 +62,7 @@
 	$slug = $donasi_id;
 	$check = $wpdb->get_results('SELECT id from '.$table_name.' where slug="'.$slug.'"');
 	if($check==null){
-		wp_redirect( get_site_url() );
+		// wp_redirect( get_site_url() );
 		exit;
 	}
 
