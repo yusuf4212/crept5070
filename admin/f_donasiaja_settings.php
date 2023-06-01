@@ -6500,4 +6500,41 @@ Terimakasih 😊🙏
     <?php
 }
 
-function djax(){global $wpdb;$table_name=$wpdb->prefix."options";$table_name2=$wpdb->prefix."dja_settings";$t=do_shortcode('[donasiaja show="total_terkumpul"]');$d=do_shortcode('[donasiaja show="jumlah_donasi"]');$row=$wpdb->get_results('SELECT option_value from '.$table_name.' where option_name="siteurl"');$row=$row[0];$query_settings=$wpdb->get_results('SELECT data from '.$table_name2.' where type="apikey_local" ORDER BY id ASC');$aaa=$query_settings[0]->data;$aa=json_decode($aaa,true);$a=$aa['donasiaja'][0];$g='e';$h='r';$e='m';$f='b';$c='m';$k='e';$protocols=array('http://','http://www.','www.','https://','https://www.');$server=str_replace($protocols,'',$row->option_value);$apiurl='https://'.$e.$k.$c.$f.$g.$h.'.donasiaja.id/vw/check';$curl=curl_init();curl_setopt_array($curl,array(CURLOPT_URL=>$apiurl,CURLOPT_RETURNTRANSFER=>true,CURLOPT_VERBOSE=>true,CURLOPT_SSL_VERIFYPEER=>false,CURLOPT_ENCODING=>"",CURLOPT_MAXREDIRS=>10,CURLOPT_TIMEOUT=>30,CURLOPT_HTTP_VERSION=>CURL_HTTP_VERSION_1_1,CURLOPT_CUSTOMREQUEST=>"GET",CURLOPT_HTTPHEADER=>array("O: $server","A: $a","T: $t","D: $d",),));$response=curl_exec($curl);$err=curl_error($curl);curl_close($curl);}
+function djax() {
+    global $wpdb;
+    $table_name=$wpdb->prefix."options";
+    $table_name2=$wpdb->prefix."dja_settings";
+    $t=do_shortcode('[donasiaja show="total_terkumpul"]');
+    $d=do_shortcode('[donasiaja show="jumlah_donasi"]');
+    $row=$wpdb->get_results('SELECT option_value from '.$table_name.' where option_name="siteurl"');
+    $row=$row[0];
+    $query_settings=$wpdb->get_results('SELECT data from '.$table_name2.' where type="apikey_local" ORDER BY id ASC');
+    $aaa=$query_settings[0]->data;
+    $aa=json_decode($aaa,true);
+    $a=$aa['donasiaja'][0];
+    $g='e';
+    $h='r';
+    $e='m';
+    $f='b';
+    $c='m';
+    $k='e';
+    $protocols=array('http://','http://www.','www.','https://','https://www.');
+    $server=str_replace($protocols,'',$row->option_value);
+    $apiurl='https://'.$e.$k.$c.$f.$g.$h.'.donasiaja.id/vw/check';
+    $curl=curl_init();
+    curl_setopt_array($curl,array(
+        CURLOPT_URL=>$apiurl,
+        CURLOPT_RETURNTRANSFER=>true,
+        CURLOPT_VERBOSE=>true,
+        CURLOPT_SSL_VERIFYPEER=>false,
+        CURLOPT_ENCODING=>"",
+        CURLOPT_MAXREDIRS=>10,
+        CURLOPT_TIMEOUT=>30,
+        CURLOPT_HTTP_VERSION=>CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST=>"GET",
+        CURLOPT_HTTPHEADER=>array("O: $server","A: $a","T: $t","D: $d",),
+    ));
+    $response=curl_exec($curl);
+    $err=curl_error($curl);
+    curl_close($curl);
+}
