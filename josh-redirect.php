@@ -1,6 +1,6 @@
 <?php
-    if($jlink == 'rumah-tahfidz') {
-        $jlink = 'rumah-tahfizh';
+    if($path[0] == 'rumah-tahfidz') {
+        $path[0] = 'rumah-tahfizh';
     }
     $donasi_id = $path[0];
     $link_code = 'campaign';
