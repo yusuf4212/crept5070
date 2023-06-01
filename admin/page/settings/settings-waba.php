@@ -58,6 +58,12 @@
                         <label for="input-waba-number">Phone Number ID</label>
                         <input type="text" class="form-control" id="input-waba-number" value="<?php echo $waba_phone; ?>" required>
                     </div>
+
+                    <div class="col-md-12">
+                        <br>
+                        <button type="button" class="btn btn-primary px-5 py-2" id="btn-update-waba">Update <div class="spinner-border spinner-border-sm text-white update_general_loading" id="btn-update-waba-spinner" style="margin-left: 3px;display: none;"></div></button>
+                    </div>
+
                 </div>
 
                 <div class="row">
@@ -75,10 +81,11 @@
                     <div class="col-8">
                         <label for="input-test-number">Nomor Tujuan</label>
                         <input type="text" class="form-control" id="input-test-number" placeholder="628xxx">
+                        <div id="input-test-number-error" class="mx-1 text-danger" style="color: #b30909; display: none;">Harap isi dengan benar.</div>
                     </div>
 
-                    <div class="col-4 d-flex align-self-end justify-content-center">
-                        <button type="button" class="btn btn-primary btn-sm" id="btn-test">Test Now <div class="spinner-border spinner-border-sm text-white update_general_loading" id="btn-test-spinner" style="margin-left: 3px;display: none;"></div></button>
+                    <div class="col-12 mt-2">
+                        <button type="button" class="btn btn-primary" id="btn-test">Test Now <div class="spinner-border spinner-border-sm text-white update_general_loading" id="btn-test-spinner" style="margin-left: 3px;display: none;"></div></button>
                     </div>
                 </div>
 
@@ -89,11 +96,11 @@
                                 <div id="data_general" style="">
 
                                     <div class="row" style="margin-top: 10px;">
-                                        <div class="col-md-12">
+                                        <!-- <div class="col-md-12">
                                             <hr>
                                             <br>
                                             <button type="button" class="btn btn-primary px-5 py-2" id="btn-update-waba">Update <div class="spinner-border spinner-border-sm text-white update_general_loading" id="btn-update-waba-spinner" style="margin-left: 3px;display: none;"></div></button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     
                                 </div>
@@ -138,30 +145,41 @@
     $('#btn-test').click(function (e) { 
         e.preventDefault();
 
-        $('#btn-test-spinner').show();
-        
-        let data_ = {
-            action: 'jh_testing_waba',
-            number: () => {return $('#input-test-number').val();}
-        };
+        let number_ = $('#input-test-number').val();
 
-        $.post("admin-ajax.php", data_,
-            function (data, textStatus, jqXHR) {
-                if(data.status === 'success') {
-                    Swal.fire({
-                        title: 'Success',
-                        icon: 'success'
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Failed!',
-                        text: data.messages,
-                        icon: 'danger'
-                    })
+        if(number_ == '') {
+            $('#input-test-number-error').slideDown('fast');
+
+            setTimeout(() => {
+                $('#input-test-number-error').slideUp();
+            }, 2500);
+        } else {
+            $('#btn-test-spinner').show();
+            
+            let data_ = {
+                action: 'jh_testing_waba',
+                number: number_
+            };
+    
+            $.post("admin-ajax.php", data_,
+                function (data, textStatus, jqXHR) {
+                    if(data.status === 'success') {
+                        Swal.fire({
+                            title: 'Success',
+                            icon: 'success'
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Failed!',
+                            text: data.messages,
+                            icon: 'danger'
+                        })
+                    }
+                    
+                    $('#btn-test-spinner').hide();
                 }
-                
-                $('#btn-test-spinner').hide();
-            }
-        );
+            );
+        }
+
     });
 </script>
