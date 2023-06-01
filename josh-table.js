@@ -1113,7 +1113,6 @@ $(document).ready(function () {
         "alwaysShowCalendars": true,
         "startDate": moment().startOf('month'),
         "endDate": moment(),
-        "maxDate": moment(),
         "opens": "left"
     }, function(start, end, label) {
         
