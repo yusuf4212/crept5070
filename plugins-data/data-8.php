@@ -191,8 +191,54 @@ function donasiaja_url_handler_() {
 	if(isset($query)) {
 		echo '<pre>'; var_dump($query); echo '</pre>';
 	}
+
+	/**
+	 * Use of url handler
+	 */
+	if(isset($path[2])) {
+		$action_id = $path[2];
+
+		if($path[0] === 'preview' && $path[2] == $page_donate) {
+			if(isset($path[3])) {
+				$nominal = (is_numeric($path[3]) ? $path[3] : null);
+			}
+	
+			require_once ROOTDIR_DNA . 'donasiaja-form4.php';
+			die;
+		}
+		else if($path[0] === 'campaign' && $path[2] == $page_donate) {
+			$track_mode = 'form';
+	
+			if(isset($path[3])) {
+				$nominal = (is_numeric($path[3])) ? $path[3] : null;
+			}
+	
+			require_once ROOTDIR_DNA . 'donasiaja-form4.php';
+		}
+		else if($path[0] === 'josh' && $path[2] == $page_donate) {
+			$track_mode = 'form';
+
+			if(isset($path[3])) {
+				$nominal = (is_numeric($path[3])) ? $path[3] : null;
+			}
+
+			require_once ROOTDIR_DNA . 'donasiaja_form4.php';
+		}
+		else if($path[0] === 'campaign' && $path[2] == $page_typ) {
+			$track_mode = 'thankyoupage';
+
+			require_once ROOTDIR_DNA . 'donasiaja-typ.php';
+			die;
+		}
+		else if($path[0] === 'josh' && $path[2] == $page_typ) {
+			$track_mode = 'thankyoupage';
+
+			require_once ROOTDIR_DNA . 'donasiaja-typ.php';
+			die;
+		}
+	} // end of isset($path[2])
 }
-donasiaja_url_handler_();
+// donasiaja_url_handler_();
 
 function donasiaja_url_handler() {
 
