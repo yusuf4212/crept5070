@@ -253,6 +253,7 @@ require 'library/f_additional_function.php';
  * check_license
  * donasiaja_global_vars
  * jh_settings_waba
+ * jh_testing_waba
  */
 require_once ROOTDIR_DNA . 'plugins-data/data-8.php';
 

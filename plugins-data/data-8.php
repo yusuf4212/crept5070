@@ -658,3 +658,144 @@ function jh_settings_waba() {
 }
 
 add_action('wp_ajax_jh_settings_waba', 'jh_settings_waba');
+
+function jh_testing_waba() {
+	header('Content-Type: application/json');
+	global $wpdb;
+
+	$number = $_POST['number'];
+	$table_settings = $wpdb->prefix . 'dja_settings';
+
+	/**
+	 * Setting Up WABA
+	 */
+	{
+		$query = "SELECT data
+		FROM $table_settings
+		WHERE type='fb_graphapi_token' or type='fb_graphapi_version' or type='waba_phone'";
+		$rows = $wpdb->get_results($query);
+
+		$fb_graphapi_token 		= $rows[0]->data;
+		$fb_graphapi_version 	= $rows[1]->data;
+		$waba_phone 			= $rows[2]->data;
+
+		$authorization = "Authorization: Bearer $fb_graphapi_token";
+
+		$version = $fb_graphapi_version;
+		$phone_from = $waba_phone;
+
+		$header = array(
+			'Content-Type: application/json',
+			$authorization
+		);
+
+		$postBody = array(
+		'messaging_product' => 'whatsapp',
+		'recipient_type' => 'individual',
+		'to' => $number,
+		'type' => 'template',
+		'template' => array(
+			'name' => 'order_baru',
+			'language' => array(
+				'code' => 'id'
+			),
+			'components' => array(
+				array(
+					'type' => 'header',
+					'parameters' => array(
+						array(
+							'type' => 'text',
+							'text' => 'TEST'
+						)
+					)
+				),
+				array(
+					'type' => 'body',
+					'parameters' => array(
+						array(
+							'type' => 'text',
+							'text' => 'Program Test'
+						),
+						array(
+							'type' => 'text',
+							'text' => 'Invoice Test'
+						),
+						array(
+							'type' => 'text',
+							'text' => 'Name Test'
+						),
+						array(
+							'type' => 'text',
+							'text' => 'CS Test'
+						),
+						array(
+							'type' => 'text',
+							'text' => 'Test Tanggal'
+						),
+						array(
+							'type' => 'text',
+							'text' => '-'
+						),
+						array(
+							'type' => 'text',
+							'text' => 'Test UTM'
+						)
+					)
+				),
+				array(
+					'type' => 'button',
+					'sub_type' => 'url',
+					'index' => '0',
+					'parameters' => array(
+						array(
+							'type' => 'text',
+							'text' => 'INV-123'
+						)
+					)
+				)
+				)
+			)
+		);
+
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, "https://graph.facebook.com/$version/$phone_from/messages");
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($postBody));
+
+		// execute
+		$response = curl_exec($curl);
+
+		if( $response === false ) {
+			$response = curl_error( $curl );
+		}
+		$response_decode = json_decode($response);
+
+		curl_close($curl);
+
+		/**
+		 * 
+		 */
+		if( isset( $response_decode->contacts ) ) {
+			$status = 'success';
+			$messages = '';
+		} else {
+			$status = 'failed';
+			$messages = $response_decode->error->message;
+		}
+	}
+	
+	echo json_encode(
+		[
+			'status'	=> $status,
+			'messages'	=> $messages
+		]
+	);
+
+	die;
+}
+
+add_action('wp_ajax_jh_testing_waba', 'jh_testing_waba');

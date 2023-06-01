@@ -37,11 +37,15 @@
                 </div><!--end row-->
 
                 <div class="row form-group">
+                    <div class="col-md-12" style="margin-bottom: 10px;">
+                        <h4 class="mt-0 header-title">Facebook Graph API and WABA Setup</h4>
+                        <p class="card-text text-muted">...</p>  
+                    </div>
+
                     <div class="col">
                         <label for="input-graphapi-token">Authorization Token</label>
                         <input type="text" class="form-control" id="input-graphapi-token" value="<?php echo $fb_graphapi_token; ?>" required>
                     </div>
-
                 </div>
                 
                 <div class="row form-group">
@@ -62,14 +66,21 @@
                     </div>
                 </div>
 
-                <!-- <div class="row form-group">
-                    <div class="col">
-                        <h5 class="card-title mt-0">Category <div class="spinner-border spinner-border-sm text-primary set_category_loading" style="margin-left: 10px;display: none;"></div></h5>
-
-                        <label for=""></label>
-                        <input type="text" name="" id="">
+                <div class="row form-group">
+                    <div class="col-md-12" style="margin-bottom: 10px;">
+                        <h4 class="mt-0 header-title">WABA Test</h4>
+                        <p class="card-text text-muted">...</p>  
                     </div>
-                </div> -->
+
+                    <div class="col-8">
+                        <label for="input-test-number">Nomor Tujuan</label>
+                        <input type="text" class="form-control" id="input-test-number" placeholder="628xxx">
+                    </div>
+
+                    <div class="col-4 d-flex align-self-end justify-content-center">
+                        <button type="button" class="btn btn-primary btn-sm" id="btn-test">Test Now <div class="spinner-border spinner-border-sm text-white update_general_loading" id="btn-test-spinner" style="margin-left: 3px;display: none;"></div></button>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-md-12 col-xl-12" style="padding: 0;margin-top: -20px;">
@@ -123,4 +134,34 @@
             }
         );
     }
+
+    $('#btn-test').click(function (e) { 
+        e.preventDefault();
+
+        $('#btn-test-spinner').show();
+        
+        let data_ = {
+            action: 'jh_testing_waba',
+            number: () => {return $('#input-test-number').val();}
+        };
+
+        $.post("admin-ajax.php", data_,
+            function (data, textStatus, jqXHR) {
+                if(data.status === 'success') {
+                    Swal.fire({
+                        title: 'Success',
+                        icon: 'success'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Failed!',
+                        text: data.messages,
+                        icon: 'danger'
+                    })
+                }
+                
+                $('#btn-test-spinner').hide();
+            }
+        );
+    });
 </script>
