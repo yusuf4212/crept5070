@@ -13,39 +13,8 @@ function donasiaja_settings() {
         $table_name6 = $wpdb->prefix . "users";
         
 
-        $themes = false;
-        $form = false;
-        $payment = false;
-        $notification = false;
-        $socialproof = false;
-        $general = false;
-        $fundraising = false;
-
         $action = (isset($_GET['action'])) ? $_GET['action'] : null;
 
-        if(isset($_GET['action'])){
-            if($_GET['action']=="themes"){
-                $themes = true;
-            }elseif($_GET['action']=="form"){
-                $form = true;
-            }elseif($_GET['action']=="payment"){
-                $payment = true;
-            }elseif($_GET['action']=="notification"){
-                $notification = true;
-            }elseif($_GET['action']=="socialproof"){
-                $socialproof = true;
-            }elseif($_GET['action']=="fundraising"){
-                $fundraising = true;
-            }elseif($_GET['action']=="general"){
-                $general = true;
-            }elseif($_GET['action']=='waba') {
-                //
-            }elseif($_GET['action']=='sos_graph') {
-                //
-            }else{
-                // nothing
-            }
-        }
 
         donasiaja_global_vars();
         $plugin_license = strtoupper($GLOBALS['donasiaja_vars']['plugin_license']);
@@ -375,7 +344,9 @@ function donasiaja_settings() {
         'notification'  => 'Notification',
         'socialproof'   => 'Social&nbsp;Proof',
         'fundraising'   => 'Fundraising',
-        'general'       => 'General'
+        'general'       => 'General',
+        'waba'          => 'Waba',
+        'socialgraph'   => 'Social&nbsp;Graph'
     ];
         
     ?>
