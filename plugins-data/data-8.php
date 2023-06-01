@@ -834,3 +834,38 @@ function jh_remove_pixel() {
 }
 
 add_action('wp_ajax_jh_remove_pixel', 'jh_remove_pixel');
+
+function jh_add_pixel() {
+	header('Content-Type: application/json');
+
+	global $wpdb;
+	$table_capi_pixel = $wpdb->prefix . 'josh_capi_pixel';
+
+	$insert = $wpdb->insert(
+		$table_capi_pixel,
+		[
+			'pixel_name'	=> 'new pixel',
+			'pixel_id'		=> '123',
+			'access_token'	=> null
+		]
+	);
+
+	if($insert === false) {
+		$status = 'failed';
+		$messages = $wpdb->last_error;
+	} else {
+		$status = 'success';
+		$messages = '';
+	}
+
+	echo json_encode(
+		[
+			'status'	=> $status,
+			'messages'	=> $messages
+		]
+	);
+
+	die;
+}
+
+add_action('wp_ajax_jh_add_pixel', 'jh_add_pixel');

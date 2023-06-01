@@ -72,6 +72,10 @@
                 }
                 ?>
 
+                <div class="row form-group">
+                    <button type="button" class="btn btn-outline-primary waves-effect waves-light" id="btn-add-pixel" style="margin-left: 10px;margin-top: 20px;font-size: 11px;">+ Add New</button>
+                </div>
+
                 <div class="row">
                     <div class="col-md-12" style="margin-bottom: 10px;">
                         <br>
@@ -126,6 +130,12 @@
         _remove_pixel(e.delegateTarget.attributes[2].value)
     });
 
+    $('#btn-add-pixel').click(function (e) { 
+        e.preventDefault();
+        
+        _add_pixel();
+    });
+
     /**
      * @param {string}
      */
@@ -165,5 +175,37 @@
                 }
             );
         }
+    }
+
+    function _add_pixel() {
+        Swal.fire({
+            title: 'Please wait',
+            html: '<div class="spinner-border spinner-border-sm"></div>',
+            allowOutsideClick: false,
+            showConfirmButton: false
+        });
+
+        $.post("admin-ajax.php", {action: 'jh_add_pixel'},
+            function (data, textStatus, jqXHR) {
+                if(data.status === 'success') {
+                    Swal.fire({
+                        title: 'Add New Success!',
+                        icon: 'success',
+                        timer: 2500,
+                        timerProgressBar: true
+                    })
+                    .then(() => {
+                        location.reload();
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Remove Failed!',
+                        icon: 'error',
+                        text: data.messages
+                    })
+                }
+            }
+        );
+
     }
 </script>
