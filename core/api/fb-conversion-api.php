@@ -124,6 +124,8 @@ class ABI_Facebook_Conversion_API {
         // }
 
         // $this->sending( $payload );
+        $city = (isset($_SERVER['GEOIP_CITY'])) ? $_SERVER['GEOIP_CITY'] : null;
+        $country_code = (isset($_SERVER['GEOIP_CITY_COUNTRY_CODE'])) ? $_SERVER['GEOIP_CITY_COUNTRY_CODE'] : null;
 
         $insert = $wpdb->insert(
             $table_wait,
@@ -141,8 +143,8 @@ class ABI_Facebook_Conversion_API {
                 "fbp"           => $fbp,
                 "fbc"           => $fbc,
                 "referrer_url"  => $referrer_url,
-                "city"          => $_SERVER['GEOIP_CITY'],
-                "country"       => $_SERVER['GEOIP_CITY_COUNTRY_CODE'],
+                "city"          => $city,
+                "country"       => $country_code,
                 "ip_address"    => $ipaddress,
                 "user_agent"    => $_SERVER['HTTP_USER_AGENT'],
                 "campaign_data" => $campaign_data,
