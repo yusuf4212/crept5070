@@ -3,9 +3,9 @@
 
     $query = "SELECT data
     FROM $table_settings
-    WHERE type='waba_token'";
+    WHERE type='fb_graphapi_token'";
 
-    $waba_token = $wpdb->get_row($query)->data;
+    $fb_graphapi_token = $wpdb->get_row($query)->data;
 ?>
 <div class="row">
     <div class="col-12">
@@ -35,7 +35,7 @@
                 <div class="row form-group">
                     <div class="col">
                         <label for="input-waba-token">Authorization Token</label>
-                        <input type="text" class="form-control" id="input-waba-token" value="<?php echo $waba_token; ?>" required>
+                        <input type="text" class="form-control" id="input-waba-token" value="<?php echo $fb_graphapi_token; ?>" required>
                     </div>
                 </div>
 
@@ -92,7 +92,7 @@
             action: 'jh_settings_waba',
             waba_token: () => {return $('#input-waba-token').val();}
         };
-        
+
         $.post("admin-ajax.php", data_,
             function (data, textStatus, jqXHR) {
                 

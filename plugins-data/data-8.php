@@ -626,7 +626,7 @@ function jh_settings_waba() {
 			'data'		=> $waba_token
 		],
 		[
-			'type'		=> 'waba_token'
+			'type'		=> 'fb_graphapi_token'
 		]
 	);
 

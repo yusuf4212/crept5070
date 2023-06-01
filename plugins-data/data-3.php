@@ -1618,12 +1618,24 @@ function joshfunction_waba_order_baru( $data ) {
 	global $wpdb;
 	$table_log_fail = $wpdb->prefix . 'josh_waba_send_fail';
 	$table_donate = $wpdb->prefix . 'dja_donate';
+	$table_settings = $wpdb->prefix . 'dja_settings';
 
-	$version = 'v16.0';
-	$phone_from = '106104445787569';
+	$query = "SELECT data
+	FROM $table_settings
+	WHERE type='fb_graphapi_token' or type='fb_graphapi_version' or type='waba_phone'";
+	$rows = $wpdb->get_results($query);
+
+	$fb_graphapi_token 		= $rows[0]->data;
+	$fb_graphapi_version 	= $rows[1]->data;
+	$waba_phone 			= $rows[2]->data;
+
+	$authorization = "Authorization: Bearer $fb_graphapi_token";
+
+	$version = $fb_graphapi_version;
+	$phone_from = $waba_phone;
 	$header = array(
 		'Content-Type: application/json',
-		'Authorization: Bearer EAAB4PRi3wKEBAAZAZABGgXFfj0Nwl3zkfh2mZCXZBpeZB7CKm3gsIT3GdHem3TLhoZA7a9nUrVCBt88EKbMXGv70FfmlGzuQxoBAzPpneYxUqCj6alLbGi0ZBOabaPn1SegljR18LPym58weQINc2CcCmdhYhN6EZCkpSO0dg2MbncTFWfA5ImQkwhLoWRTO9tZBKIxBtq9ZBE0gZDZD'
+		$authorization
 	);
 	$postBody = array(
 		'messaging_product' => 'whatsapp',
