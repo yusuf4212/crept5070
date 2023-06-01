@@ -3,9 +3,13 @@
 
     $query = "SELECT data
     FROM $table_settings
-    WHERE type='fb_graphapi_token'";
+    WHERE type='fb_graphapi_token' or type='fb_graphapi_version' or type='waba_phone'";
 
-    $fb_graphapi_token = $wpdb->get_row($query)->data;
+    $rows = $wpdb->get_results($query);
+
+    $fb_graphapi_token = $rows[0]->data;
+    $fb_graphapi_version = $rows[1]->data;
+    $waba_phone = $rows[2]->data;
 ?>
 <div class="row">
     <div class="col-12">
@@ -34,8 +38,21 @@
 
                 <div class="row form-group">
                     <div class="col">
-                        <label for="input-waba-token">Authorization Token</label>
-                        <input type="text" class="form-control" id="input-waba-token" value="<?php echo $fb_graphapi_token; ?>" required>
+                        <label for="input-graphapi-token">Authorization Token</label>
+                        <input type="text" class="form-control" id="input-graphapi-token" value="<?php echo $fb_graphapi_token; ?>" required>
+                    </div>
+
+                </div>
+                
+                <div class="row form-group">
+                    <div class="col">
+                        <label for="input-graphapi-version">Graph API Version</label>
+                        <input type="text" class="form-control" id="input-graphapi-version" value="<?php echo $fb_graphapi_version; ?>" required>
+                    </div>
+
+                    <div class="col">
+                        <label for="input-waba-number">Phone Number ID</label>
+                        <input type="text" class="form-control" id="input-waba-number" value="<?php echo $waba_phone; ?>" required>
                     </div>
                 </div>
 
@@ -90,7 +107,9 @@
     function waba_submit() {
         let data_ = {
             action: 'jh_settings_waba',
-            waba_token: () => {return $('#input-waba-token').val();}
+            graphapi_token: () => {return $('#input-graphapi-token').val();},
+            graphapi_version: () => {return $('#input-graphapi-version').val();},
+            waba_number: () => {return $('#input-waba-number').val();}
         };
 
         $.post("admin-ajax.php", data_,

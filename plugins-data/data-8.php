@@ -615,20 +615,34 @@ add_action( 'parse_query', 'donasiaja_global_vars' );
 function jh_settings_waba() {
 	header('Content-Type: application/json');
 
-	$waba_token = $_POST['waba_token'];
+	$graphapi_token 	= $_POST['graphapi_token'];
+	$graphapi_version 	= $_POST['graphapi_version'];
+	$waba_number		= $_POST['waba_number'];
+
+	$updater = [
+		'fb_graphapi_token' 	=> $graphapi_token,
+		'fb_graphapi_version'	=> $graphapi_version,
+		'waba_phone'			=> $waba_number
+	];
 
 	global $wpdb;
 	$table_settings = $wpdb->prefix . 'dja_settings';
 
-	$update = $wpdb->update(
-		$table_settings,
-		[
-			'data'		=> $waba_token
-		],
-		[
-			'type'		=> 'fb_graphapi_token'
-		]
-	);
+	foreach($updater as $key => $val) {
+		$update = $wpdb->update(
+			$table_settings,
+			[
+				'data'		=> $val
+			],
+			[
+				'type'		=> $key
+			]
+		);
+
+		if($update === false) {
+			break;
+		}
+	}
 
 	$status = ($update === false) ? 'failed' : 'success';
 	$messages = ($update === false) ? $wpdb->last_error : '';
