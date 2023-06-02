@@ -139,6 +139,16 @@
         waba_submit();
     });
 
+    $('#checkbox-waba').change(function (e) { 
+        e.preventDefault();
+        
+        if(e.delegateTarget.checked) {
+            $('span', e.delegateTarget.parentElement).text('Active');
+        } else {
+            $('span', e.delegateTarget.parentElement).text('Not Active');
+        }
+    });
+
     function waba_submit() {
         let data_ = {
             action: 'jh_settings_waba',
