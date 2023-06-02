@@ -3,13 +3,17 @@
 
     $query = "SELECT data
     FROM $table_settings
-    WHERE type='fb_graphapi_token' or type='fb_graphapi_version' or type='waba_phone'";
+    WHERE type='fb_graphapi_token' or type='fb_graphapi_version' or type='waba_phone' or type='run_waba'";
 
     $rows = $wpdb->get_results($query);
 
     $fb_graphapi_token = $rows[0]->data;
     $fb_graphapi_version = $rows[1]->data;
     $waba_phone = $rows[2]->data;
+    $run_waba = $rows[3]->data;
+
+    $run_waba_chk = ($run_waba === '1') ? 'checked' : '';
+    $run_waba_text = ($run_waba === '1') ? 'Active' : 'Not Active';
 ?>
 <div class="row">
     <div class="col-12">
@@ -35,6 +39,19 @@
                         <hr>           
                     </div><!--end col-->
                 </div><!--end row-->
+
+                <div class="row" style="padding: 0px 0 30px 0;">
+                    <div class="col-md-12" style="margin-bottom: 10px;">
+                        <h5 class="card-title mt-0">Run WABA</h5>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch" id="checkbox-waba-box">
+                                <input type="checkbox" class="custom-control-input checkbox1" id="checkbox-waba" data-id="1" <?= $run_waba_chk; ?>>
+                                <label class="custom-control-label" for="checkbox-waba"><span><?= $run_waba_text; ?></span></label>
+                            </div>
+                        </div>
+                        <p class="card-text text-muted" style="margin-top: -10px;">Aktifkan untuk menjalankan fitur WABA.</p> 
+                    </div>
+                </div>
 
                 <div class="row form-group">
                     <div class="col-md-12" style="margin-bottom: 10px;">
@@ -127,7 +144,8 @@
             action: 'jh_settings_waba',
             graphapi_token: () => {return $('#input-graphapi-token').val();},
             graphapi_version: () => {return $('#input-graphapi-version').val();},
-            waba_number: () => {return $('#input-waba-number').val();}
+            waba_number: () => {return $('#input-waba-number').val();},
+            waba_status: () => {return $('#checkbox-waba:checked').val();}
         };
 
         $.post("admin-ajax.php", data_,

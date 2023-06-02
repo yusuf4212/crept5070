@@ -618,11 +618,15 @@ function jh_settings_waba() {
 	$graphapi_token 	= $_POST['graphapi_token'];
 	$graphapi_version 	= $_POST['graphapi_version'];
 	$waba_number		= $_POST['waba_number'];
+	$run_waba			= $_POST['waba_status'];
+
+	$run_waba = ($run_waba === 'on') ? '1' : '0';
 
 	$updater = [
 		'fb_graphapi_token' 	=> $graphapi_token,
 		'fb_graphapi_version'	=> $graphapi_version,
-		'waba_phone'			=> $waba_number
+		'waba_phone'			=> $waba_number,
+		'run_waba'				=> $run_waba
 	];
 
 	global $wpdb;
