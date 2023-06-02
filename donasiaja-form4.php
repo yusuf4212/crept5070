@@ -88,6 +88,8 @@
         $current_path = '/preview/'.$slug;
 	}
 
+    $cookie_path = parse_url($_SERVER['REQUEST_URI'])['path'];
+
 	if($row->publish_status!='1'){
 		wp_redirect( $current_url );
 		exit;
@@ -1246,18 +1248,24 @@
                 var nominalnya = parseInt(Cookies.get('nominal'));
                 var totalnya = parseInt(Cookies.get('totalnya'));
 
-                <?php
-                if($row->form_type=='4') { echo '
+                <?php if($row->form_type=='4') { ?>
+
                 main_donate = nominalnya;
-                total_nominalnya = unique_number + nominalnya; ';
-                }elseif($additional_formula!='' && $row->form_status=='1'){ echo '
+                total_nominalnya = unique_number + nominalnya;
+
+                <?php }elseif($additional_formula!='' && $row->form_status=='1'){ ?>
+
                 main_donate = totalnya;
-                total_nominalnya = unique_number + totalnya; ';
-                }else{ echo '
+                total_nominalnya = unique_number + totalnya;
+
+                <?php }else{ ?>
+
                 main_donate = nominalnya;
-                total_nominalnya = unique_number + nominalnya; ';
-                }
-                ?>
+                total_nominalnya = unique_number + nominalnya;
+
+                <?php } ?>
+
+                console.log(main_donate);
                 
                 if(main_donate>=min_donasi){
                 	var campaign_id = $('#campaign_id').val();
@@ -1365,12 +1373,12 @@
                         var info_donate = '{"<?php echo $allocation_title; ?> Utama":"Rp'+numberWithDot(nominalnya)+'","Kode Unik":"'+unique_number+'"'+new_selected_field+'}';
                     }
 
-                    var utm_source      = '<?php echo $get_parameters['utm_source']; ?>';
-                    var utm_medium      = '<?php echo $get_parameters['utm_medium']; ?>';
-                    var utm_campaign    = '<?php echo $get_parameters['utm_campaign']; ?>';
-                    var utm_term        = '<?php echo $get_parameters['utm_term']; ?>';
-                    var utm_content     = '<?php echo $get_parameters['utm_content']; ?>';
-                    var linkReference   = '<?php echo $get_parameters['ref']; ?>';
+                    var utm_source      = '<?php echo (isset($get_parameters['utm_source'])) ? $get_parameters['utm_source'] : ''; ?>';
+                    var utm_medium      = '<?php echo (isset($get_parameters['utm_medium'])) ? $get_parameters['utm_medium'] : ''; ?>';
+                    var utm_campaign    = '<?php echo (isset($get_parameters['utm_campaign'])) ? $get_parameters['utm_campaign'] : ''; ?>';
+                    var utm_term        = '<?php echo (isset($get_parameters['utm_term'])) ? $get_parameters['utm_term'] : ''; ?>';
+                    var utm_content     = '<?php echo (isset($get_parameters['utm_content'])) ? $get_parameters['utm_content'] : ''; ?>';
+                    var linkReference   = '<?php echo (isset($get_parameters['ref'])) ? $get_parameters['ref'] : ''; ?>';
 
 	                var data_nya = [
 	                	campaign_id,
@@ -1407,7 +1415,7 @@
                         var jdecode = response
                         // console.log(jdecode);
                         console.log(response);
-                        var currentParam = "<?php echo $get_parameters['jpass'] ?>"
+                        var currentParam = "<?= (isset($get_parameters['jpass'])) ? $get_parameters['jpass'] : ''; ?>"
 
                         if (jdecode.statDb == 'true') {
                             var urlnya = "<?php echo $current_url.'/'.$page_typ.'/'; ?>" + jdecode.inv + currentParam;
@@ -1727,17 +1735,17 @@
 		    }
 		}
 		function set_cookies_nominal(nominal){
-            Cookies.set('nominal', nominal, { expires: 1, path: '<?php echo $current_path; ?>' });
+            Cookies.set('nominal', nominal, { expires: 1, path: '<?= $cookie_path; ?>' });
         }
         function set_cookies_totalnya(totalnya){
-            Cookies.set('totalnya', totalnya, { expires: 1, path: '<?php echo $current_path; ?>' });
+            Cookies.set('totalnya', totalnya, { expires: 1, path: '<?= $cookie_path; ?>' });
         }
 		function numberWithDot(x) {
 		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 		}
 
         <?php if($total_on_url!='') { ?>
-        Cookies.set('nominal', <?php echo $total_on_url; ?>, { expires: 1, '<?php echo $current_path; ?>' });
+        Cookies.set('nominal', <?= $total_on_url; ?>, { expires: 1, '<?= $cookie_path; ?>' });
         <?php } ?>
 
         function set_cookies_name(name){

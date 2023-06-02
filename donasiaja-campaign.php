@@ -704,7 +704,7 @@
 		<div class="section-button button-disabled"><a href="javascript:;"><button class="donation_button_now" id="btn-primary-josh"><?php echo $text2; ?> Terpenuhi</button></a></div>
 
 		<?php }else{ ?>
-		<div class="section-button"><a href="<?php echo $current_url;?>/<?php echo $page_donate; ?><?php echo $link_ref_aff; ?><?php echo $get_parameters['jpass']; ?>"><button class="donation_button_now" style="background:<?php echo $button_color;?>;border-color:<?php echo $button_color;?>"  id="btn-primary-josh"><?php echo $text1; ?></button></a></div>
+		<div class="section-button"><a href="<?php echo $current_url;?>/<?php echo $page_donate; ?><?php echo $link_ref_aff; ?><?php echo (isset($get_parameters['jpass'])) ? $get_parameters['jpass'] : ''; ?>"><button class="donation_button_now" style="background:<?php echo $button_color;?>;border-color:<?php echo $button_color;?>"  id="btn-primary-josh"><?php echo $text1; ?></button></a></div>
 		<?php } ?>
 	</div>
 	
