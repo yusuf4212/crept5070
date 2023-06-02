@@ -869,3 +869,100 @@ function jh_add_pixel() {
 }
 
 add_action('wp_ajax_jh_add_pixel', 'jh_add_pixel');
+
+
+function jh_update_pixel() {
+	header('Content-Type: application/json');
+
+	$data = $_POST['data'];
+
+	global $wpdb;
+	$table_settings = $wpdb->prefix . 'dja_settings';
+	$table_pixels = $wpdb->prefix . 'josh_capi_pixel';
+
+	/**
+	 * Capi Status
+	 */
+	{
+		$statusCapi = ($data['statusCapi'] == 'true') ? '1' : '0';
+
+		$update = $wpdb->update(
+			$table_settings,
+			[
+				'data'	=> $statusCapi
+			],
+			[
+				'type'	=> 'run_capi'
+			]
+		);
+	}
+
+	if($update === false) {
+		// $status = 'failed';
+		$messages = $wpdb->last_error;
+
+		output_fail($messages, $data);
+	} else {
+		
+		$update = $wpdb->update(
+			$table_settings,
+			[
+				'data'	=> $data['token']
+			],
+			[
+				'type'	=> 'capi_access_token'
+			]
+		);
+
+		if($update === false) {
+
+			// $status = 'failed';
+			$messages = $wpdb->last_error;
+
+			output_fail($messages, $data);
+		} else {
+			
+			foreach($data['pixels'] as $data) {
+				$update = $wpdb->update(
+					$table_pixels,
+					[
+						'pixel_name'	=> $data['pixelName'],
+						'pixel_id'		=> $data['pixelId']
+					],
+					[
+						'id'			=> $data['id']
+					]
+				);
+
+				if($update === false) {
+					// $status = 'failed';
+					$messages = $wpdb->last_error;
+
+					output_fail($messages, $data);
+					break;
+				}
+			}
+
+		}
+	}
+
+	function output_fail($messages, $data) {
+		echo json_encode([
+			'status'	=> 'failed',
+			'messages'	=> $messages,
+			'dbg'		=> $data
+		]);
+
+		die;
+	}
+
+	echo json_encode([
+		'status'	=> 'success',
+		'messages'	=> '',
+		'dbg'		=> $data
+	]);
+
+	die;
+}
+
+add_action('wp_ajax_jh_update_pixel', 'jh_update_pixel');
