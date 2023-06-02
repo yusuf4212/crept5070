@@ -1622,12 +1622,17 @@ function joshfunction_waba_order_baru( $data ) {
 
 	$query = "SELECT data
 	FROM $table_settings
-	WHERE type='fb_graphapi_token' or type='fb_graphapi_version' or type='waba_phone'";
+	WHERE type='fb_graphapi_token' or type='fb_graphapi_version' or type='waba_phone' or type='run_waba'";
 	$rows = $wpdb->get_results($query);
 
 	$fb_graphapi_token 		= $rows[0]->data;
 	$fb_graphapi_version 	= $rows[1]->data;
 	$waba_phone 			= $rows[2]->data;
+	$run_waba				= $rows[3]->data;
+
+	if($run_waba === '0') {
+		return 'waba_off';
+	}
 
 	$authorization = "Authorization: Bearer $fb_graphapi_token";
 
