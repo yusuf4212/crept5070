@@ -898,7 +898,6 @@ function jh_update_pixel() {
 	}
 
 	if($update === false) {
-		// $status = 'failed';
 		$messages = $wpdb->last_error;
 
 		output_fail($messages, $data);
@@ -915,8 +914,6 @@ function jh_update_pixel() {
 		);
 
 		if($update === false) {
-
-			// $status = 'failed';
 			$messages = $wpdb->last_error;
 
 			output_fail($messages, $data);
@@ -935,7 +932,6 @@ function jh_update_pixel() {
 				);
 
 				if($update === false) {
-					// $status = 'failed';
 					$messages = $wpdb->last_error;
 
 					output_fail($messages, $data);
