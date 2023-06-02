@@ -6,7 +6,18 @@ class Send_API {
     }
 
     public function __construct() {
-        $this->get_data();
+        global $wpdb;
+        $table_settings = $wpdb->prefix . 'dja_settings';
+
+        $query = "SELECT data
+        FROM $table_settings
+        WHERE type='run_capi'";
+
+        $run_capi = $wpdb->get_row($query)->data;
+
+        if($run_capi === '1') {
+            $this->get_data();
+        }
     }
 
     private function get_data() {
