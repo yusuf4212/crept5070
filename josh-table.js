@@ -568,6 +568,7 @@ $(document).ready(function () {
         "rp",
         "serverSide": true,
         "processing": true,
+        "pagingType": "numbers",
         "columnDefs": [
             {
                 "targets": 0,
@@ -1355,7 +1356,6 @@ $(document).ready(function () {
         let dateEnd = end.format('YYYY-MM-DD');
 
         let cleanDate = {'from': dateStart, 'end': dateEnd};
-        // console.log(cleanDate);
 
         FilterApply1.transferDate = cleanDate;
 
@@ -1385,7 +1385,7 @@ $(document).ready(function () {
         modal: true,
         draggable: false,
         resizable: false,
-        width: 600,
+        minWidth: 350,
         maxWidth: 600,
         closeText: 'hide',
         show: {
