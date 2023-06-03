@@ -907,8 +907,10 @@ $(document).ready(function () {
              * @since 31 Mar 2023
              */
             $(cells[11]).addClass('abi-click');
-            var span = cells[11].querySelector('span')
-            span.style.color = 'red'
+            var span = cells[11].querySelector('span');
+            span.style.color = 'red';
+            span.style.cursor = 'pointer';
+            span.classList.add('badge', 'rounded-pill', 'text-bg-danger');
             $(span).click(function (e) { 
                 e.preventDefault();
                 let id = $(e.target.parentElement.parentElement).attr('db-id')
@@ -976,12 +978,9 @@ $(document).ready(function () {
         div2.id = 'img-popup-box';
         var img2 = document.createElement("img");
         img2.src = e.target.attributes["abi-data"].textContent;
-        // img2.src = e.target.currentSrc;
         img2.id = 'img-popup';
+        img2.classList.add('img-fluid', 'mx-auto', 'd-block', 'shadow');
         div2.appendChild(img2);
-
-        // console.log(e)
-        // console.log(e.target.attributes["abi-data"].textContent)
 
         bootbox.dialog({
             message: div2,

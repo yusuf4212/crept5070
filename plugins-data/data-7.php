@@ -320,12 +320,12 @@ function josh_table_slip() {
 			}
 			$given_date_f = strtotime($data->given_date);
 			$given_date_f = date('m/d/Y', $given_date_f);
-			$program	  = "<span>".$data->program."</span>";
+			$program	  = "<span>".str_replace(' ', '&nbsp;', $data->program)."</span>";
 			$type		  = "<span>".$data->type."</span>";
 			$platform	  = "<span>".$data->platform."</span>";
-			$amount		  = "Rp ".number_format($data->nominal, 0, ',', '.');
+			$amount		  = "Rp".number_format($data->nominal, 0, ',', '.');
 			$amount		  = "<span>".$amount."</span>";
-			$bank		  = "<span>".$data->bank."</span>";
+			$bank		  = "<span>".str_replace(' ', '&nbsp;', $data->bank)."</span>";
 			$transfer_date = "<span>".$data->transfer_date."</span>";
 			$transfer_date_f = strtotime($data->transfer_date);
 			$transfer_date_f = date('m/d/Y', $transfer_date_f);
@@ -348,8 +348,7 @@ function josh_table_slip() {
 			}
 			$tes = $tes . $buktiSrc[count($buktiSrc)-1];
 
-			$bukti_tf = "<div class='slip-tf-box'><img id='img_".$data->id."' class='slip-tf' src='".$tes."' abi-data='$data->slip_address'></div>";
-			// $bukti_tf = "<div class='slip-tf-box'><img id='img_".$data->id."' class='slip-tf' src='".$data->slip_address."' alt='' srcset=''></div>";
+			$bukti_tf = "<div class='slip-tf-box'><img id='img_$data->id' class='slip-tf img-fluid shadow-sm mx-auto d-block' src='$tes' style='cursor: pointer;' abi-data='$data->slip_address'></div>";
 
 			$remove = '<span>Delete</span>';
 

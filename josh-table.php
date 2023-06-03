@@ -343,7 +343,7 @@ function josh_table() {
         };
     </script>
 
-    <script src="<?= plugin_dir_url( __FILE__ ).'josh-table.js?v=1.0.3'; ?>"></script>
+    <script src="<?= plugin_dir_url( __FILE__ ).'josh-table.js?v=1.0.4'; ?>"></script>
 <?php
 }
 ?>
