@@ -497,17 +497,6 @@ function donasiaja_modifymenu() {
 			);
 		}
 
-		if(wp_get_current_user()->ID == 1) {
-			add_submenu_page(
-				'donasiaja_dashboard',
-				'Customer Relationship Management (CRM) - Develop',
-				'CRM Dev',
-				'read',
-				'josh-crm-2',
-				'josh_crm'
-			);
-		}
-		
 		if($role!='cs'){
 			//this submenu is HIDDEN
 			add_submenu_page('donasiaja_dashboard', //parent slug
@@ -727,5 +716,4 @@ require_once(ROOTDIR_DNA . 'josh-newplugins.php');
 require_once(ROOTDIR_DNA . 'josh-table.php');
 require_once(ROOTDIR_DNA . 'core/public-function/caller.php');
 require_once(ROOTDIR_DNA . 'core/api/Send_API.php');
-require_once ROOTDIR_DNA . 'josh-crm.php';
 require_once ROOTDIR_DNA . 'josh-crm-2.php';
