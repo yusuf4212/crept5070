@@ -62,8 +62,20 @@ class ABI_Facebook_Conversion_API {
     public function __construct( $pixel_id, $track_mode, $link_code = 'campaign', $campaign_data = null, $donate_data = null, $test_code = null ) {
     // public function __construct( $pixel_id, $access_token, $track_mode, $link_code = 'campaign', $campaign_data = null, $donate_data = null, $test_code = null ) {
         global $wpdb;
-        $table_wait = $wpdb->prefix . 'josh_capi_wait';
-        $table_wait_fail = $wpdb->prefix . 'josh_capi_wait_fail';
+        $table_wait         = $wpdb->prefix . 'josh_capi_wait';
+        $table_wait_fail    = $wpdb->prefix . 'josh_capi_wait_fail';
+        $table_settings     = $wpdb->prefix . 'dja_settings';
+        
+        /**
+         * Get run_capi value
+         */
+        {
+            $query = "SELECT data
+            FROM $table_settings
+            WHERE type='run_capi'";
+
+            $run_capi = $wpdb->get_row($query)->data;
+        }
 
         // $this->track_mode = $track_mode;
         // $this->donate_data = $donate_data;
@@ -106,8 +118,12 @@ class ABI_Facebook_Conversion_API {
             $referrer_url = $_SERVER['HTTP_REFERER'];
         }
 
-        $status = ( $link_code == 'josh' ) ? 2 : 0;
-        $status = ( strpos( $_SERVER['HTTP_USER_AGENT'], 'WhatsApp' ) === false ) ? $status : 3;
+        if($run_capi === '1') {
+            $status = ( $link_code == 'josh' ) ? 2 : 0;
+            $status = ( strpos( $_SERVER['HTTP_USER_AGENT'], 'WhatsApp' ) === false ) ? $status : 3;
+        } else {
+            $status = null;
+        }
 
         // $this->user_data();
 
@@ -124,6 +140,8 @@ class ABI_Facebook_Conversion_API {
         // }
 
         // $this->sending( $payload );
+        $city = (isset($_SERVER['GEOIP_CITY'])) ? $_SERVER['GEOIP_CITY'] : null;
+        $country_code = (isset($_SERVER['GEOIP_CITY_COUNTRY_CODE'])) ? $_SERVER['GEOIP_CITY_COUNTRY_CODE'] : null;
 
         $insert = $wpdb->insert(
             $table_wait,
@@ -141,16 +159,14 @@ class ABI_Facebook_Conversion_API {
                 "fbp"           => $fbp,
                 "fbc"           => $fbc,
                 "referrer_url"  => $referrer_url,
-                "city"          => $_SERVER['GEOIP_CITY'],
-                "country"       => $_SERVER['GEOIP_CITY_COUNTRY_CODE'],
+                "city"          => $city,
+                "country"       => $country_code,
                 "ip_address"    => $ipaddress,
                 "user_agent"    => $_SERVER['HTTP_USER_AGENT'],
                 "campaign_data" => $campaign_data,
                 "donate_data"   => $donate_data,
                 "test_code"     => $test_code
             )
-            // array( '%d', '%s', '%s', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
-            // array( '%d', '%s', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
         );
 
         if( $insert == false ) {

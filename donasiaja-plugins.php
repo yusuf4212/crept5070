@@ -252,7 +252,11 @@ require 'library/f_additional_function.php';
  * donasiaja_admin_default_page
  * check_license
  * donasiaja_global_vars
- * 
+ * jh_settings_waba
+ * jh_testing_waba
+ * jh_remove_pixel
+ * jh_add_pixel
+ * jh_update_pixel
  */
 require_once ROOTDIR_DNA . 'plugins-data/data-8.php';
 

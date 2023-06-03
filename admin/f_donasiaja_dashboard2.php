@@ -49,18 +49,19 @@ function donasiaja_dashboard() {
         $row2 = $wpdb->get_results('SELECT * from '.$table_name2.' ');     
 
         // Settings
-        $query_settings = $wpdb->get_results('SELECT data from '.$table_name5.' where type="form_setting" or type="btn_followup" or type="text_f1" or type="text_f2" or type="text_f3" or type="text_f4" or type="text_f5" or type="text_received" or type="text_received_status" or type="app_name" or type="wanotif_on_dashboard"  ORDER BY id ASC');
-        $form_setting = $query_settings[0]->data;
-        $btn_followup = $query_settings[1]->data;
-        $text_f1 = $query_settings[2]->data;
-        $text_f2 = $query_settings[3]->data;
-        $text_f3 = $query_settings[4]->data;
-        $text_f4 = $query_settings[5]->data;
-        $text_f5 = $query_settings[6]->data;
-        $text_received = $query_settings[7]->data;
-        $text_received_status = $query_settings[8]->data;
-        $app_name = $query_settings[9]->data;
-        $wanotif_on_dashboard = $query_settings[10]->data;
+        $query_settings = $wpdb->get_results('SELECT data from '.$table_name5.' where type="form_setting" or type="btn_followup" or type="text_f1" or type="text_f2" or type="text_f3" or type="text_f4" or type="text_f5" or type="text_received" or type="text_received_status" or type="app_name" or type="wanotif_on_dashboard" or type="fb_graphapi_token"  ORDER BY id ASC');
+        $form_setting           = $query_settings[0]->data;
+        $btn_followup           = $query_settings[1]->data;
+        $text_f1                = $query_settings[2]->data;
+        $text_f2                = $query_settings[3]->data;
+        $text_f3                = $query_settings[4]->data;
+        $text_f4                = $query_settings[5]->data;
+        $text_f5                = $query_settings[6]->data;
+        $text_received          = $query_settings[7]->data;
+        $text_received_status   = $query_settings[8]->data;
+        $app_name               = $query_settings[9]->data;
+        $wanotif_on_dashboard   = $query_settings[10]->data;
+        $graphapi_token         = $query_settings[11]->data;
 
         $user_info = get_userdata($id_login);
         $first_name = $user_info->first_name;
@@ -1662,10 +1663,7 @@ Terimakasih 😊🙏</textarea>
                     type: "GET",
                     url: "https://graph.facebook.com/v16.0/act_838172233514888/insights",
                     data: {
-                        // access_token : 'EAAB4PRi3wKEBAHRlV4hOjq0aQwzZB3fE5hDgo1BUxhC1EfXkiEVEEqw93D6M7i7kcKyRhxnOFr028XjLV1zZAqmS0fKE6kfTOaZAVDmaSEHNbwkIyPWL81Xsi6qaAo8OlwRYRpo2v6g5RowTZA0b64IytD5ovh9GZC41niZChS2Sad8HEDZBwFZB',
-                        access_token : 'EAAB4PRi3wKEBAEQJHVxucZCb2YDZCKSHVP6VMoS2OE0thbbYAEHvxkuOtcMmW4cxR2tM7U5vpL5Y4X6WoWdGyszQ9PLSAA1Mwe89y6w6k2JwiftCoCQAHQ2OLZAxitHkmbmiSsEJmJ2z6eh4XULmYoAC9T93ay3vLREGxzzGWZCBNNF5NCHG',
-                        // access_token : "EAAB4PRi3wKEBACXNPhs0U84tddybz1IWS0yWcmPlq9jz4KnY3ZAHALZCm5uw4AxWZC9C67bvgZA4ueHQZBtLDxkmJrZApePtSRbZCktao5G2alFaZA8JnXZCBz80uc913a2YCRaOiRTPZAyd6q1sdesoKDC22u7eiWl88XtnjvjbZCqkrYlYdO8v86RTBuf1xw1eAmQI9oLZC3QI7wZDZD",
-                        // time_range : {"since":"2023-04-09","until":"2023-04-09"}
+                        access_token : '<?= $graphapi_token; ?>',
                         [dateTitle] : () => {return dateRange}
                     },
                     success: function (response) {
