@@ -12,8 +12,8 @@ function josh_table() {
     $program    = $rows[0]->data;
     $platform   = $rows[1]->data;
     $cs         = $rows[2]->data;
-    $type       = $rows[3]->data;
-    $bank       = $rows[4]->data;
+    $bank       = $rows[3]->data;
+    $type       = $rows[4]->data;
     ?>
     
     <!-- bootstrap 5.3 -->
