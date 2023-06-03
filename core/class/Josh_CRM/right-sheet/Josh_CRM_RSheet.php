@@ -271,7 +271,7 @@ class JOSH_CRM_RSHEET {
          */
         {
             $query = "SELECT a.campaign_id, a.invoice_id, a.name, a.whatsapp, b.abbvr FROM $this->table_donate AS a
-            LEFT JOIN `ympb2020_dja_campaign` AS b ON a.campaign_id = b.campaign_id
+            LEFT JOIN $this->table_campaign AS b ON a.campaign_id = b.campaign_id
             WHERE a.whatsapp='$this->whatsapp'
             GROUP BY b.abbvr
             ORDER BY a.id";

@@ -1,7 +1,7 @@
 <?php
 function josh_crm_2() {
     global $wpdb;
-    $table_settings = $wpdb->prefix . 'josh_table_settings';
+    $table_settings = $wpdb->prefix . 'dja_settings';
     global $wp_roles;
 
     /**
@@ -44,9 +44,10 @@ function josh_crm_2() {
     /**
      * CS list
      */
-    $query = "SELECT value FROM $table_settings WHERE menu='cs'";
-    $list_cs = $wpdb->get_row( $query )->value;
-    // var_dump($list_cs);
+    $query = "SELECT data
+    FROM $table_settings
+    WHERE type='cs_'";
+    $list_cs = $wpdb->get_row( $query )->data;
 
 ?>
 
@@ -96,8 +97,8 @@ function josh_crm_2() {
 <link href="<?php echo plugin_dir_url( __FILE__ ) . 'assets/asset-j/card-select/card-select.css' ?>" rel="stylesheet">
 
 <!-- custom js -->
-<script defer src="<?php echo DJA_PLUGIN_URL . 'assets/asset-j/crm-rsheet/jh-crm-rsheet-bootstrap.js?v1.3.3' ?>"></script>
-<script defer src="<?php echo plugin_dir_url( __FILE__ ) . 'josh-crm.js?v=1.3.3' ?>"></script>
+<script defer src="<?php echo DJA_PLUGIN_URL . 'assets/asset-j/crm-rsheet/jh-crm-rsheet-bootstrap.js?v1.3.5' ?>"></script>
+<script defer src="<?php echo plugin_dir_url( __FILE__ ) . 'josh-crm.js?v=1.3.5' ?>"></script>
 
 <!-- put variable -->
 <script>

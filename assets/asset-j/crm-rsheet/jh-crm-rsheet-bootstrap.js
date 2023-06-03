@@ -33,7 +33,7 @@ class RSheet {
      * @param {string} c chart type (line, pie, etc)
      */
     __chart(d, t, c) {
-        $.post("https://ympb.or.id/wp-admin/admin-ajax.php", d,
+        $.post("admin-ajax.php", d,
                 function (data, textStatus, jqXHR) {
                     // console.log(data)
 
@@ -150,7 +150,7 @@ class RSheet {
                 "processing": true,
                 "ordering": false,
                 "ajax" : {
-                    "url"   : "/wp-admin/admin-ajax.php",
+                    "url"   : "admin-ajax.php",
                     "type"  : "POST",
                     "dataSrc": "data",
                     "data": {action: 'josh_crm_table_2', donorData: () => {return RightSheet.donorId}},
@@ -212,7 +212,7 @@ class RSheet {
     _donors_data() {
         const req = {action : 'josh_crm_donors', donorData: this.donorId};
 
-        $.post("/wp-admin/admin-ajax.php", req,
+        $.post("admin-ajax.php", req,
             function (data, textStatus, jqXHR) {
                 if(data.status == 'success') {
                     RightSheet._hideLoadAllData();
