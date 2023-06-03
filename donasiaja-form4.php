@@ -950,7 +950,11 @@
                 </div>
 
                 <div class="info-payment">
-                    <p>*Note: pemilihan metode pembayaran di halaman selanjutnya.</p>
+                    <figure class="quote-figure" style="background-color: #ffeff3; border-color: #ff5074;">
+                        <blockquote class="blockquote">
+                            <p class="quote-p" style="margin-bottom: 0; padding-bottom:= 0.5rem;">*Catatan: pemilihan metode pembayaran di halaman selanjutnya.</p>
+                        </blockquote>
+                    </figure>
                 </div>
 
 				<?php if($powered_by_setting=='1'){ ?>
