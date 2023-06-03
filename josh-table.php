@@ -2,16 +2,27 @@
 function josh_table() {
     global $wpdb;
     
-    $table_settings = $wpdb->prefix.'josh_table_settings';
+    // $table_settings = $wpdb->prefix.'josh_table_settings';
+    $table_settings_ = $wpdb->prefix . 'dja_settings';
     
-    $query = " SELECT menu, value FROM $table_settings ";
-    $row = $wpdb->get_results( $query );
+    // $query = " SELECT menu, value FROM $table_settings ";
+    // $row = $wpdb->get_results( $query );
     
-    $program    = $row[0]->value;
-    $platform   = $row[1]->value;
-    $cs         = $row[2]->value;
-    $type       = $row[3]->value;
-    $bank       = $row[4]->value;
+    // $program    = $row[0]->value;
+    // $platform   = $row[1]->value;
+    // $cs         = $row[2]->value;
+    // $type       = $row[3]->value;
+    // $bank       = $row[4]->value;
+
+    $query = "SELECT data
+    FROM $table_settings_
+    WHERE type='program_' or type='platform_' or type='cs_' or type='bank_'";
+    $rows = $wpdb->get_results($query);
+    
+    $program    = $rows[0]->data;
+    $platform   = $rows[1]->data;
+    $cs         = $rows[2]->data;
+    $bank       = $rows[3]->data;
     ?>
     
     <!-- bootstrap 5.3 -->
@@ -198,22 +209,6 @@ function josh_table() {
             </div>
         </div>
 
-        <div class="float drop-down type" id="float-type" style="display: none;">
-            <div class="wrapper">
-                <div class="float-row-title">SELECT AN OPTION</div>
-                <div class="row-list">
-                    <?php
-                    $type2 = json_decode( $type );
-                    foreach( $type2 as $v ) {
-                        echo '
-                        <div id="opt-1" class="option"><div>'.$v->text.'</div></div>
-                        ';
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-
         <div class="float drop-down platform" id="float-platform" style="display: none;">
             <div class="wrapper">
                 <div class="float-row-title">SELECT AN OPTION</div>
@@ -339,7 +334,7 @@ function josh_table() {
             program: <?php echo $program; ?>,
             platform: <?php echo $platform; ?>,
             cs: <?php echo $cs; ?>,
-            type: <?php echo $type; ?>,
+            // type: <?php //echo $type; ?>,
             bank: <?php echo $bank; ?>
         };
     </script>

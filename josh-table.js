@@ -107,8 +107,6 @@ $(document).ready(function () {
         };
 
         execute() {
-            // console.log('executed!');
-            // console.log(this);
             if ( this.ajaxName != undefined) {
                 let field = this.field;
 
@@ -588,7 +586,7 @@ $(document).ready(function () {
             'print'
         ],
         "ajax" : {
-            "url"   : "/wp-admin/admin-ajax.php",
+            "url"   : "admin-ajax.php",
             "type"  : "POST",
             "dataSrc": "data",
             "data"  : {
@@ -932,7 +930,7 @@ $(document).ready(function () {
                     showLoaderOnConfirm: true,
                     preConfirm: () => {
 
-                        return $.post('https://ympb.or.id/wp-admin/admin-ajax.php', data, (data, textStatus, jqXHR) => {
+                        return $.post('admin-ajax.php', data, (data, textStatus, jqXHR) => {
                             if( data.response === 'success' ) {
                                 // console.log('sucess!')
                                 table.ajax.reload( null, false )
@@ -942,20 +940,6 @@ $(document).ready(function () {
                                 return 'not success'
                             }
                         })
-
-                        // let formDataJosh = new FormData()
-                        // formDataJosh.append('tes', 'yes this is test')
-                        // formDataJosh.append('another_test', 'blabla')
-                        // formDataJosh.append('tes', 'no 2 tes')
-
-                        // return fetch('https://ympb.or.id/wp-admin/admin-ajax.php', {
-                        //     method: 'POST',
-                        //     // headers: {
-                        //     //     'Content-Type': 'application/json'
-                        //     // },
-                        //     body: formDataJosh
-                        // })
-                        // .then(response => { console.log(response)})
                     }
                 })
                 .then((result) => {
@@ -974,7 +958,7 @@ $(document).ready(function () {
 
         }
     }).on('xhr.dt', (e, settings, json, xhr ) => {
-        // console.log(json)
+        console.log(json)
 
         $('#donation-value').text(json.value_donation);
         $('#donors-total').text(json.recordsFiltered);
