@@ -97,8 +97,8 @@ function josh_crm_2() {
 <link href="<?php echo plugin_dir_url( __FILE__ ) . 'assets/asset-j/card-select/card-select.css' ?>" rel="stylesheet">
 
 <!-- custom js -->
-<script defer src="<?php echo DJA_PLUGIN_URL . 'assets/asset-j/crm-rsheet/jh-crm-rsheet-bootstrap.js?v1.3.4' ?>"></script>
-<script defer src="<?php echo plugin_dir_url( __FILE__ ) . 'josh-crm.js?v=1.3.4' ?>"></script>
+<script defer src="<?php echo DJA_PLUGIN_URL . 'assets/asset-j/crm-rsheet/jh-crm-rsheet-bootstrap.js?v1.3.5' ?>"></script>
+<script defer src="<?php echo plugin_dir_url( __FILE__ ) . 'josh-crm.js?v=1.3.5' ?>"></script>
 
 <!-- put variable -->
 <script>
