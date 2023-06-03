@@ -830,8 +830,10 @@ $(document).ready(function () {
              */
             $(cells[11]).addClass('abi-click');
             var span = cells[11].querySelector('span');
+
             span.style.cursor = 'pointer';
             span.style.textDecoration = 'none';
+
             span.classList.add('badge', 'rounded-pill', 'text-bg-danger');
             $(span).click(function (e) { 
                 e.preventDefault();
