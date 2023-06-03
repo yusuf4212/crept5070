@@ -562,7 +562,10 @@ $(document).ready(function () {
 
 
     var table = $('#datatables').DataTable({
-        "dom": 'lirtp',
+        "dom": "<'d-flex justify-content-start'l>"+
+        "<'d-flex justify-content-start text-start'i>"+
+        "<'table-responsive my-2't>"+
+        "rp",
         "serverSide": true,
         "processing": true,
         "columnDefs": [
@@ -614,7 +617,6 @@ $(document).ready(function () {
             [ 10, 25, 50, 100, -1 ],
             [ '10', '25', '50', '100', 'All' ]
         ],
-        "responsive": true,
         "searchDelay" : 2000,
         "buttons" : [ 'copy', 'csv', 'excel'],
         "createdRow": function( row, data, dataIndex, cells ) {
