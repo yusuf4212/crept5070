@@ -201,7 +201,7 @@ let mainTable = $('#table-donors').DataTable({
     },
     "ordering": false,
     "ajax" : {
-        "url"   : "/wp-admin/admin-ajax.php",
+        "url"   : "admin-ajax.php",
         "type"  : "POST",
         "dataSrc": "data",
         "data"  : {

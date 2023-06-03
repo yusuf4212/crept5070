@@ -1,7 +1,7 @@
 <?php
 function josh_crm_2() {
     global $wpdb;
-    $table_settings = $wpdb->prefix . 'josh_table_settings';
+    $table_settings = $wpdb->prefix . 'dja_settings';
     global $wp_roles;
 
     /**
@@ -44,9 +44,10 @@ function josh_crm_2() {
     /**
      * CS list
      */
-    $query = "SELECT value FROM $table_settings WHERE menu='cs'";
-    $list_cs = $wpdb->get_row( $query )->value;
-    // var_dump($list_cs);
+    $query = "SELECT data
+    FROM $table_settings
+    WHERE type='cs_'";
+    $list_cs = $wpdb->get_row( $query )->data;
 
 ?>
 
