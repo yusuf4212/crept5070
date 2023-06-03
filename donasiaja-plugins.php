@@ -216,6 +216,7 @@ require_once ROOTDIR_DNA . 'plugins-data/data-6.php';
  * josh_crm_table
  * josh_crm_table_2
  * josh_crm_chart
+ * josh_crm_donors
  * dja_get_data_donasi
  * dja_handling_character
  * dja_get_provinsi

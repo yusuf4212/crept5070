@@ -319,7 +319,7 @@ let mainTable = $('#table-donors').DataTable({
                         preConfirm: (reason) => {
                             
                             data.reason = reason;
-                            return $.post('https://ympb.or.id/wp-admin/admin-ajax.php', data, (data, textStatus, jqXHR) => {
+                            return $.post('admin-ajax.php', data, (data, textStatus, jqXHR) => {
                                 if( data.status === 'success' ) {
                                     // console.log('sucess!')
                                     // return 'josh_success'
@@ -356,7 +356,7 @@ let mainTable = $('#table-donors').DataTable({
                         preConfirm: (reason) => {
                             
                             data.reason = reason;
-                            return $.post('https://ympb.or.id/wp-admin/admin-ajax.php', data, (data, textStatus, jqXHR) => {
+                            return $.post('admin-ajax.php', data, (data, textStatus, jqXHR) => {
                                 if( data.status === 'success' ) {
                                     // console.log('sucess!')
                                     // return 'josh_success'
