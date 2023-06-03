@@ -338,15 +338,15 @@ function josh_table() {
 
     <script>
         var jsonReady = {
-            program: <?php echo $program; ?>,
-            platform: <?php echo $platform; ?>,
-            cs: <?php echo $cs; ?>,
-            type: <?php echo $type; ?>,
-            bank: <?php echo $bank; ?>
+            program: <?= $program; ?>,
+            platform: <?= $platform; ?>,
+            cs: <?= $cs; ?>,
+            type: <?= $type; ?>,
+            bank: <?= $bank; ?>
         };
     </script>
 
-    <script src="<?php echo plugin_dir_url( __FILE__ ).'josh-table.js?v=1.0.1'; ?>"></script>
+    <script src="<?= plugin_dir_url( __FILE__ ).'josh-table.js?v=1.0.2'; ?>"></script>
 <?php
 }
 ?>
