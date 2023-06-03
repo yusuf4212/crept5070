@@ -6,19 +6,19 @@ function josh_table() {
     
     $query = "SELECT data
     FROM $table_settings_
-    WHERE type='program_' or type='platform_' or type='cs_' or type='bank_'";
+    WHERE type='program_' or type='platform_' or type='cs_' or type='type_' or type='bank_'";
     $rows = $wpdb->get_results($query);
     
     $program    = $rows[0]->data;
     $platform   = $rows[1]->data;
     $cs         = $rows[2]->data;
-    $bank       = $rows[3]->data;
+    $type       = $rows[3]->data;
+    $bank       = $rows[4]->data;
     ?>
     
     <!-- bootstrap 5.3 -->
-    <link rel="stylesheet" href="<?php echo DJA_PLUGIN_URL . 'assets/vendor/twbs/bootstrap/dist/css/bootstrap.css' ?>">
-    <script src="<?php echo DJA_PLUGIN_URL . 'assets/vendor/twbs/bootstrap/dist/js/bootstrap.js' ?>"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     
     <!-- jQuery -->
     <!-- <script src="<?php //echo plugin_dir_url( __FILE__ ); ?>admin/assets/js/jquery.min.js"></script>
@@ -200,6 +200,22 @@ function josh_table() {
             </div>
         </div>
 
+        <div class="float drop-down type" id="float-type" style="display: none;">
+            <div class="wrapper">
+                <div class="float-row-title">SELECT AN OPTION</div>
+                <div class="row-list">
+                    <?php
+                    $type2 = json_decode( $type );
+                    foreach( $type2 as $v ) {
+                        echo '
+                        <div id="opt-1" class="option"><div>'.$v->text.'</div></div>
+                        ';
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+
         <div class="float drop-down platform" id="float-platform" style="display: none;">
             <div class="wrapper">
                 <div class="float-row-title">SELECT AN OPTION</div>
@@ -325,7 +341,7 @@ function josh_table() {
             program: <?php echo $program; ?>,
             platform: <?php echo $platform; ?>,
             cs: <?php echo $cs; ?>,
-            // type: <?php //echo $type; ?>,
+            type: <?php echo $type; ?>,
             bank: <?php echo $bank; ?>
         };
     </script>
