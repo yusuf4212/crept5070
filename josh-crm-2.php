@@ -1,4 +1,5 @@
 <?php
+require_once ROOTDIR_DNA . 'core/class/Url-Parser.php';
 function josh_crm_2() {
     global $wpdb;
     $table_settings = $wpdb->prefix . 'dja_settings';
@@ -12,11 +13,6 @@ function josh_crm_2() {
     if($user->roles[0] === 'cs') {
         $cs_id = $user->ID;
         $cs_text = $cs_conversion[$user->data->user_login];
-        // $cs_text = $cs_conversion['meisya'];
-        // echo '<pre>'.$cs_text.'</pre>';
-        // echo '<pre>'; var_dump($user->data); echo '<pre>';
-        // echo '<pre>'; var_dump($user->data->user_login); echo '<pre>';
-        // echo '<pre>'; var_dump($cs_text); echo '<pre>';
     }
 
     /**
@@ -24,8 +20,6 @@ function josh_crm_2() {
      */
     $end_date = new DateTime('2021-08-01');
     $start_date = new DateTime('now');
-    // $start_date = new DateTime('2021-08-01');
-    // $end_date = new DateTime('now');
 
     $list_month = array();
     $i = 1;
@@ -40,6 +34,10 @@ function josh_crm_2() {
         $start_date->modify('-1 month');
         $i++;
     }
+
+    $url_parser = new URL_Parser();
+    $js_query_date = (isset($url_parser->query_ar['date'])) ? $url_parser->query_ar['date'] : $list_month[0]['data'];
+    $js_query_date_ = (isset($url_parser->query_ar['date_'])) ? urldecode($url_parser->query_ar['date_']) : $list_month[0]['text'];
 
     /**
      * CS list
@@ -98,7 +96,7 @@ function josh_crm_2() {
 
 <!-- custom js -->
 <script defer src="<?php echo DJA_PLUGIN_URL . 'assets/asset-j/crm-rsheet/jh-crm-rsheet-bootstrap.js?v1.3.5' ?>"></script>
-<script defer src="<?php echo plugin_dir_url( __FILE__ ) . 'josh-crm.js?v=1.3.5' ?>"></script>
+<script defer src="<?php echo plugin_dir_url( __FILE__ ) . 'josh-crm.js?v=1.4.0' ?>"></script>
 
 <!-- put variable -->
 <script>
@@ -158,10 +156,17 @@ function josh_crm_2() {
             <div class="d-flex justify-content-end gap-2">
                 <div class="filter-cs-2 border px-2 rounded-2 d-flex align-items-center bg-white <?php if($user->roles[0] === 'cs') {echo 'd-none';} ?>" id="filter-cs"></div>
     
-                <div class="date-picker" id="date-picker">
-                    <div class="icon"></div>
-    
-                    <div class="btn btn-secondary btn-sm" id="date-picker-text">This Month</div>
+                <div class="dropdown">
+                    <button class="btn btn-primary btn-sm dropdown-toggle" id="btn-month-select" type="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $js_query_date_; ?></button>
+                    
+                    <ul class="dropdown-menu">
+                        <?php
+                        foreach($list_month as $data) {
+                            $highlight = ($data['data'] === $js_query_date) ? 'bg-primary text-light' : '';
+                        ?>
+                            <li><a class="dropdown-item <?= $highlight; ?>" href="#" jh-data="<?= $data['data']; ?>"><?= $data['text']; ?></a></li>
+                        <?php } ?>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -486,6 +491,12 @@ function josh_crm_2() {
         </svg>
     </div>
 </div>
+
+<script>
+
+    let monthDate = '<?= $js_query_date; ?>';
+
+</script>
 
 <?php
 } // end of function josh_crm()
