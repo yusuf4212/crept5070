@@ -2252,6 +2252,8 @@ Terimakasih 😊🙏</textarea>
                 }else{
                     // redirect WA
                     var redirectWindow = window.open(response, "_blank");
+                    $('.followup'+followup_number).find("i").show();
+                    $('.followup'+followup_number).find(".spinner-border").remove();
                     redirectWindow.location;
                 }
                 

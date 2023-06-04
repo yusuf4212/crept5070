@@ -1090,7 +1090,7 @@ function djafunction_send_wa(){
     	// $urllink_whatsapp = 'https://api.whatsapp.com/send?phone='.$phone.'&text='.$messagenya;
     	// echo $urllink_whatsapp;
 
-		$urllink_follow = 'https://ympb.or.id/f/?inv='.$invoice_id_jsh;
+		$urllink_follow = home_url("f/?inv=$invoice_id_jsh");
     	echo $urllink_follow;
     } 
 

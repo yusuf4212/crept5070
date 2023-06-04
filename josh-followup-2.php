@@ -87,7 +87,7 @@ if(isset($_GET['inv'])) {
     
         $get_follow = $wpdb->get_results($query);
 
-        if(! isset($get_follow)) {
+        if($get_follow == null) {
             $wpdb->insert( $table_followup,
             array(
             'invoice_id' 	=> $gett,
@@ -103,23 +103,23 @@ if(isset($_GET['inv'])) {
             $fol4 = $get_follow[0]->date_fol_up4;
             $fol5 = $get_follow[0]->date_fol_up5;
 
-            if(isset($fol2)) {
+            if($fol2 == null) {
                 $wpdb->update( $table_followup,
                 array(
                 'date_fol_up2' 	=> date("Y-m-d H:i:s")),
                 array('invoice_id' => $gett));
     
-            } elseif (isset($fol3)) {
+            } elseif ($fol3 == null) {
                 $wpdb->update( $table_followup,
                 array(
                 'date_fol_up3' 	=> date("Y-m-d H:i:s")),
                 array('invoice_id' => $gett));
-            } elseif (isset($fol4)) {
+            } elseif ($fol4 == null) {
                 $wpdb->update( $table_followup,
                 array(
                 'date_fol_up4' 	=> date("Y-m-d H:i:s")),
                 array('invoice_id' => $gett));
-            } elseif (isset($fol5)) {
+            } elseif ($fol5 == null) {
                 $wpdb->update( $table_followup,
                 array(
                 'date_fol_up5' 	=> date("Y-m-d H:i:s")),
