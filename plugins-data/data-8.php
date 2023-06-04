@@ -268,7 +268,7 @@ function donasiaja_url_handler_() {
 			die;
 		}
 		else if($path[0] === 'f') {
-			require_once ROOTDIR_DNA . 'josh-followup.php';
+			require_once ROOTDIR_DNA . 'josh-followup-2.php';
 			die;
 		}
 		else if($path[0] === '_f') {

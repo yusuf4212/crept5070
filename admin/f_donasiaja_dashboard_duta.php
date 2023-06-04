@@ -1071,7 +1071,7 @@ Terimakasih 😊🙏</textarea>
         if(isset($_GET['date'])){
             $c_date = $_GET['date'];
         }else{
-            $c_date = thismonth;
+            $c_date = 'thismonth';
         }
         if(isset($_GET['range'])){
             $c_range = $_GET['range'];
