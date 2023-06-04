@@ -1,8 +1,6 @@
 <?php
 
 function donasiaja_dashboard() {
-    ?>
-    <?php 
         global $wpdb;
         $table_name = $wpdb->prefix . "dja_campaign";
         $table_name2 = $wpdb->prefix . "dja_category";
@@ -1607,6 +1605,7 @@ Terimakasih 😊🙏</textarea>
                     $(row).attr('id', 'donasi_'+row_id);
                 }
             }).on('xhr.dt', function ( e, settings, json, xhr ) {
+                console.log(json, xhr);
                 var totalDonasi = json.totalDonasi;
                 var totalDonasiCS = json.totalDonasiCS;
                 var jumlahDonasi = json.jumlahDonasi;
@@ -1616,6 +1615,9 @@ Terimakasih 😊🙏</textarea>
                 var konversi = json.konversi;
                 var konversiCS = json.konversiCS;
 
+                // console.log(JSON.parse(json.spent));
+                // console.log(json.spent);
+
                 $('#totalDonasi').html(totalDonasi);
                 $('#totalDonasiCS').html(totalDonasiCS);
                 $('#jumlahDonasi').html(jumlahDonasi);
@@ -1624,6 +1626,12 @@ Terimakasih 😊🙏</textarea>
                 $('#jumlahDonasiTerkumpulCS').html(jumlahDonasiTerkumpulCS);
                 $('#konversi').html(konversi);
                 $('#konversiCS').html(konversiCS);
+                if(json.spent.status === 'success') {
+                    $('#totalSpent').html(json.spent.spend);
+                } else {
+                    $('#totalSpent').html('error');
+                    console.error(json.spent.message);
+                }
 
                 var datePreset = { range:'<?php echo $c_range; ?>', filter: '<?php echo $c_date; ?>' }
                 var dateRange = ''
@@ -1658,26 +1666,6 @@ Terimakasih 😊🙏</textarea>
                     }
                     dateTitle = 'date_preset'
                 }
-
-                $.ajax({
-                    type: "GET",
-                    url: "https://graph.facebook.com/v16.0/act_838172233514888/insights",
-                    data: {
-                        access_token : '<?= $graphapi_token; ?>',
-                        [dateTitle] : () => {return dateRange}
-                    },
-                    success: function (response) {
-                        // console.log( response )
-
-                        var formattedNumber = new Intl.NumberFormat('id-ID').format(response.data[0].spend)
-                        var formattedString = formattedNumber.toString()
-
-                        $('#totalSpent').html(formattedString)
-                    },
-                    error: (xhr, status, error) => {
-                        console.log( error )
-                    }
-                });
             });
 
 
