@@ -107,8 +107,6 @@ $(document).ready(function () {
         };
 
         execute() {
-            // console.log('executed!');
-            // console.log(this);
             if ( this.ajaxName != undefined) {
                 let field = this.field;
 
@@ -564,9 +562,13 @@ $(document).ready(function () {
 
 
     var table = $('#datatables').DataTable({
-        "dom": 'lirtp',
+        "dom": "<'d-flex justify-content-start'l>"+
+        "<'d-flex justify-content-start text-start'i>"+
+        "<'table-responsive my-2't>"+
+        "rp",
         "serverSide": true,
         "processing": true,
+        "pagingType": "numbers",
         "columnDefs": [
             {
                 "targets": 0,
@@ -588,7 +590,7 @@ $(document).ready(function () {
             'print'
         ],
         "ajax" : {
-            "url"   : "/wp-admin/admin-ajax.php",
+            "url"   : "admin-ajax.php",
             "type"  : "POST",
             "dataSrc": "data",
             "data"  : {
@@ -616,7 +618,6 @@ $(document).ready(function () {
             [ 10, 25, 50, 100, -1 ],
             [ '10', '25', '50', '100', 'All' ]
         ],
-        "responsive": true,
         "searchDelay" : 2000,
         "buttons" : [ 'copy', 'csv', 'excel'],
         "createdRow": function( row, data, dataIndex, cells ) {
@@ -906,8 +907,10 @@ $(document).ready(function () {
              * @since 31 Mar 2023
              */
             $(cells[11]).addClass('abi-click');
-            var span = cells[11].querySelector('span')
-            span.style.color = 'red'
+            var span = cells[11].querySelector('span');
+            span.style.color = 'red';
+            span.style.cursor = 'pointer';
+            span.classList.add('badge', 'rounded-pill', 'text-bg-danger');
             $(span).click(function (e) { 
                 e.preventDefault();
                 let id = $(e.target.parentElement.parentElement).attr('db-id')
@@ -932,7 +935,7 @@ $(document).ready(function () {
                     showLoaderOnConfirm: true,
                     preConfirm: () => {
 
-                        return $.post('https://ympb.or.id/wp-admin/admin-ajax.php', data, (data, textStatus, jqXHR) => {
+                        return $.post('admin-ajax.php', data, (data, textStatus, jqXHR) => {
                             if( data.response === 'success' ) {
                                 // console.log('sucess!')
                                 table.ajax.reload( null, false )
@@ -942,20 +945,6 @@ $(document).ready(function () {
                                 return 'not success'
                             }
                         })
-
-                        // let formDataJosh = new FormData()
-                        // formDataJosh.append('tes', 'yes this is test')
-                        // formDataJosh.append('another_test', 'blabla')
-                        // formDataJosh.append('tes', 'no 2 tes')
-
-                        // return fetch('https://ympb.or.id/wp-admin/admin-ajax.php', {
-                        //     method: 'POST',
-                        //     // headers: {
-                        //     //     'Content-Type': 'application/json'
-                        //     // },
-                        //     body: formDataJosh
-                        // })
-                        // .then(response => { console.log(response)})
                     }
                 })
                 .then((result) => {
@@ -974,7 +963,7 @@ $(document).ready(function () {
 
         }
     }).on('xhr.dt', (e, settings, json, xhr ) => {
-        // console.log(json)
+        console.log(json)
 
         $('#donation-value').text(json.value_donation);
         $('#donors-total').text(json.recordsFiltered);
@@ -989,12 +978,9 @@ $(document).ready(function () {
         div2.id = 'img-popup-box';
         var img2 = document.createElement("img");
         img2.src = e.target.attributes["abi-data"].textContent;
-        // img2.src = e.target.currentSrc;
         img2.id = 'img-popup';
+        img2.classList.add('img-fluid', 'mx-auto', 'd-block', 'shadow');
         div2.appendChild(img2);
-
-        // console.log(e)
-        // console.log(e.target.attributes["abi-data"].textContent)
 
         bootbox.dialog({
             message: div2,
@@ -1369,7 +1355,6 @@ $(document).ready(function () {
         let dateEnd = end.format('YYYY-MM-DD');
 
         let cleanDate = {'from': dateStart, 'end': dateEnd};
-        // console.log(cleanDate);
 
         FilterApply1.transferDate = cleanDate;
 
@@ -1399,7 +1384,7 @@ $(document).ready(function () {
         modal: true,
         draggable: false,
         resizable: false,
-        width: 600,
+        minWidth: 350,
         maxWidth: 600,
         closeText: 'hide',
         show: {

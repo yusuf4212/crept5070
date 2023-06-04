@@ -2,16 +2,18 @@
 function josh_table() {
     global $wpdb;
     
-    $table_settings = $wpdb->prefix.'josh_table_settings';
+    $table_settings_ = $wpdb->prefix . 'dja_settings';
     
-    $query = " SELECT menu, value FROM $table_settings ";
-    $row = $wpdb->get_results( $query );
+    $query = "SELECT data
+    FROM $table_settings_
+    WHERE type='program_' or type='platform_' or type='cs_' or type='type_' or type='bank_'";
+    $rows = $wpdb->get_results($query);
     
-    $program    = $row[0]->value;
-    $platform   = $row[1]->value;
-    $cs         = $row[2]->value;
-    $type       = $row[3]->value;
-    $bank       = $row[4]->value;
+    $program    = $rows[0]->data;
+    $platform   = $rows[1]->data;
+    $cs         = $rows[2]->data;
+    $bank       = $rows[3]->data;
+    $type       = $rows[4]->data;
     ?>
     
     <!-- bootstrap 5.3 -->
@@ -56,9 +58,7 @@ function josh_table() {
     <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ ).'select3.css'; ?>">
     <script src="<?php echo plugin_dir_url( __FILE__ ); ?>select3-full.js"></script>
 
-    <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ ).'josh-table.css?v=3'; ?>">
-
-    <div class="model">
+    <div class="model"  style="display: none;">
         <div class="model-header">
             <div class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
@@ -85,82 +85,85 @@ function josh_table() {
         </div>
     </div>
 
-    <div class="wrapper">
-        <div class="jhead">
-            <div class="jrow">
-                <div class="jcol-1">
+    <div class="container-fluid wrapper mt-2">
+        <div class="row mt-2">
+            <div class="d-flex justify-content-between gap-2">
+                <div class="">
                     <input class="form-control form-control-sm" id="search-table" type="text" placeholder="Search Here" aria-label=".form-control-sm example">
                 </div>
     
-                <div class="jcol-2"></div>
-                
-                <div class="jcol-3 date-picker-box" id="date-picker">
-                    <div class="date-picker">
-                        <div class="icon-date">
+                <div class="date-picker-box" id="date-picker">
+                    <div class="date-picker btn btn-outline-secondary d-flex align-items-center gap-2">
+                        <div class="icon-date" style="width: 20px;">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 1920 1920">
                                 <path d="M1694.176 451.765H225.942V282.353c0-31.172 25.411-56.471 56.47-56.471h169.411v56.471c0 31.172 25.3 56.471 56.471 56.471 31.172 0 56.471-25.299 56.471-56.471v-56.471h790.589v56.471c0 31.172 25.3 56.471 56.47 56.471 31.171 0 56.47-25.299 56.47-56.471v-56.471h169.412c31.059 0 56.47 25.299 56.47 56.471v169.412Zm-338.822 790.586H1016.53v338.826H903.589v-338.826H564.765v-112.939h338.824V790.588h112.941v338.824h338.824v112.939Zm282.352-1129.41h-169.412v-56.47c0-31.172-25.299-56.471-56.47-56.471-31.17 0-56.47 25.299-56.47 56.471v56.47H564.765v-56.47C564.765 25.299 539.466 0 508.294 0c-31.171 0-56.471 25.299-56.471 56.471v56.47H282.412c-93.403 0-169.412 76.01-169.412 169.412V1920h1694.118V282.353c0-93.402-76.008-169.412-169.412-169.412Z" fill-rule="evenodd"/>
                             </svg>
                         </div>
-
-                        <div class="date-text" id="date-text">This Month</div>
-
-                        <div class="icon-drop">
+    
+                        <div class="date-text text-nowrap" id="date-text">This Month</div>
+    
+                        <div class="icon-drop" style="width: 20px;">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="blue" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 12l-4-4h8l-4 4z"/></svg>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="jrow">
-                <div class="jcol-1">
-                    <button onclick="window.open('https://ympb.or.id/slip-input', '_blank');" type="button" class="btn btn-outline-primary btn-sm josh1" id="btn-input">
+        <div class="row mt-2">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <button onclick="window.open('<?= home_url('slip-input'); ?>', '_blank');" type="button" class="btn btn-outline-primary btn-sm josh1" id="btn-input">
                         Input slip
                     </button>
                 </div>
-
-                <div class="jcol-2"></div>
-
-                <div class="jcol-3">
-                    <button type="button" class="btn btn-outline-primary btn-sm josh1" id="btn-filter">
-                        <div class="icon-filter">
+    
+                <div class="btn btn-outline-primary btn-sm josh1" id="btn-filter">
+                    <div class="icon-filter d-flex justify-content-between gap-2">
+                        <div class="jh-icon" style="width: 20px;">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="icon-filter">
                                 <path d="M6 12H18M3 6H21M9 18H15" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <span>Filter</span>
                         </div>
-                    </button>
+
+                        <span>Filter</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="summary-data">
-            <div class="summary-card donation-value">
-                <div class="title">Nilai Donasi</div>
-                <div class="value" id="donation-value">Rp ...</div>
+        <div class="row mt-4 mx-0 summary-data gap-3">
+            <div class="col-sm-4 col-12 card donation-value shadow-sm p-0">
+                <div class="card-body">
+                    <div class="card-title">Nilai Donasi</div>
+                    <div class="value fw-bold" id="donation-value">Rp ...</div>
+                </div>
             </div>
             
-            <div class="summary-card donors-total">
-                <div class="title">Total Slip</div>
-                <div class="value" id="donors-total">...</div>
+            <div class="col-sm-4 col-12 card donors-total shadow-sm p-0">
+                <div class="card-body">
+                    <div class="card-title">Total Slip</div>
+                    <div class="value fw-bold" id="donors-total">...</div>
+                </div>
             </div>
         </div>
 
-        <div class="table">
-            <table id="datatables" class="table table-bordered align-middle">
+        <div class="row table mt-4 mx-0 shadow rounded" style="font-size: 14px;">
+            <table id="datatables" class="table table-hover align-middle">
                 <thead class="table-light align-middle text-center">
                     <tr>
-                        <th>No</th>
-                        <th>relawan</th>
-                        <th>given date</th>
-                        <th>program</th>
-                        <th>type</th>
-                        <th>platform</th>
-                        <th>bukti tf</th>
-                        <th>amount</th>
-                        <th>bank</th>
-                        <th>transfer date</th>
-                        <th>whatsapp</th>
-                        <th>action</th>
+                        <th class="py-3">No</th>
+                        <th class="py-3">Relawan</th>
+                        <th class="py-3">Given&nbsp;date</th>
+                        <th class="py-3">Program</th>
+                        <th class="py-3">Type</th>
+                        <th class="py-3">Platform</th>
+                        <th class="py-3">Bukti&nbsp;TF</th>
+                        <th class="py-3">Amount</th>
+                        <th class="py-3">Bank</th>
+                        <th class="py-3">Transfer&nbsp;date</th>
+                        <th class="py-3">WhatsApp</th>
+                        <th class="py-3">Action</th>
                     </tr>
                 </thead>
             </table>
@@ -279,42 +282,42 @@ function josh_table() {
             </div>
         </div>
 
-        <div class="float filter" id="filter-dialog" title="Filter" style="display: none;">
-            <div class="container" style="width: 550px;">
+        <div class="w-100" id="filter-dialog" title="Filter" style="display: none; width: 100%;">
+            <div class="container-fluid p-0 m-0">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-sm-6 col-12">
                         <div class="select-relawan">relawan</div>
                         <span id="select-relawan" class="multi-input multiple-relawan form-control form-control-sm"></span>
                     </div>
 
-                    <div class="col">
+                    <div class="col-sm-6 col-12">
                         <div class="select-program">program</div>
                         <span id="select-program" class="multi-input multiple-program form-control form-control-sm"></span>
                     </div>
                 </div>
                 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-sm-6 col-12">
                         <div class="select-type">type</div>
                         <span id="select-type" class="multi-input multiple-type form-control form-control-sm"></span>
                     </div>
 
-                    <div class="col">
+                    <div class="col-sm-6 col-12">
                         <div class="select-platform">platform</div>
                         <span id="select-platform" class="multi-input multiple-platform form-control form-control-sm"></span>
                     </div>
                 </div>
                 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-sm-6 col-12">
                         <div class="select-bank">bank</div>
                         <span id="select-bank" class="multi-input multiple-bank form-control form-control-sm"></span>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-6 col-12">
                         <div class="select-transfer-date">transfer date</div>
-                            <div class="date-picker-box date-filter form-control" id="date-picker-tf">
-                                <div class="date-picker">
-                                    <div class="icon-date">
+                            <div class="date-picker-box date-filter form-control" id="date-picker-tf" style="cursor: pointer;">
+                                <div class="date-picker d-flex gap-2">
+                                    <div class="icon-date" style="width: 20px;">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 1920 1920">
                                             <path d="M1694.176 451.765H225.942V282.353c0-31.172 25.411-56.471 56.47-56.471h169.411v56.471c0 31.172 25.3 56.471 56.471 56.471 31.172 0 56.471-25.299 56.471-56.471v-56.471h790.589v56.471c0 31.172 25.3 56.471 56.47 56.471 31.171 0 56.47-25.299 56.47-56.471v-56.471h169.412c31.059 0 56.47 25.299 56.47 56.471v169.412Zm-338.822 790.586H1016.53v338.826H903.589v-338.826H564.765v-112.939h338.824V790.588h112.941v338.824h338.824v112.939Zm282.352-1129.41h-169.412v-56.47c0-31.172-25.299-56.471-56.47-56.471-31.17 0-56.47 25.299-56.47 56.471v56.47H564.765v-56.47C564.765 25.299 539.466 0 508.294 0c-31.171 0-56.471 25.299-56.471 56.471v56.47H282.412c-93.403 0-169.412 76.01-169.412 169.412V1920h1694.118V282.353c0-93.402-76.008-169.412-169.412-169.412Z" fill-rule="evenodd"/>
                                         </svg>
@@ -330,21 +333,17 @@ function josh_table() {
 
     </div>
 
-    <!-- <div>
-        <img id="joshimg" src="https://t25551408.p.clickup-attachments.com/t25551408/043d5d7d-5f2b-4a26-acf2-df8a9e523dcf/IMG-20230101-WA0094.jpg" alt="" srcset="">
-    </div> -->
-
     <script>
         var jsonReady = {
-            program: <?php echo $program; ?>,
-            platform: <?php echo $platform; ?>,
-            cs: <?php echo $cs; ?>,
-            type: <?php echo $type; ?>,
-            bank: <?php echo $bank; ?>
+            program: <?= $program; ?>,
+            platform: <?= $platform; ?>,
+            cs: <?= $cs; ?>,
+            type: <?= $type; ?>,
+            bank: <?= $bank; ?>
         };
     </script>
 
-    <script src="<?php echo plugin_dir_url( __FILE__ ).'josh-table.js?v=1.0.1'; ?>"></script>
+    <script src="<?= plugin_dir_url( __FILE__ ).'josh-table.js?v=1.0.4'; ?>"></script>
 <?php
 }
 ?>
