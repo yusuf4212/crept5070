@@ -11,6 +11,7 @@ class JOSH_CRM {
 	private $order_dir;
 	private $date_start;
 	private $date_end;
+    private $date_end_;
     /**
      * Hold filtered clause and each part of it
      * - date (donors, donate)
@@ -81,7 +82,7 @@ class JOSH_CRM {
 		$this->search		= $_POST['search']['value'];
 		$this->order_col	= $_POST['order']['0']['column'];
 		$this->order_dir	= $_POST['order']['0']['dir'];
-		$this->date_start   = $_POST['date_start'];
+		// $this->date_start   = $_POST['date_start'];
 		$this->date_end	    = $_POST['date_end'];
 		$filter		        = $_POST['filter'];
         $this->undonate     = ($_POST['undonate'] === 'on') ? true : false;
@@ -97,13 +98,13 @@ class JOSH_CRM {
      */
 	public function filter($filter) {
 		// set this month if there is no request (default)
-        if( $this->date_start == '') {
-            $date_start = "'1970-01-01'";
-            $date_end	= "CURRENT_DATE";
+        $date_start = "'1970-01'";
+        if( $this->date_end == '') {
+            $date_end	= "DATE_FORMAT(CURRENT_DATE, '%Y-%m')";
         } else {
-            $date_start = "'$this->date_start'";
             $date_end   = "'$this->date_end'";
         }
+        $this->date_end_ = $date_end;
 
         /**
          * Order Column
@@ -145,8 +146,8 @@ class JOSH_CRM {
          */
         {
             $date_sql = array(
-                'donors'	=> " (DATE_FORMAT(since, '%Y-%m-%d') BETWEEN $date_start AND $date_end) ",
-                'donate'	=> " (DATE_FORMAT(created_at, '%Y-%m-%d') BETWEEN $date_start AND $date_end) "
+                'donors'	=> " (DATE_FORMAT(since, '%Y-%m') BETWEEN $date_start AND $date_end) ",
+                'donate'	=> " (DATE_FORMAT(created_at, '%Y-%m') BETWEEN $date_start AND $date_end) "
             );
             $this->filter['date'] = $date_sql;
         }
@@ -262,12 +263,13 @@ class JOSH_CRM {
                 WHERE c.whatsapp NOT IN (
                     SELECT s.whatsapp
                     FROM $this->table_slip AS s
-                    WHERE MONTH(s.given_date) = MONTH(CURRENT_DATE) 
-                    AND YEAR(s.given_date) = YEAR(CURRENT_DATE)
+                    WHERE MONTH(s.given_date) = MONTH($this->date_end_) 
+                    AND YEAR(s.given_date) = YEAR($this->date_end_)
                 )
                 AND {$this->filter['show_remove']['donors']}
                 AND ({$this->filter['cs']['donors']})
-                AND DATE_FORMAT(c.since, '%Y-%m') < DATE_FORMAT(CURRENT_DATE, '%Y-%m')";
+                AND DATE_FORMAT(c.since, '%Y-%m') < $this->date_end_";
+
                 $row = $wpdb->get_row($query)->belum_tf;
                 $this->query_card['belum_tf'] = strval(number_format($row, 0, ',', '.'));
             }
@@ -280,6 +282,7 @@ class JOSH_CRM {
                 $sql = "SELECT COUNT(*) as nomor_dikelola
                 FROM $this->table_donors
                 WHERE {$this->filter['cs']['donors']}
+                AND (DATE_FORMAT(since, '%Y-%m') <= $this->date_end_)
                 AND {$this->filter['show_remove']['donors']}";
     
                 $this->query_card['nomor_dikelola'] = intval($wpdb->get_row($sql)->nomor_dikelola);
@@ -296,9 +299,12 @@ class JOSH_CRM {
                 WHERE d.whatsapp IN (
                     SELECT s.whatsapp
                     FROM $this->table_slip AS s
+                    WHERE (DATE_FORMAT(s.given_date, '%Y-%m') <= $this->date_end_)
                 )
+                AND (DATE_FORMAT(d.since, '%Y-%m') <= $this->date_end_)
                 AND {$this->filter['show_remove']['donors']}
                 AND ({$this->filter['cs']['donors']})";
+
                 $row = $wpdb->get_row($query)->dn_aktif;
                 $this->query_card['donatur_aktif'] = intval($row);
                 $this->query_card['donatur_aktif_f'] = strval(number_format($row, 0, ',', '.'));
@@ -322,7 +328,7 @@ class JOSH_CRM {
                 FROM $this->table_slip
                 WHERE platform='Organik'
                 AND {$this->filter['cs']['slip']}
-                AND (given_date BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') and DATE_FORMAT(NOW(), '%Y-%m-%d'))";
+                AND (DATE_FORMAT(given_date, '%Y-%m') = $this->date_end_)";
                 
                 $nominal = $wpdb->get_row( $query )->dod;
     
@@ -330,7 +336,7 @@ class JOSH_CRM {
                 FROM $this->table_donors
                 WHERE (remove IS NULL)
                 AND ({$this->filter['cs']['donors']})
-                AND (DATE_FORMAT(since, '%Y-%m') < DATE_FORMAT(CURRENT_DATE, '%Y-%m'))";
+                AND (DATE_FORMAT(since, '%Y-%m') < $this->date_end_)";
     
                 $nomor_dikelola_since_last_month = $wpdb->get_row($query)->n_dikelola;
     
@@ -346,7 +352,7 @@ class JOSH_CRM {
                 FROM $this->table_slip
                 WHERE (platform='Iklan')
                 AND {$this->filter['cs']['slip']}
-                AND (given_date BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') and DATE_FORMAT(NOW(), '%Y-%m-%d'))";
+                AND (DATE_FORMAT(given_date, '%Y-%m') = $this->date_end_)";
     
                 $DID = $wpdb->get_row( $query )->did;
                 $this->query_card['DID'] = strval( number_format( $DID, 0, ',', '.' ) );
@@ -360,7 +366,7 @@ class JOSH_CRM {
                 FROM $this->table_donors
                 WHERE (remove IS NULL)
                 AND {$this->filter['cs']['donors']}
-                AND (since BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') and DATE_FORMAT(NOW(), '%Y-%m-%d'))";
+                AND (DATE_FORMAT(since, '%Y-%m') = $this->date_end_)";
     
                 $leads = $wpdb->get_row( $query )->leads;
                 $this->query_card['leads'] = strval( number_format( $leads, 0, ',', '.') );
@@ -373,7 +379,7 @@ class JOSH_CRM {
                 $query = "SELECT SUM(nominal) as omset
                 FROM $this->table_slip
                 WHERE {$this->filter['cs']['slip']}
-                AND (given_date BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') and DATE_FORMAT(NOW(), '%Y-%m-%d'))";
+                AND (DATE_FORMAT(given_date, '%Y-%m') = $this->date_end_)";
                 $omset = $wpdb->get_row( $query )->omset;
     
                 $this->query_card['omset'] = strval( number_format( $omset, 0, ',', '.' ) );
