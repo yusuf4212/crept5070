@@ -845,6 +845,7 @@ function josh_crm_donors() {
 }
 add_action( 'wp_ajax_josh_crm_donors', 'josh_crm_donors' );
 
+require_once ROOTDIR_DNA . 'core/api/fb-graphapi-ads.php';
 function dja_get_data_donasi(){
 
 	global $wpdb;
@@ -1323,10 +1324,30 @@ function dja_get_data_donasi(){
 	    $konversi_cs = '0&nbsp;%';
 	}
     
+	$spent_ = jh_get_spent_(
+		[
+			'date_filter' 	=> $_POST['date_filter'],
+			'date_range'	=> $_POST['date_range']
+		]
+	);
+
+	if(isset($spent_['data'])) {
+		$spent__ = [
+			'status'	=> 'success',
+			'spend'		=> number_format(intval($spent_['data'][0]['spend']), 0, ',', '.')
+		];
+	} else {
+		$spent__ = [
+			'status'	=> 'failed',
+			'message'	=> $spent_['error']['message']
+		];
+	}
 
 
 	$no = 1+$startlist;
 	$len = count($data_donasi)+$startlist;
+
+	header( 'Content-Type: application/json' );
 	             
 		echo '
 		{
@@ -1339,6 +1360,7 @@ function dja_get_data_donasi(){
 			"jumlahDonasiCS": "'.$jumlahDonasi_cs.'",
 			"jumlahDonasiTerkumpul": "'.$jumlahDonasiTerkumpul.'",
 			"jumlahDonasiTerkumpulCS": "'.$jumlahDonasiTerkumpul_cs.'",
+			"spent": '.json_encode($spent__).',
 			"konversi": "'.$konversi.'",
 			"konversiCS": "'.$konversi_cs.'",
 			"data": [';
