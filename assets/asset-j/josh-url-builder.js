@@ -15,33 +15,34 @@ $('input[name="owner"]').change(function (e) {
         $('#cs-section').hide();
         $('#cc-section').hide();
         $('#duta-section').show();
+        $('#row-result').show();
 
-        $('#cs-name').selectivity('clear');
-        $('#target-page-cs').selectivity('clear');
-        $('#cc-name').selectivity('clear');
-        $('#target-page-cc').selectivity('clear');
+        selectivityClear();
     }
     else if(section === 'cs') {
         $('#duta-section').hide();
         $('#cc-section').hide();
         $('#cs-section').show();
+        $('#row-result').show();
 
-        $('#duta-name').selectivity('clear');
-        $('#target-page-duta').selectivity('clear');
-        $('#cc-name').selectivity('clear');
-        $('#target-page-cc').selectivity('clear');
+        selectivityClear();
     }
     else if(section === 'cc') {
         $('#duta-section').hide();
         $('#cs-section').hide();
         $('#cc-section').show();
+        $('#row-result').hide();
 
-        $('#duta-name').selectivity('clear');
-        $('#target-page-duta').selectivity('clear');
-        $('#cs-name').selectivity('clear');
-        $('#target-page-cs').selectivity('clear');
+        selectivityClear();
     }
 });
+
+function selectivityClear() {
+    $('#cs-name').selectivity('clear');
+    $('#target-page-cs').selectivity('clear');
+    $('#duta-name').selectivity('clear');
+    $('#target-page-duta').selectivity('clear');
+}
 
 /**
  * Toast Config
@@ -58,6 +59,57 @@ const Toast = Swal.mixin({
       toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
 });
+
+const newUTM = Swal.mixin({
+    html: '<p>Hanya menerima huruf (aA) dan angka.</p><p>Sangat disarankan menggunakan 1 atau 2 suku kata (singkat).</p>',
+    input: 'text',
+    showCancelButton: true,
+    confirmButtonText: 'Create',
+    showLoaderOnConfirm: true,
+    allowOutsideClick: () => !Swal.isLoading(),
+    customClass: {
+        input: 'input-new-utm'
+    },
+    didOpen: () => {
+        $('.input-new-utm').keyup(function (e) { 
+            let text = $('.input-new-utm').val();
+            text = text.replace(/[^a-zA-Z0-9 ]/g, '');
+            text = text.slice(0, 100);
+            $('.input-new-utm').val(text);
+        });        
+    },
+    willClose: () => {
+        $('.input-new-utm').unbind('keyup');
+    }
+});
+
+function newUtmAjax(field_, text_) {
+    let data_ = {action: 'jh_new_utm', field: field_, text: text_};
+
+    return $.post(ajaxLink, data_,
+    function (data, textStatus, jqXHR) {
+        if(data.status === 'success') {
+            Swal.fire({
+                title: 'Create Success',
+                icon: 'success',
+                timer: 2000,
+                timerProgressBar: true
+            });
+        } else {
+            Swal.showValidationMessage(
+                `Failed: ${data.messages}`
+            )
+        }
+    }
+).fail(() => {
+    Swal.hideLoading();
+    Swal.showValidationMessage('Failed! Please login first!');
+});
+}
+
+// $('.input-new-utm').keyup(function (e) { 
+//     console.log(e);
+// });
 
 /**
  * Duta Section
@@ -151,35 +203,11 @@ $('#cc-usource').selectivity({
 $('#add-new-usource').click(function (e) { 
     e.preventDefault();
     
-    Swal.fire({
+    newUTM.fire({
         title: 'Create New UTM Source',
-        input: 'text',
-        showCancelButton: true,
-        confirmButtonText: 'Create',
-        showLoaderOnConfirm: true,
         preConfirm: (text) => {
-            let data_ = {action: 'jh_new_utm', field: 'usource'};
-            return $.post(ajaxLink, data_,
-                function (data, textStatus, jqXHR) {
-                    if(data.status === 'success') {
-                        Swal.fire({
-                            title: 'Create Success',
-                            icon: 'success',
-                            timer: 2000,
-                            timerProgressBar: true
-                        });
-                    } else {
-                        Swal.showValidationMessage(
-                            `Failed: ${data.messages}`
-                        )
-                    }
-                }
-            ).fail(() => {
-                Swal.hideLoading();
-                Swal.showValidationMessage('Failed! Please login first!');
-            });
+            return newUtmAjax('usource', text);
         },
-        allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
         //
     });
@@ -207,7 +235,13 @@ $('#cc-ucontent').selectivity({
 
 $('#add-new-ucontent').click(function (e) { 
     e.preventDefault();
-    $('#cc-ucontent').selectivity('data', {id: 5, text: 'Feed'});
+    // $('#cc-ucontent').selectivity('data', {id: 5, text: 'Feed'});
+    newUTM.fire({
+        title: 'Create New UTM Content',
+        preConfirm: (text) => {
+            return newUtmAjax('ucontent', text);
+        }
+    });
 });
 
 // CC UTM Campaign
@@ -218,6 +252,17 @@ $('#cc-ucampaign').selectivity({
     items: uCampaign,
     allowClear: true,
     placeholder: 'Campaign Name'
+});
+
+$('#add-new-ucampaign').click(function (e) { 
+    e.preventDefault();
+    
+    newUTM.fire({
+        title: 'Create New UTM Source',
+        preConfirm: (text) => {
+            return newUtmAjax('ucampaign', text);
+        }
+    });
 });
 
 // target page

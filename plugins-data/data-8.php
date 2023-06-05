@@ -970,14 +970,86 @@ add_action('wp_ajax_jh_update_pixel', 'jh_update_pixel');
 function jh_new_utm() {
 	header( 'Content-Type: application/json' );
 
-	echo json_encode(
+	$field	= $_POST['field'];
+	$text	= $_POST['text'];
+
+	switch ($field) {
+		case 'usource':
+			$field_ = 'url_usource';
+			break;
+
+		case 'ucontent':
+			$field_ = 'url_ucontent';
+			break;
+
+		case 'ucampaign':
+			$field_ = 'url_ucampaign';
+			break;
+
+		default:
+			echo json_encode(
+				['status' => 'failed', 'messages' => 'invalid field params']
+			);
+			die;
+	}
+
+	$text_value = ($field === 'usource') ? 'cc_' : '';
+	$text_value = $text_value . str_replace(' ', '_', strtolower($text));
+
+	global $wpdb;
+	$table_settings = $wpdb->prefix . 'dja_settings';
+
+	$query = "SELECT data
+	FROM $table_settings
+	WHERE type='$field_'";
+	
+	$row = json_decode($wpdb->get_row($query)->data);
+
+	$_ = false;
+	foreach($row as $data) {
+		if($data->value === $text_value) {
+			$_ = true;
+		}
+		$last_id = $data->id;
+	}
+
+	if($_ === true) {
+		echo json_encode(['status' => 'failed', 'messages' => 'Already exist! Try another.']);
+		die;
+	}
+
+	$k = $last_id +1;
+	$row[] = [
+		'id'	=> $k,
+		'text'	=> $text,
+		'value'	=> $text_value
+	];
+
+	$row_ = json_encode($row);
+
+	$update = $wpdb->update(
+		$table_settings,
 		[
-			'status'	=> 'success',
-			'messages'	=> ''
+			'data' 	=> $row_
+		],
+		[
+			'type'	=> $field_
 		]
 	);
-
-	die;
+	
+	if($update === false) {
+		echo json_encode(['status'=> 'failed', 'messages'=>'Fail when update to database!']);
+		die;
+	} else {
+		echo json_encode(
+			[
+				'status'	=> 'success',
+				'messages'	=> ''
+			]
+		);
+	
+		die;
+	}
 }
 
 add_action('wp_ajax_jh_new_utm', 'jh_new_utm');

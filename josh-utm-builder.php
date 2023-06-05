@@ -62,7 +62,7 @@ $table_settings = $wpdb->prefix . 'dja_settings';
 /**
  * versioning control
  */
-$jsVer = '1.0.7';
+$jsVer = '1.0.12';
 ?>
 
 <!DOCTYPE html>
@@ -274,7 +274,7 @@ $jsVer = '1.0.7';
                 </div>
             </div>
         
-            <div class="row result mt-4">
+            <div class="row result mt-4" id="row-result">
                 <div class="col-12">
                     <div class="title">Hasil</div>
                 </div>
