@@ -258,6 +258,7 @@ require 'library/f_additional_function.php';
  * jh_remove_pixel
  * jh_add_pixel
  * jh_update_pixel
+ * jh_new_utm
  */
 require_once ROOTDIR_DNA . 'plugins-data/data-8.php';
 
