@@ -72,9 +72,10 @@ if(isset($_GET['inv'])) {
     
         $bank_text = "$bank_text\n\nAtas Nama: *Yayasan Mulia Peduli Bangsa*";
         $bank_text = ($bank_chooser_) ? $bank_text . " atau *Rumah Tahfizh Tahzilul Qur'an*" : $bank_text;
+        $nominal = 'Rp'.number_format(intval($get_order->nominal), 0, ',', '.');
     
         // $name = 'Maulana Isra';
-        $text_followup2 = "Assalamualaikum Kak $name \xF0\x9F\x98\x8A\n\nKami sudah menerima niat baik nya.\n\n*Wakaf Rumah Tahfizh Tanzilul Qur'an*\nTotal: Rp55.668\n\nTerimakasih sudah berniat baik semoga Allah tambahkan rezeki nya seluas samudra.. Untuk melengkapi niat baik kakak, silahkan transfer senilai *Rp55.668*, ke salah satu rekening dibawah ini:$bank_text\n\n\n\nMohon kirim bukti jika sudah di tunaikan, untuk membantu proses administrasi Kami.\n_syuqran katsiran_ \xF0\x9F\x99\x8F \xF0\x9F\x98\x8A	";
+        $text_followup2 = "Assalamualaikum Kak $name \xF0\x9F\x98\x8A\n\nKami sudah menerima niat baik nya.\n\n*$get_order->title*\nTotal: $nominal\n\nTerimakasih sudah berniat baik semoga Allah tambahkan rezeki nya seluas samudra.. Untuk melengkapi niat baik kakak, silahkan transfer senilai *$nominal*, ke salah satu rekening dibawah ini:$bank_text\n\n\n\nMohon kirim bukti jika sudah di tunaikan, untuk membantu proses administrasi Kami.\n_syuqran katsiran_ \xF0\x9F\x99\x8F \xF0\x9F\x98\x8A	";
     
         $text_followup = urlencode($text_followup2);
     
