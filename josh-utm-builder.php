@@ -24,12 +24,13 @@ $table_settings = $wpdb->prefix . 'dja_settings';
 {
     $query = "SELECT data
     FROM $table_settings
-    WHERE type='url_usource' or type='url_ucontent' or type='url_ucampaign'";
+    WHERE type='url_usource' or type='url_ucontent' or type='url_ucampaign' or type='user_can_urlbuilder_cc'";
     $rows = $wpdb->get_results($query);
 
-    $url_usource = $rows[0]->data;
-    $url_ucontent = $rows[1]->data;
-    $url_ucampaign = $rows[2]->data;
+    $url_usource    = $rows[0]->data;
+    $url_ucontent   = $rows[1]->data;
+    $url_ucampaign  = $rows[2]->data;
+    $allow_user_cc  = json_decode($rows[3]->data);
 }
 
 {
@@ -47,10 +48,21 @@ $table_settings = $wpdb->prefix . 'dja_settings';
 }
 
 /**
+ * Show CC only registered user
+ */
+{
+    $user = wp_get_current_user();
+
+    // $show_cc = (! in_array('2', $allow_user_cc)) ? ' style="display: none;"' : '';
+    $show_cc = (! in_array(strval($user->ID), $allow_user_cc)) ? ' style="display: none;"' : '';
+
+    $show_login = ($user->ID === 0) ? '' : ' display: none;';
+}
+
+/**
  * versioning control
  */
 $jsVer = '1.0.7';
-// $cssVer = '1.0.4';
 ?>
 
 <!DOCTYPE html>
@@ -96,6 +108,8 @@ $jsVer = '1.0.7';
                 <div class="col d-flex justify-content-center">
                     <img class="img-fluid" style="max-width: 80px; margin-top: -40px;" src="https://ympb.or.id/wp-content/uploads/2022/10/Logo-ympb-768x782-1.png" alt="">
                 </div>
+
+                <span style="position: fixed; margin-top: 30px;<?= $show_login; ?>"><a href="<?= wp_login_url('url-builder'); ?>" class="text-dark" style=" text-decoration: underline dashed 1px; font-size: 14px;">login</a></span>
             </div>
         
             <div class="row title text-center" style="margin-top: 35px;">
@@ -118,7 +132,7 @@ $jsVer = '1.0.7';
                     <label for="cs">CS DFR</label>
                 </div>
                 
-                <div class="col radio-3">
+                <div class="col radio-3" <?= $show_cc; ?>>
                     <input type="radio" value="cc" name="owner" id="cc">
                     <label for="cc">CC</label>
                 </div>
