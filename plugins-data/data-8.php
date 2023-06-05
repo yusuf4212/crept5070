@@ -966,3 +966,18 @@ function jh_update_pixel() {
 }
 
 add_action('wp_ajax_jh_update_pixel', 'jh_update_pixel');
+
+function jh_new_utm() {
+	header( 'Content-Type: application/json' );
+
+	echo json_encode(
+		[
+			'status'	=> 'success',
+			'messages'	=> ''
+		]
+	);
+
+	die;
+}
+
+add_action('wp_ajax_jh_new_utm', 'jh_new_utm');
