@@ -5,6 +5,7 @@ global $wpdb;
 $table_duta = $wpdb->prefix . 'josh_duta';
 $table_link = $wpdb->prefix . 'josh_link_target';
 $table_settings = $wpdb->prefix . 'dja_settings';
+$table_slink = $wpdb->prefix . 'josh_slink';
 
 {
     $query = "SELECT id, name, code FROM $table_duta";
@@ -60,9 +61,31 @@ $table_settings = $wpdb->prefix . 'dja_settings';
 }
 
 /**
+ * Get saved slink
+ */
+{
+    $query = "SELECT * FROM $table_slink";
+
+    $rows = $wpdb->get_results($query);
+    $slink = [];
+
+    if($rows != null) {
+        foreach($rows as $data) {
+            $slink[] = [
+                'id'    => $data->id,
+                'text'  => $data->path,
+                'value' => "$data->domain/$data->path",
+                'parts' => json_decode($data->parts)
+            ];
+
+        }
+    }
+}
+
+/**
  * versioning control
  */
-$jsVer = '1.0.12';
+$jsVer = '1.0.22';
 ?>
 
 <!DOCTYPE html>
@@ -153,7 +176,7 @@ $jsVer = '1.0.12';
                     
                     <div class="row row-input row-input-2 mt-3">
                         <div class="col target">
-                            <div class="label target">Halaman Target</div>
+                            <div class="label target">Halaman Tujuan</div>
         
                             <div id="target-page-duta" class="input border-bottom"></div>
         
@@ -176,7 +199,7 @@ $jsVer = '1.0.12';
                     
                     <div class="row row-input row-input-2 mt-3">
                         <div class="col target">
-                            <div class="label target">Halaman Target</div>
+                            <div class="label target">Halaman Tujuan</div>
         
                             <div id="target-page-cs" class="input border-bottom"></div>
         
@@ -234,7 +257,7 @@ $jsVer = '1.0.12';
                     <div class="row row-input row-input-1 mt-4">
                         <div class="col">
                             <div class="d-flex justify-content-between">
-                                <div class="label">UTM Campaign<span class="text-danger">*</span></div>
+                                <div class="label">UTM Campaign<span class="text-body-tertiary" style="font-size: 12px;"> (opsional)</span></div>
 
                                 <div class="text-primary fw-bold" id="add-new-ucampaign" style="cursor: pointer; font-size: 14px;">+ Add New</div>
                             </div>
@@ -247,30 +270,37 @@ $jsVer = '1.0.12';
                     
                     <div class="row row-input row-input-2 mt-4">
                         <div class="col target">
-                            <div class="label target">Halaman Target<span class="text-body-tertiary" style="font-size: 12px;"> (opsional)</span></div>
+                            <div class="label target">Halaman Tujuan<span class="text-danger">*</span></div>
         
                             <div id="target-page-cc" class="input border-bottom"></div>
         
                             <div class="notice-error type" style="display: none;">pilih salah satu</div>
                         </div>
                     </div>
-
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <label for="exampleFormControlInput1" class="form-label">Short Link (ympb.me)<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="rumah-tahfizh-ig-post">
-                        </div>
-
-                        <div class="col-12">
-                            <span class="text-primary fw-bold mt-1 ps-2" id="submit-short-link" style="cursor: pointer; font-size: 14px;">Submit Preset</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <div class="row my-2" style="margin-left: -35px; margin-right: -35px;">
+            <div class="row my-4" style="margin-left: -35px; margin-right: -35px;">
                 <div class="col">
                     <hr>
+                </div>
+            </div>
+
+            <div class="row mt-4" id="row-submit-slink" style="display: none;">
+                <div class="col-12">
+                    <label for="cc-short-link" class="form-label">Short Link (ympb.me)<span class="text-danger">*</span></label>
+                    
+                    <input type="text" class="form-control" id="cc-short-link" placeholder="rumah-tahfizh-ig-post">
+                </div>
+
+                <div class="col-12 mt-2 text-body-secondary" style="font-size: 13px;">
+                    <div><i>Preview:</i></div>
+
+                    <div><i>ympb.me/<span id="preview-cc"></span></i></div>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <span class="text-primary fw-bold mt-1 ps-2" id="submit-short-link" style="cursor: pointer; font-size: 14px;">Submit Preset</span>
                 </div>
             </div>
         
@@ -295,6 +325,28 @@ $jsVer = '1.0.12';
                     </div>
                 </div>
             </div>
+
+            <div class="row result mt-4" id="row-result-cc" style="display: none;">
+                <div class="col-12">
+                    <div class="title">Hasil</div>
+                </div>
+
+                <div class="col-9">
+                    <div class="text" id="result-copy-cc" style="font-size: 14px;"></div>
+                </div>
+                
+                <div class="col-3 d-flex align-items-center">
+                    <div class="btn btn-primary btn-sm copy-btn d-flex gap-2 shadow" id="copy-btn-cc" style="cursor: pointer;">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="#ffffff">
+                                <path d="M16.4574 0H4.88298C4.73908 0 4.60108 0.0537992 4.49934 0.149562C4.39759 0.245326 4.34043 0.375209 4.34043 0.510638V4.08511H0.542553C0.398659 4.08511 0.260659 4.13891 0.15891 4.23467C0.0571616 4.33043 0 4.46031 0 4.59574V15.4894C0 15.6248 0.0571616 15.7547 0.15891 15.8504C0.260659 15.9462 0.398659 16 0.542553 16H12.117C12.2609 16 12.3989 15.9462 12.5007 15.8504C12.6024 15.7547 12.6596 15.6248 12.6596 15.4894V11.9149H16.4574C16.6013 11.9149 16.7393 11.8611 16.8411 11.7653C16.9428 11.6696 17 11.5397 17 11.4043V0.510638C17 0.375209 16.9428 0.245326 16.8411 0.149562C16.7393 0.0537992 16.6013 0 16.4574 0ZM11.5745 14.9787H1.08511V5.10638H11.5745V14.9787ZM15.9149 10.8936H12.6596V4.59574C12.6596 4.46031 12.6024 4.33043 12.5007 4.23467C12.3989 4.13891 12.2609 4.08511 12.117 4.08511H5.42553V1.02128H15.9149V10.8936Z" fill="#ffffff"/>
+                            </svg>
+                        </div>
+        
+                        <div class="text">Copy</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -302,7 +354,8 @@ $jsVer = '1.0.12';
         const ajaxLink  = '<?= home_url('wp-admin/admin-ajax.php'); ?>';
         const duta      = JSON.parse('<?php echo json_encode($duta); ?>');
         const target    = JSON.parse('<?php echo json_encode($target); ?>');
-        const uSource   = JSON.parse('<?= $url_usource; ?>'); console.log(uSource)
+        const slink     = JSON.parse('<?= json_encode($slink); ?>'); console.log(slink);
+        const uSource   = JSON.parse('<?= $url_usource; ?>');
         const uContent  = JSON.parse('<?= $url_ucontent; ?>');
         const uCampaign = JSON.parse('<?= $url_ucampaign; ?>');
         var josh_ajax = {

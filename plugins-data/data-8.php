@@ -1053,3 +1053,110 @@ function jh_new_utm() {
 }
 
 add_action('wp_ajax_jh_new_utm', 'jh_new_utm');
+
+function jh_submit_cc_link() {
+	header( 'Content-Type: application/json' );
+
+	$uSource	= $_POST['payload']['uSource'];
+	$uContent	= $_POST['payload']['uContent'];
+	$uCampaign	= $_POST['payload']['uCampaign'];
+	$target		= $_POST['payload']['target'];
+	$path		= $_POST['payload']['sLink'];
+
+	/**
+	 * Check if $path exist
+	 */
+	{
+		global $wpdb;
+		$table_slink = $wpdb->prefix . 'josh_slink';
+
+		$query = "SELECT path
+		FROM $table_slink";
+
+		$rows = $wpdb->get_results($query);
+
+		if($rows != null) {
+			foreach($rows as $data) {
+				if($data->path === $path) {
+					echo json_encode(
+						[
+							'status' => 'failed',
+							'messages' => 'Path already exist! Try another.'
+						]
+					);
+
+					die;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Generate Desination
+	 */
+	{
+		if($uCampaign == '') {
+			$query = [
+				'utm_source'	=> $uSource['value'],
+				'utm_content'	=> $uContent['value']
+			];
+		} else {
+			$query = [
+				'utm_source'	=> $uSource['value'],
+				'utm_content'	=> $uContent['value'],
+				'utm_campaign'	=> $uCampaign['value']
+			];
+		}
+
+		$query_ = http_build_query($query);
+		$destination = "ympb.or.id{$target['value']}?$query_";
+	}
+
+	/**
+	 * Generate Parts
+	 */
+	{
+		$parts = [
+			'uSource'	=> $uSource,
+			'uContent'	=> $uContent,
+			'uCampaign'	=> $uCampaign,
+			'target'	=> $target
+		];
+
+		$parts = json_encode($parts);
+	}
+
+	/**
+	 * Insert into db
+	 */
+	{
+		$user = wp_get_current_user();
+
+		$insert = $wpdb->insert(
+			$table_slink,
+			[
+				'domain'		=> 'ympb.me',
+				'path'			=> $path,
+				'destination'	=> $destination,
+				'parts'			=> $parts,
+				'user_id'		=> $user->ID
+			]
+		);
+	}
+
+	if($insert === false) {
+		echo json_encode([
+			'status'	=> 'failed',
+			'messages'	=> $wpdb->last_error
+		]);
+	} else {
+		echo json_encode([
+			'status'	=> 'success',
+			'messages'	=> ''
+		]);
+	}
+
+	die;
+}
+
+add_action('wp_ajax_jh_submit_cc_link', 'jh_submit_cc_link');

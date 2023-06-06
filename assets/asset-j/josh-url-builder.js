@@ -15,7 +15,9 @@ $('input[name="owner"]').change(function (e) {
         $('#cs-section').hide();
         $('#cc-section').hide();
         $('#duta-section').show();
+        $('#row-result-cc').hide();
         $('#row-result').show();
+        $('#row-submit-slink').hide();
 
         selectivityClear();
     }
@@ -23,7 +25,9 @@ $('input[name="owner"]').change(function (e) {
         $('#duta-section').hide();
         $('#cc-section').hide();
         $('#cs-section').show();
+        $('#row-result-cc').hide();
         $('#row-result').show();
+        $('#row-submit-slink').hide();
 
         selectivityClear();
     }
@@ -31,10 +35,16 @@ $('input[name="owner"]').change(function (e) {
         $('#duta-section').hide();
         $('#cs-section').hide();
         $('#cc-section').show();
+        $('#row-result-cc').hide();
         $('#row-result').hide();
+        $('#row-submit-slink').show();
 
         selectivityClear();
     }
+
+    $('#target-page-duta').selectivity('data', target[0]);
+    $('#target-page-cs').selectivity('data', target[0]);
+    $('#target-page-cc').selectivity('data', target[0]);
 });
 
 function selectivityClear() {
@@ -42,6 +52,10 @@ function selectivityClear() {
     $('#target-page-cs').selectivity('clear');
     $('#duta-name').selectivity('clear');
     $('#target-page-duta').selectivity('clear');
+    $('#cc-preset').selectivity('clear');
+    $('#cc-usource').selectivity('clear');
+    $('#cc-ucontent').selectivity('clear');
+    $('#cc-ucampaign').selectivity('clear');
 }
 
 /**
@@ -130,9 +144,10 @@ $('#duta-name').change(function (e) {
 // target page
 $('#target-page-duta').selectivity({
     items: target,
-    allowClear: true,
     placeholder: 'Halaman Tujuan'
 });
+
+$('#target-page-duta').selectivity('data', target[0]);
 
 $('#target-page-duta').change(function (e) { 
     e.preventDefault();
@@ -165,7 +180,6 @@ $('#cs-name').change(function (e) {
 // target page
 $('#target-page-cs').selectivity({
     items: target,
-    allowClear: true,
     placeholder: 'Halaman Tujuan'
 });
 
@@ -181,19 +195,42 @@ $('#target-page-cs').change(function (e) {
  */
 // CC Preset
 $('#cc-preset').selectivity({
-    items: [{id: 1, text: 'bla'}],
+    // items: [{id: 1, text: 'bla'}],
+    items: slink,
     allowClear: true,
     placeholder: 'ympb.me/'
 });
 
+$('#cc-preset').change(function (e) { 
+    e.preventDefault();
+    
+    let data = $(e.delegateTarget).selectivity('data');
+    //
+    if(data === null) {
+        if($('input[name="owner"]:checked').val() === 'cc') {
+            $('#row-submit-slink').show();
+            $('#row-result-cc').hide();
+        }
+
+        $('#cc-usource').selectivity('setOptions', {readOnly: false});
+        $('#cc-ucontent').selectivity('setOptions', {readOnly: false});
+        $('#cc-ucampaign').selectivity('setOptions', {readOnly: false});
+    } else {
+        if($('input[name="owner"]:checked').val() === 'cc') {
+            $('#row-submit-slink').hide();
+            $('#row-result-cc').show();
+        }
+
+        $('#cc-usource').selectivity('setOptions', {readOnly: true});
+        $('#cc-ucontent').selectivity('setOptions', {readOnly: true});
+        $('#cc-ucampaign').selectivity('setOptions', {readOnly: true});
+
+        urlBuilder.generator_cc(data);
+    }
+});
+
 // CC UTM Source
 $('#cc-usource').selectivity({
-    // items: [
-    //     {id: 1, text: 'TikTok', value: 'cc_tiktok'},
-    //     {id: 2, text: 'IG', value: 'cc_ig'},
-    //     {id: 3, text: 'FB', value: 'cc_fb'},
-    //     {id: 4, text: 'YT', value: 'cc_yt'},
-    // ],
     items: uSource,
     allowClear: true,
     placeholder: 'TikTok, IG, FB, YT'
@@ -213,11 +250,11 @@ $('#add-new-usource').click(function (e) {
     });
 });
 
-// $('#cc-usource').change(function (e) { 
-//     e.preventDefault();
+$('#cc-usource').change(function (e) { 
+    e.preventDefault();
     
-//     urlBuilder.cc('cc', e.delegateTarget.selectivity._data);
-// });
+    urlBuilder.cc('usource', e.delegateTarget.selectivity._data);
+});
 
 // CC UTM Content
 $('#cc-ucontent').selectivity({
@@ -244,6 +281,13 @@ $('#add-new-ucontent').click(function (e) {
     });
 });
 
+$('#cc-ucontent').change(function (e) { 
+    e.preventDefault();
+    
+    urlBuilder.cc('ucontent', e.delegateTarget.selectivity._data);
+});
+
+
 // CC UTM Campaign
 $('#cc-ucampaign').selectivity({
     // items: [
@@ -265,10 +309,16 @@ $('#add-new-ucampaign').click(function (e) {
     });
 });
 
+$('#cc-ucampaign').change(function (e) { 
+    e.preventDefault();
+    
+    urlBuilder.cc('ucampaign', e.delegateTarget.selectivity._data);
+});
+
+
 // target page
 $('#target-page-cc').selectivity({
     items: target,
-    allowClear: true,
     placeholder: 'Halaman Tujuan'
 });
 
@@ -276,6 +326,23 @@ $('#target-page-cc').change(function (e) {
     e.preventDefault();
     
     urlBuilder.cc('target', e.delegateTarget.selectivity._data);
+});
+
+// short link
+$('#cc-short-link').keyup(function (e) { 
+    let text = e.delegateTarget.value;
+    text = text.replace(/[ ]/g, '-');
+    text = text.replace(/[^a-zA-Z0-9-_]/g, '');
+
+    $('#cc-short-link').val(text);
+    $('#preview-cc').text(text);
+});
+
+// submit preset cc
+$('#submit-short-link').click(function (e) { 
+    e.preventDefault();
+    
+    urlBuilder.cc_sumbit();
 });
 
 /**
@@ -292,6 +359,32 @@ $('#copy-btn').click(function (e) {
         });
     } else {
         navigator.clipboard.writeText(urlBuilder.results).then(() => {
+            Toast.fire({
+                icon: 'success',
+                title: 'Copied',
+                text: 'Link berhasil di copy!'
+            });
+        }, (err) => {
+            console.error('Could not copy to clipboard: '+err)
+            Toast.fire({
+                icon: 'error',
+                title: 'Fail to Copy',
+                text: err
+            });
+        });
+    }
+});
+
+$('#copy-btn-cc').click(function (e) { 
+    e.preventDefault();
+
+    if(urlBuilder.results_cc === undefined || urlBuilder.results_cc === '') {
+        Toast.fire({
+            icon: 'error',
+            title: 'Fail to Copy'
+        });
+    } else {
+        navigator.clipboard.writeText(urlBuilder.results_cc).then(() => {
             Toast.fire({
                 icon: 'success',
                 title: 'Copied',
