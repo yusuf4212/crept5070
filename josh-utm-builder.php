@@ -87,7 +87,7 @@ $table_slink    = $db->prefix . 'slink';
 /**
  * versioning control
  */
-$jsVer = '1.0.24';
+$jsVer = '1.0.25';
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +134,7 @@ $jsVer = '1.0.24';
                     <img class="img-fluid" style="max-width: 80px; margin-top: -40px;" src="https://ympb.or.id/wp-content/uploads/2022/10/Logo-ympb-768x782-1.png" alt="">
                 </div>
 
-                <span style="position: fixed; margin-top: 30px;<?= $show_login; ?>"><a href="<?= wp_login_url('url-builder'); ?>" class="text-dark" style=" text-decoration: underline dashed 1px; font-size: 14px;">login</a></span>
+                <span style="position: absolute; margin-top: 30px;<?= $show_login; ?>"><a href="<?= wp_login_url('url-builder'); ?>" class="text-dark" style=" text-decoration: underline dashed 1px; font-size: 14px;">login</a></span>
             </div>
         
             <div class="row title text-center" style="margin-top: 35px;">

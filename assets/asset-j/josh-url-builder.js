@@ -108,6 +108,8 @@ function newUtmAjax(field_, text_) {
                 icon: 'success',
                 timer: 2000,
                 timerProgressBar: true
+            }).then(() => {
+                window.location.reload();
             });
         } else {
             Swal.showValidationMessage(
@@ -307,7 +309,7 @@ $('#add-new-ucampaign').click(function (e) {
     e.preventDefault();
     
     newUTM.fire({
-        title: 'Create New UTM Source',
+        title: 'Create New UTM Campaign',
         preConfirm: (text) => {
             return newUtmAjax('ucampaign', text);
         }
