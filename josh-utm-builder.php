@@ -2,10 +2,12 @@
 header('Cache-Control: no-store, no-cache, must-revalidate');
 
 global $wpdb;
-$table_duta = $wpdb->prefix . 'josh_duta';
-$table_link = $wpdb->prefix . 'josh_link_target';
+$db = new wpdb('u1567316_ympbme', 'u0E*iu*xg1tT', 'u1567316_ympbme_1', 'localhost:3307');
+$db->prefix     = 'ympbme_';
+$table_duta     = $wpdb->prefix . 'josh_duta';
+$table_link     = $wpdb->prefix . 'josh_link_target';
 $table_settings = $wpdb->prefix . 'dja_settings';
-$table_slink = $wpdb->prefix . 'josh_slink';
+$table_slink    = $db->prefix . 'slink';
 
 {
     $query = "SELECT id, name, code FROM $table_duta";
@@ -66,7 +68,7 @@ $table_slink = $wpdb->prefix . 'josh_slink';
 {
     $query = "SELECT * FROM $table_slink";
 
-    $rows = $wpdb->get_results($query);
+    $rows = $db->get_results($query);
     $slink = [];
 
     if($rows != null) {
@@ -85,7 +87,7 @@ $table_slink = $wpdb->prefix . 'josh_slink';
 /**
  * versioning control
  */
-$jsVer = '1.0.22';
+$jsVer = '1.0.24';
 ?>
 
 <!DOCTYPE html>

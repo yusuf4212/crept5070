@@ -215,6 +215,11 @@ $('#cc-preset').change(function (e) {
         $('#cc-usource').selectivity('setOptions', {readOnly: false});
         $('#cc-ucontent').selectivity('setOptions', {readOnly: false});
         $('#cc-ucampaign').selectivity('setOptions', {readOnly: false});
+        
+        $('#cc-usource').selectivity('clear');
+        $('#cc-ucontent').selectivity('clear');
+        $('#cc-ucampaign').selectivity('clear');
+        $('#target-page-cc').selectivity('data', target[0]);
     } else {
         if($('input[name="owner"]:checked').val() === 'cc') {
             $('#row-submit-slink').hide();

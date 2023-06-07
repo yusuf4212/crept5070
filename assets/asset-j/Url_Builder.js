@@ -202,6 +202,8 @@ class Url_Builder {
                     this.results = 'https://ympb.or.id' + this.valDutaTarget + '?ref=' + this.valDuta;
                 }
             }
+
+            $('#result-copy').text(this.results);
         }
         else if(a === 'cs') {
             if(this.valCs == null) {
@@ -213,9 +215,11 @@ class Url_Builder {
                     this.results = 'https://ympb.or.id' + this.valCsTarget + '?ref=' + this.valCs;
                 }
             }
+
+            $('#result-copy').text(this.results);
         }
 
-        $(this.target).text(this.results);
+        // $(this.target).text(this.results); console.log(this.target);
     }
 
     generator_cc(a) {

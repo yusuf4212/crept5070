@@ -1067,13 +1067,14 @@ function jh_submit_cc_link() {
 	 * Check if $path exist
 	 */
 	{
-		global $wpdb;
-		$table_slink = $wpdb->prefix . 'josh_slink';
+		$db = new wpdb('u1567316_ympbme', 'u0E*iu*xg1tT', 'u1567316_ympbme_1', 'localhost:3307');
+		$db->prefix     = 'ympbme_';
+		$table_slink	= $db->prefix . 'slink';
 
 		$query = "SELECT path
 		FROM $table_slink";
 
-		$rows = $wpdb->get_results($query);
+		$rows = $db->get_results($query);
 
 		if($rows != null) {
 			foreach($rows as $data) {
@@ -1132,7 +1133,7 @@ function jh_submit_cc_link() {
 	{
 		$user = wp_get_current_user();
 
-		$insert = $wpdb->insert(
+		$insert = $db->insert(
 			$table_slink,
 			[
 				'domain'		=> 'ympb.me',
@@ -1147,7 +1148,7 @@ function jh_submit_cc_link() {
 	if($insert === false) {
 		echo json_encode([
 			'status'	=> 'failed',
-			'messages'	=> $wpdb->last_error
+			'messages'	=> $db->last_error
 		]);
 	} else {
 		echo json_encode([
