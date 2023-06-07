@@ -966,3 +966,198 @@ function jh_update_pixel() {
 }
 
 add_action('wp_ajax_jh_update_pixel', 'jh_update_pixel');
+
+function jh_new_utm() {
+	header( 'Content-Type: application/json' );
+
+	$field	= $_POST['field'];
+	$text	= $_POST['text'];
+
+	switch ($field) {
+		case 'usource':
+			$field_ = 'url_usource';
+			break;
+
+		case 'ucontent':
+			$field_ = 'url_ucontent';
+			break;
+
+		case 'ucampaign':
+			$field_ = 'url_ucampaign';
+			break;
+
+		default:
+			echo json_encode(
+				['status' => 'failed', 'messages' => 'invalid field params']
+			);
+			die;
+	}
+
+	$text_value = ($field === 'usource') ? 'cc_' : '';
+	$text_value = $text_value . str_replace(' ', '_', strtolower($text));
+
+	global $wpdb;
+	$table_settings = $wpdb->prefix . 'dja_settings';
+
+	$query = "SELECT data
+	FROM $table_settings
+	WHERE type='$field_'";
+	
+	$row = json_decode($wpdb->get_row($query)->data);
+
+	$_ = false;
+	foreach($row as $data) {
+		if($data->value === $text_value) {
+			$_ = true;
+		}
+		$last_id = $data->id;
+	}
+
+	if($_ === true) {
+		echo json_encode(['status' => 'failed', 'messages' => 'Already exist! Try another.']);
+		die;
+	}
+
+	$k = $last_id +1;
+	$row[] = [
+		'id'	=> $k,
+		'text'	=> $text,
+		'value'	=> $text_value
+	];
+
+	$row_ = json_encode($row);
+
+	$update = $wpdb->update(
+		$table_settings,
+		[
+			'data' 	=> $row_
+		],
+		[
+			'type'	=> $field_
+		]
+	);
+	
+	if($update === false) {
+		echo json_encode(['status'=> 'failed', 'messages'=>'Fail when update to database!']);
+		die;
+	} else {
+		echo json_encode(
+			[
+				'status'	=> 'success',
+				'messages'	=> ''
+			]
+		);
+	
+		die;
+	}
+}
+
+add_action('wp_ajax_jh_new_utm', 'jh_new_utm');
+
+function jh_submit_cc_link() {
+	header( 'Content-Type: application/json' );
+
+	$uSource	= $_POST['payload']['uSource'];
+	$uContent	= $_POST['payload']['uContent'];
+	$uCampaign	= $_POST['payload']['uCampaign'];
+	$target		= $_POST['payload']['target'];
+	$path		= $_POST['payload']['sLink'];
+
+	/**
+	 * Check if $path exist
+	 */
+	{
+		$db = new wpdb('u1567316_ympbme', 'u0E*iu*xg1tT', 'u1567316_ympbme_1', 'localhost:3307');
+		$db->prefix     = 'ympbme_';
+		$table_slink	= $db->prefix . 'slink';
+
+		$query = "SELECT path
+		FROM $table_slink";
+
+		$rows = $db->get_results($query);
+
+		if($rows != null) {
+			foreach($rows as $data) {
+				if($data->path === $path) {
+					echo json_encode(
+						[
+							'status' => 'failed',
+							'messages' => 'Path already exist! Try another.'
+						]
+					);
+
+					die;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Generate Desination
+	 */
+	{
+		if($uCampaign == '') {
+			$query = [
+				'utm_source'	=> $uSource['value'],
+				'utm_content'	=> $uContent['value']
+			];
+		} else {
+			$query = [
+				'utm_source'	=> $uSource['value'],
+				'utm_content'	=> $uContent['value'],
+				'utm_campaign'	=> $uCampaign['value']
+			];
+		}
+
+		$query_ = http_build_query($query);
+		$destination = "ympb.or.id{$target['value']}?$query_";
+	}
+
+	/**
+	 * Generate Parts
+	 */
+	{
+		$parts = [
+			'uSource'	=> $uSource,
+			'uContent'	=> $uContent,
+			'uCampaign'	=> $uCampaign,
+			'target'	=> $target
+		];
+
+		$parts = json_encode($parts);
+	}
+
+	/**
+	 * Insert into db
+	 */
+	{
+		$user = wp_get_current_user();
+
+		$insert = $db->insert(
+			$table_slink,
+			[
+				'domain'		=> 'ympb.me',
+				'path'			=> $path,
+				'destination'	=> $destination,
+				'parts'			=> $parts,
+				'user_id'		=> $user->ID
+			]
+		);
+	}
+
+	if($insert === false) {
+		echo json_encode([
+			'status'	=> 'failed',
+			'messages'	=> $db->last_error
+		]);
+	} else {
+		echo json_encode([
+			'status'	=> 'success',
+			'messages'	=> ''
+		]);
+	}
+
+	die;
+}
+
+add_action('wp_ajax_jh_submit_cc_link', 'jh_submit_cc_link');
