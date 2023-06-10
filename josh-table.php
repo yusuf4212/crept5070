@@ -59,6 +59,7 @@ function josh_table() {
     <script src="<?php echo plugin_dir_url( __FILE__ ); ?>select3-full.js"></script>
 
 
+
     <style>
         .row-list .option:hover {
             background-color: #50a0fb;

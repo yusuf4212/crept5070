@@ -1,4 +1,35 @@
 /**
+ * Dropdown date end filter
+ */
+let a = document.querySelectorAll('.dropdown .dropdown-item');
+let b = document.querySelector('#btn-month-select');
+
+for(let i=0; i < a.length; i++) {
+    $(a[i]).click(function (e) { 
+        e.preventDefault();
+
+        $(b).html($(a[i]).html());
+
+        for(let j=0; j < a.length; j++) {
+            $(a[j]).removeClass('bg-primary text-light');
+        }
+        $(e.delegateTarget).addClass('bg-primary text-light');
+
+        let currentUrl = window.location.href;
+        let url = new URL(currentUrl);
+
+        url.searchParams.set('date', e.delegateTarget.attributes[2].value);
+        url.searchParams.set('date_', e.delegateTarget.textContent);
+        let modifiedUrl = url.toString();
+        window.history.pushState(null, null, modifiedUrl);
+
+        monthDate = e.delegateTarget.attributes[2].value;
+
+        mainTable.ajax.reload();
+    });
+}
+
+/**
  * Quick search by name and phone
  */
 $('#btn-search').click(function (e) { 
@@ -185,10 +216,6 @@ let mainTable = $('#table-donors').DataTable({
             "targets": 0,
             "className": "text-center"
         },
-        // {
-        //     targets: 1,
-        //     width: '75%'
-        // },
         {
             "targets": 6,
             "searchable": false,
@@ -206,13 +233,13 @@ let mainTable = $('#table-donors').DataTable({
         "dataSrc": "data",
         "data"  : {
             action  : 'josh_crm_table_1',
-            date_start : () => { return dateStart },
-            date_end : () => { return dateEnd },
+            // date_start : () => { return dateStart },
+            date_end : () => { return monthDate },
             filter : () => {
                 let filter_cs = (cs_now == undefined) ? $('#filter-cs').selectivity('data') : cs_now;
 
-
                 let quickSearch = getSearchText();
+
 
                 // if(cs_now == undefined) {
                 //     filter_cs = $('#filter-cs').selectivity('data');
