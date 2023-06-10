@@ -260,6 +260,7 @@ require 'library/f_additional_function.php';
  * jh_update_pixel
  * jh_new_utm
  * jh_submit_cc_link
+ * jh_non_referrer_test
  */
 require_once ROOTDIR_DNA . 'plugins-data/data-8.php';
 

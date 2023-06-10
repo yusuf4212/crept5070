@@ -1161,3 +1161,12 @@ function jh_submit_cc_link() {
 }
 
 add_action('wp_ajax_jh_submit_cc_link', 'jh_submit_cc_link');
+
+function jh_non_referrer_test() {
+	echo 'non referrer success!';
+
+	die;
+}
+
+add_action('wp_ajax_jh_non_referrer_test', 'jh_non_referrer_test');
+add_action('wp_ajax_nopriv_jh_non_referrer_test', 'jh_non_referrer_test');
