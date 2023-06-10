@@ -58,6 +58,19 @@ function josh_table() {
     <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ ).'select3.css'; ?>">
     <script src="<?php echo plugin_dir_url( __FILE__ ); ?>select3-full.js"></script>
 
+
+    <style>
+        .row-list .option:hover {
+            background-color: #50a0fb;
+            color: white;
+        }
+        .abi-click span {
+            cursor: pointer;
+            text-decoration: underline 1px dashed;
+        }
+    </style>
+
+
     <div class="model"  style="display: none;">
         <div class="model-header">
             <div class="icon">
@@ -169,15 +182,15 @@ function josh_table() {
             </table>
         </div>
 
-        <div class="float drop-down relawan" id="float-relawan" style="display: none;">
+        <div class="float drop-down relawan p-2 bg-white shadow rounded border" id="float-relawan" style="display: none; position: absolute; font-size: 12px;">
             <div class="wrapper">
                 <div class="float-row-title">SELECT AN OPTION</div>
-                <div class="row-list">
+                <div class="row-list mt-2" style="font-size: 14px;">
                     <?php
                     $cs2 = json_decode( $cs );
                     foreach( $cs2 as $v ) {
                         echo '
-                        <div id="opt-1" class="option"><div>'.$v->text.'</div></div>
+                        <div id="opt-1" class="option border mt-1 px-2 rounded" style="cursor: pointer;"><div>'.$v->text.'</div></div>
                         ';
                     }
                     ?>
@@ -185,15 +198,15 @@ function josh_table() {
             </div>
         </div>
 
-        <div class="float drop-down program" id="float-program" style="display: none;">
+        <div class="float drop-down program p-2 bg-white shadow rounded border" id="float-program" style="display: none; position: absolute; font-size: 12px;">
             <div class="wrapper">
                 <div class="float-row-title">SELECT AN OPTION</div>
-                <div class="row-list">
+                <div class="row-list mt-2" style="font-size: 14px;">
                     <?php
                     $program2 = json_decode( $program );
                     foreach( $program2 as $v ) {
                         echo '
-                        <div id="opt-1" class="option"><div>'.$v->text.'</div></div>
+                        <div id="opt-1" class="option border mt-1 px-2 rounded" style="cursor: pointer;"><div>'.$v->text.'</div></div>
                         ';
                     }
                     ?>
@@ -201,15 +214,15 @@ function josh_table() {
             </div>
         </div>
 
-        <div class="float drop-down type" id="float-type" style="display: none;">
+        <div class="float drop-down type p-2 bg-white shadow rounded border" id="float-type" style="display: none; position: absolute; font-size: 12px;">
             <div class="wrapper">
                 <div class="float-row-title">SELECT AN OPTION</div>
-                <div class="row-list">
+                <div class="row-list mt-2" style="font-size: 14px;">
                     <?php
                     $type2 = json_decode( $type );
                     foreach( $type2 as $v ) {
                         echo '
-                        <div id="opt-1" class="option"><div>'.$v->text.'</div></div>
+                        <div id="opt-1" class="option border mt-1 px-2 rounded" style="cursor: pointer;"><div>'.$v->text.'</div></div>
                         ';
                     }
                     ?>
@@ -217,15 +230,15 @@ function josh_table() {
             </div>
         </div>
 
-        <div class="float drop-down platform" id="float-platform" style="display: none;">
+        <div class="float drop-down platform p-2 bg-white shadow rounded border" id="float-platform" style="display: none; position: absolute; font-size: 12px;">
             <div class="wrapper">
                 <div class="float-row-title">SELECT AN OPTION</div>
-                <div class="row-list">
+                <div class="row-list mt-2" style="font-size: 14px;">
                     <?php
                     $platform2 = json_decode( $platform );
                     foreach( $platform2 as $v ) {
                         echo '
-                        <div id="opt-1" class="option"><div>'.$v->text.'</div></div>
+                        <div id="opt-1" class="option border mt-1 px-2 rounded" style="cursor: pointer;"><div>'.$v->text.'</div></div>
                         ';
                     }
                     ?>
@@ -233,14 +246,14 @@ function josh_table() {
             </div>
         </div>
 
-        <div class="float drop-down bank" id="float-bank" style="display: none;">
+        <div class="float drop-down bank p-2 bg-white shadow rounded border" id="float-bank" style="display: none; position: absolute; font-size: 12px;">
             <div class="wrapper">
                 <div class="float-row-title">SELECT AN OPTION</div>
-                <div class="row-list">
+                <div class="row-list mt-2" style="font-size: 14px;">
                     <?php
                     foreach( json_decode($bank) as $v ) {
                         echo '
-                        <div id="opt-1" class="option"><div>'.$v->text.'</div></div>
+                        <div id="opt-1" class="option border mt-1 px-2 rounded" style="cursor: pointer;"><div>'.$v->text.'</div></div>
                         ';
                     }
                     ?>
@@ -248,14 +261,14 @@ function josh_table() {
             </div>
         </div>
 
-        <div class="float input amount" id="float-amount" style="display: none;">
+        <div class="float input amount p-2 bg-white shadow rounded border" id="float-amount" style="display: none; position: absolute; font-size: 12px;">
             <div class="wrapper">
                 <div class="float-row-title">INSERT AMOUNT</div>
                 <div class="row-list">
                     <div id="opt-1" class="option">
-                        <input type="text" placeholder="insert here" id="float-amount-input">
+                        <input type="text" placeholder="insert here" id="float-amount-input" style="font-size: 14px;">
                     </div>
-                    <div class="button-box">
+                    <div class="button-box mt-1">
                         <div class="drp-buttons">
                             <button class="cancelBtn btn btn-sm btn-default" type="button" id="amount-cancel">Cancel</button>
                             <button class="applyBtn btn btn-sm btn-primary" type="button" id="amount-apply">Apply</button>
@@ -265,14 +278,14 @@ function josh_table() {
             </div>
         </div>
 
-        <div class="float input phone" id="float-phone" style="display: none;">
+        <div class="float input phone p-2 bg-white shadow rounded border" id="float-phone" style="display: none; position: absolute; font-size: 12px;">
             <div class="wrapper">
                 <div class="float-row-title">INSERT PHONE</div>
                 <div class="row-list">
                     <div id="opt-1" class="option">
-                        <input type="text" placeholder="insert here" id="float-phone-input">
+                        <input type="text" placeholder="insert here" id="float-phone-input" style="font-size: 14px;">
                     </div>
-                    <div class="button-box">
+                    <div class="button-box mt-1">
                         <div class="drp-buttons">
                             <button class="cancelBtn btn btn-sm btn-default" type="button" id="phone-cancel">Cancel</button>
                             <button class="applyBtn btn btn-sm btn-primary" type="button" id="phone-apply">Apply</button>
@@ -343,7 +356,10 @@ function josh_table() {
         };
     </script>
 
-    <script src="<?= plugin_dir_url( __FILE__ ).'josh-table.js?v=1.0.4'; ?>"></script>
+
+    <script src="<?= plugin_dir_url( __FILE__ ).'josh-table.js?v=1.0.5'; ?>"></script>
+
+
 <?php
 }
 ?>

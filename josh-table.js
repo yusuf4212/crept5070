@@ -639,25 +639,25 @@ $(document).ready(function () {
 
             $(cells[1].children[0]).click(function (e) { 
                 let bottom = e.target.getBoundingClientRect();
-                // console.log(e.target.attributes[0]);    //---field or column
-                // console.log(e.target.attributes[1]);    //---db-id
-                // console.log($(e.target).parent()[0].attributes[0].value);    //parent db-id!
-                // console.log(e.target.innerText);        //---value
 
                 changeRelawan1.oldData = e.target.innerText;
                 changeRelawan1.idBefore = $(cells[1]).parent()[0].attributes[0].value;
                 
-                if( $('body').hasClass('folded') ) {
-                    $(floatRelawan).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatRelawan).css('left', bottom.left - 65);
-                    $(floatRelawan).css('display', 'block');
-                    e.stopPropagation();
-                } else {
-                    $(floatRelawan).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatRelawan).css('left', bottom.left - 190);
-                    $(floatRelawan).css('display', 'block');
-                    e.stopPropagation();
-                }
+                $(floatRelawan).css('top', window.scrollY + bottom.bottom - 15);
+                $(floatRelawan).css('left', bottom.left - 65);
+                $(floatRelawan).css('display', 'block');
+                e.stopPropagation();
+                // if( $('body').hasClass('folded') ) {
+                //     $(floatRelawan).css('top', window.scrollY + bottom.bottom - 45);
+                //     $(floatRelawan).css('left', bottom.left - 65);
+                //     $(floatRelawan).css('display', 'block');
+                //     e.stopPropagation();
+                // } else {
+                //     $(floatRelawan).css('top', window.scrollY + bottom.bottom - 45);
+                //     $(floatRelawan).css('left', bottom.left - 190);
+                //     $(floatRelawan).css('display', 'block');
+                //     e.stopPropagation();
+                // }
             }, );
 
             /**
@@ -665,22 +665,15 @@ $(document).ready(function () {
              */
             $(cells[2]).addClass('abi-click');
             $(cells[2]).attr('field', 'given_date');
-            // console.log(cells);
-            // console.log(cells[2].children[0]);
 
             $(cells[2].children[0]).daterangepicker({
                 "singleDatePicker": true,
                 "startDate": data.given_date_f
             }, function(start, end, label) {
-                // console.log('db id: '+$(cells[2]).parent()[0].attributes[0].value);     //parent db-id value!
-                // console.log('field: '+$(cells[2]).attr('field'));
-                // console.log(cells[2].innerText);
 
                 changeGivenDate1.idBefore = $(cells[2]).parent()[0].attributes[0].value;
                 changeGivenDate1.oldData = cells[2].innerText;
                 changeGivenDate1.newData = start.format('YYYY-MM-DD');
-                // console.log('New date selected: ' + start.format('YYYY-MM-DD'));
-                // console.log(changeGivenDate1);
                 changeGivenDate1.run();
             });
 
@@ -692,25 +685,14 @@ $(document).ready(function () {
 
             $(cells[3].children[0]).click(function (e) { 
                 let bottom = e.target.getBoundingClientRect();
-                // console.log(e.target.attributes[0]);    //---field or column
-                // console.log(e.target.attributes[1]);    //---db-id
-                // console.log($(e.target).parent()[0].attributes[0].value);    //parent db-id!
-                // console.log(e.target.innerText);        //---value
 
                 changeProgram1.oldData = e.target.innerText;
                 changeProgram1.idBefore = $(cells[1]).parent()[0].attributes[0].value;
                 
-                if( $('body').hasClass('folded') ) {
-                    $(floatProgram).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatProgram).css('left', bottom.left - 65);
-                    $(floatProgram).css('display', 'block');
-                    e.stopPropagation();
-                } else {
-                    $(floatProgram).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatProgram).css('left', bottom.left - 190);
-                    $(floatProgram).css('display', 'block');
-                    e.stopPropagation();
-                }
+                $(floatProgram).css('top', window.scrollY + bottom.bottom - 15);
+                $(floatProgram).css('left', bottom.left - 65);
+                $(floatProgram).css('display', 'block');
+                e.stopPropagation();
             }, );
 
             /**
@@ -729,17 +711,10 @@ $(document).ready(function () {
                 changeType1.oldData = e.target.innerText;
                 changeType1.idBefore = $(cells[1]).parent()[0].attributes[0].value;
                 
-                if( $('body').hasClass('folded') ) {
-                    $(floatType).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatType).css('left', bottom.left - 65);
-                    $(floatType).css('display', 'block');
-                    e.stopPropagation();
-                } else {
-                    $(floatType).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatType).css('left', bottom.left - 190);
-                    $(floatType).css('display', 'block');
-                    e.stopPropagation();
-                }
+                $(floatType).css('top', window.scrollY + bottom.bottom - 15);
+                $(floatType).css('left', bottom.left - 65);
+                $(floatType).css('display', 'block');
+                e.stopPropagation();
             }, );
 
 
@@ -751,25 +726,14 @@ $(document).ready(function () {
 
             $(cells[5].children[0]).click(function (e) { 
                 let bottom = e.target.getBoundingClientRect();
-                // console.log(e.target.attributes[0]);    //---field or column
-                // console.log(e.target.attributes[1]);    //---db-id
-                // console.log($(e.target).parent()[0].attributes[0].value);    //parent db-id!
-                // console.log(e.target.innerText);        //---value
 
                 changePlatform1.oldData = e.target.innerText;
                 changePlatform1.idBefore = $(cells[1]).parent()[0].attributes[0].value;
                 
-                if( $('body').hasClass('folded') ) {
-                    $(floatPlatform).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatPlatform).css('left', bottom.left - 65);
-                    $(floatPlatform).css('display', 'block');
-                    e.stopPropagation();
-                } else {
-                    $(floatPlatform).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatPlatform).css('left', bottom.left - 190);
-                    $(floatPlatform).css('display', 'block');
-                    e.stopPropagation();
-                }
+                $(floatPlatform).css('top', window.scrollY + bottom.bottom - 15);
+                $(floatPlatform).css('left', bottom.left - 65);
+                $(floatPlatform).css('display', 'block');
+                e.stopPropagation();
             }, );
 
             /**
@@ -787,11 +751,6 @@ $(document).ready(function () {
 
             $(cells[7].children[0]).click(function (e) { 
                 let bottom = e.target.getBoundingClientRect();
-                // console.log(e.target.attributes[0]);    //---field or column
-                // console.log(e.target.attributes[1]);    //---db-id
-                // console.log(e);
-                // console.log($(e.target).parent()[0].attributes[0].value);    //parent db-id!
-                // console.log(e.target.innerText);        //---value
 
                 changeAmount1.oldData = e.target.innerText;
                 changeAmount1.idBefore = $(cells[1]).parent()[0].attributes[0].value;
@@ -799,17 +758,10 @@ $(document).ready(function () {
                 $('#float-amount-input').focus();
                 changeAmount1.newData = e.target.innerText;
                 
-                if( $('body').hasClass('folded') ) {
-                    $(floatAmount).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatAmount).css('left', bottom.left - 65);
-                    $(floatAmount).css('display', 'block');
-                    e.stopPropagation();
-                } else {
-                    $(floatAmount).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatAmount).css('left', bottom.left - 190);
-                    $(floatAmount).css('display', 'block');
-                    e.stopPropagation();
-                }
+                $(floatAmount).css('top', window.scrollY + bottom.bottom - 15);
+                $(floatAmount).css('left', bottom.left - 65);
+                $(floatAmount).css('display', 'block');
+                e.stopPropagation();
             }, );
             
 
@@ -821,25 +773,14 @@ $(document).ready(function () {
 
             $(cells[8].children[0]).click(function (e) { 
                 let bottom = e.target.getBoundingClientRect();
-                // console.log(e.target.attributes[0]);    //---field or column
-                // console.log(e.target.attributes[1]);    //---db-id
-                // console.log($(e.target).parent()[0].attributes[0].value);    //parent db-id!
-                // console.log(e.target.innerText);        //---value
 
                 changeBank1.oldData = e.target.innerText;
                 changeBank1.idBefore = $(cells[1]).parent()[0].attributes[0].value;
                 
-                if( $('body').hasClass('folded') ) {
-                    $(floatBank).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatBank).css('left', bottom.left - 65);
-                    $(floatBank).css('display', 'block');
-                    e.stopPropagation();
-                } else {
-                    $(floatBank).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatBank).css('left', bottom.left - 190);
-                    $(floatBank).css('display', 'block');
-                    e.stopPropagation();
-                }
+                $(floatBank).css('top', window.scrollY + bottom.bottom - 15);
+                $(floatBank).css('left', bottom.left - 65);
+                $(floatBank).css('display', 'block');
+                e.stopPropagation();
             }, );
 
             /**
@@ -847,23 +788,16 @@ $(document).ready(function () {
              */
             $(cells[9]).addClass('abi-click');
             $(cells[9]).attr('field', 'transfer_date');
-            // console.log(cells);
-            // console.log(cells[2].children[0]);
 
             $(cells[9].children[0]).daterangepicker({
                 "singleDatePicker": true,
                 "showDropdowns": true,
                 "startDate": data.transfer_date_f
             }, function(start, end, label) {
-                // console.log('db id: '+$(cells[2]).parent()[0].attributes[0].value);     //parent db-id value!
-                // console.log('field: '+$(cells[2]).attr('field'));
-                // console.log(cells[2].innerText);
 
                 changeTFDate1.idBefore = $(cells[2]).parent()[0].attributes[0].value;
                 changeTFDate1.oldData = cells[2].innerText;
                 changeTFDate1.newData = start.format('YYYY-MM-DD');
-                // console.log('New date selected: ' + start.format('YYYY-MM-DD'));
-                // console.log(changeTFDate1);
                 changeTFDate1.run();
             });
             
@@ -876,29 +810,17 @@ $(document).ready(function () {
 
             $(cells[10].children[0]).click(function (e) { 
                 let bottom = e.target.getBoundingClientRect();
-                // console.log(e.target.attributes[0]);    //---field or column
-                // console.log(e.target.attributes[1]);    //---db-id
-                // console.log($(e.target).parent()[0].attributes[0].value);    //parent db-id!
-                // console.log(e.target.innerText);        //---value
                 
                 changeWhatsApp1.oldData = e.target.innerText;
                 changeWhatsApp1.idBefore = $(cells[1]).parent()[0].attributes[0].value;
                 $('#float-phone-input').val(e.target.innerText);
                 $('#float-phone-input').focus();
                 changeWhatsApp1.newData = e.target.innerText;
-                // console.log(changeWhatsApp1);
                 
-                if( $('body').hasClass('folded') ) {
-                    $(floatWhatsApp).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatWhatsApp).css('left', bottom.left - 65);
-                    $(floatWhatsApp).css('display', 'block');
-                    e.stopPropagation();
-                } else {
-                    $(floatWhatsApp).css('top', window.scrollY + bottom.bottom - 45);
-                    $(floatWhatsApp).css('left', bottom.left - 190);
-                    $(floatWhatsApp).css('display', 'block');
-                    e.stopPropagation();
-                }
+                $(floatWhatsApp).css('top', window.scrollY + bottom.bottom - 15);
+                $(floatWhatsApp).css('left', bottom.left - 65);
+                $(floatWhatsApp).css('display', 'block');
+                e.stopPropagation();
             }, );
 
 
@@ -908,8 +830,10 @@ $(document).ready(function () {
              */
             $(cells[11]).addClass('abi-click');
             var span = cells[11].querySelector('span');
-            span.style.color = 'red';
+          
             span.style.cursor = 'pointer';
+            span.style.textDecoration = 'none';
+
             span.classList.add('badge', 'rounded-pill', 'text-bg-danger');
             $(span).click(function (e) { 
                 e.preventDefault();
@@ -924,9 +848,6 @@ $(document).ready(function () {
                     img2: img2
                 }
                 
-                // console.log(e)
-                // console.log(e.target.parentElement.parentElement)
-                // console.log(e.target.parentElement.parentElement.querySelector('.slip-tf'))
                 Swal.fire({
                     title: 'Yakin ingin menghapus?',
                     text: 'Hal ini tidak dapat di undo atau kembalikan.',
