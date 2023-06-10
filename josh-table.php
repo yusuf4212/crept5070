@@ -58,6 +58,7 @@ function josh_table() {
     <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ ).'select3.css'; ?>">
     <script src="<?php echo plugin_dir_url( __FILE__ ); ?>select3-full.js"></script>
 
+
     <style>
         .row-list .option:hover {
             background-color: #50a0fb;
@@ -68,6 +69,7 @@ function josh_table() {
             text-decoration: underline 1px dashed;
         }
     </style>
+
 
     <div class="model"  style="display: none;">
         <div class="model-header">
@@ -356,6 +358,7 @@ function josh_table() {
 
 
     <script src="<?= plugin_dir_url( __FILE__ ).'josh-table.js?v=1.0.5'; ?>"></script>
+
 
 <?php
 }
