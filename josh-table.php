@@ -359,7 +359,6 @@ function josh_table() {
 
     <script src="<?= plugin_dir_url( __FILE__ ).'josh-table.js?v=1.0.5'; ?>"></script>
 
-
 <?php
 }
 ?>
