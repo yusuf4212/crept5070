@@ -77,17 +77,17 @@ add_action( 'wp_footer', 'register_donasiaja_footer_script');
 /**
  * Function List ====
  * donasiaja_readtime
- * donasiaja_load_campaign
- * donasiaja_load_campaign_search
+ * donasiaja_load_campaign - nopriv
+ * donasiaja_load_campaign_search - nopriv
  * action_get_the_user_attachments
  * filter_get_the_user_attachments
- * djafunction_publish_campaign
+ * djafunction_publish_campaign - nopriv
  * donasiaja_getIP
  * donasiaja_getOS
  * donasiaja_getBrowser
  * donasiaja_getMobDesktop
  * shortDisplayNumber
- * djafunction_set_love
+ * djafunction_set_love - nopriv
  * getBaseUrl
  * paymentCode
  * 
@@ -97,18 +97,18 @@ require_once ROOTDIR_DNA . 'plugins-data/data-2.php';
 
 /**
  * Function List ====
- * djafunction_submit_donasi
+ * djafunction_submit_donasi - nopriv
  * joshfunction_waba_order_baru
- * joshfunction_manual_submitdonasi
+ * joshfunction_manual_submitdonasi - nopriv
  * joshfunction_input_leads
  * joshfunction_submit_leads
- * djafunction_regaff_fundraiser
+ * djafunction_regaff_fundraiser - nopriv
  * donasiaja_send2tg
  * josh_send_email
- * djafunction_send_test_telegram
- * djafunction_send_test_email
- * djafunction_send_test_wanotif
- * djafunction_status_wanotif
+ * djafunction_send_test_telegram - nopriv
+ * djafunction_send_test_email - nopriv
+ * djafunction_send_test_wanotif - nopriv
+ * djafunction_status_wanotif - nopriv
  * 
  */
 require_once ROOTDIR_DNA . 'plugins-data/data-3.php';
@@ -116,23 +116,25 @@ require_once ROOTDIR_DNA . 'plugins-data/data-3.php';
 
 /**
  * Function List ====
- * djafunction_get_donasi
- * djafunction_get_donasi_confirmation
- * donasiaja_upload_confirmation
- * djafunction_update_confirmation
+ * djafunction_get_donasi - nopriv
+ * djafunction_get_donasi_confirmation - nopriv
+ * donasiaja_upload_confirmation - nopriv
+ * djafunction_update_confirmation - nopriv
  * joshfunction_waba_slip
  * add_phone_number_field
- * djafunction_get_mydonasi
- * djafunction_update_donasi
- * djafunction_upload_ss
- * djafunction_update_fundraising_settings
- * djafunction_update_status_payment
- * djafunction_download_donasi
+ * djafunction_get_mydonasi - nopriv
+ * djafunction_update_donasi - nopriv
+ * djafunction_upload_ss - nopriv
+ * djafunction_cairkan_sekarang - nopriv
+ * djafunction_update_fundraising_settings - nopriv
+ * djafunction_delete_pencairan - nopriv
+ * djafunction_update_status_payment - nopriv
+ * djafunction_download_donasi - nopriv
  * download_donasi
  * upload_donasi
  * download_template_excel
- * djafunction_del_donasi
- * djafunction_del_confirmation
+ * djafunction_del_donasi - nopriv
+ * djafunction_del_confirmation - nopriv
  * 
  */
 require_once ROOTDIR_DNA . 'plugins-data/data-4.php';
@@ -140,23 +142,23 @@ require_once ROOTDIR_DNA . 'plugins-data/data-4.php';
 
 /**
  * Function List ===
- * djafunction_update_csrotator
- * djafunction_update_campaign
- * djafunction_update_info
- * djafunction_delete_campaign
- * djafunction_clone_campaign
- * djafunction_delete_info
- * djafunction_add_update_info
- * djafunction_update_text_followup
- * djafunction_send_wa
- * djafunction_set_payment
- * djafunction_clone_shortcode
- * djafunction_delete_shortcode
- * djafunction_update_shortcode
- * djafunction_add_shortcode
- * djafunction_login_user
- * djafunction_register_user
- * djafunction_send_link
+ * djafunction_update_csrotator - nopriv
+ * djafunction_update_campaign - nopriv
+ * djafunction_update_info - nopriv
+ * djafunction_delete_campaign - nopriv
+ * djafunction_clone_campaign - nopriv
+ * djafunction_delete_info - nopriv
+ * djafunction_add_update_info - nopriv
+ * djafunction_update_text_followup - nopriv
+ * djafunction_send_wa - nopriv
+ * djafunction_set_payment - nopriv
+ * djafunction_clone_shortcode - nopriv
+ * djafunction_delete_shortcode - nopriv
+ * djafunction_update_shortcode - nopriv
+ * djafunction_add_shortcode - nopriv
+ * djafunction_login_user - nopriv
+ * djafunction_register_user - nopriv
+ * djafunction_send_link - nopriv
  * 
  */
 require_once ROOTDIR_DNA . 'plugins-data/data-5.php';
@@ -164,42 +166,42 @@ require_once ROOTDIR_DNA . 'plugins-data/data-5.php';
 
 /**
  * Function List====
- * djafunction_reset_pass
- * djafunction_add_user
- * djafunction_delete_usernya
- * djafunction_update_user
- * djafunction_update_profile
- * djafunction_update_akun
- * djafunction_update_akun_bank
- * djafunction_update_pp_img
- * djafunction_update_pp_img_user
- * djafunction_upload_ktp
- * djafunction_upload_app_logo
- * djafunction_update_themes_settings
- * djafunction_update_form_settings
- * djafunction_del_category
- * djafunction_add_new_category
- * djafunction_save_category
- * djafunction_update_category_private
+ * djafunction_reset_pass - nopriv
+ * djafunction_add_user - nopriv
+ * djafunction_delete_usernya - nopriv
+ * djafunction_update_user - nopriv
+ * djafunction_update_profile - nopriv
+ * djafunction_update_akun - nopriv
+ * djafunction_update_akun_bank - nopriv
+ * djafunction_update_pp_img - nopriv
+ * djafunction_update_pp_img_user - nopriv
+ * djafunction_upload_ktp - nopriv
+ * djafunction_upload_app_logo - nopriv
+ * djafunction_update_themes_settings - nopriv
+ * djafunction_update_form_settings - nopriv
+ * djafunction_del_category - nopriv
+ * djafunction_add_new_category - nopriv
+ * djafunction_save_category - nopriv
+ * djafunction_update_category_private - nopriv
  * get_data_campaign
- * djafunction_update_socialproof
- * djafunction_update_general_settings
- * djafunction_update_payment_settings
- * djafunction_update_ipaymu_settings
- * djafunction_update_tripay_settings
- * djafunction_update_midtrans_settings
- * djafunction_update_moota_settings
- * djafunction_update_wanotif_settings
- * djafunction_update_telegram_settings
- * djafunction_update_email_settings
- * djafunction_upload_ktp_selfie
- * djafunction_upload_legalitas
- * djafunction_submit_verification
- * djafunction_update_cover_img
- * djafunction_load_data_donatur
- * djafunction_load_list_donatur
- * djafunction_load_fundraiser
- * djafunction_load_doa_donatur
+ * djafunction_update_socialproof - nopriv
+ * djafunction_update_general_settings - nopriv
+ * djafunction_update_payment_settings - nopriv
+ * djafunction_update_ipaymu_settings - nopriv
+ * djafunction_update_tripay_settings - nopriv
+ * djafunction_update_midtrans_settings - nopriv
+ * djafunction_update_moota_settings - nopriv
+ * djafunction_update_wanotif_settings - nopriv
+ * djafunction_update_telegram_settings - nopriv
+ * djafunction_update_email_settings - nopriv
+ * djafunction_upload_ktp_selfie - nopriv
+ * djafunction_upload_legalitas - nopriv
+ * djafunction_submit_verification - nopriv
+ * djafunction_update_cover_img - nopriv
+ * djafunction_load_data_donatur - nopriv
+ * djafunction_load_list_donatur - nopriv
+ * djafunction_load_fundraiser - nopriv
+ * djafunction_load_doa_donatur - nopriv
  * 
  */
 require_once ROOTDIR_DNA . 'plugins-data/data-6.php';
@@ -207,23 +209,23 @@ require_once ROOTDIR_DNA . 'plugins-data/data-6.php';
 
 /**
  * Function List ===
- * djafunction_update_password
- * djafunction_update_password_user
- * josh_table_slip
- * joshfunction_table_change
- * joshfunction_table_delete
- * josh_imgupload
+ * djafunction_update_password - nopriv
+ * djafunction_update_password_user - nopriv
+ * josh_table_slip - nopriv
+ * joshfunction_table_change - nopriv
+ * joshfunction_table_delete - nopriv
+ * josh_imgupload - nopriv
  * josh_crm_table
  * josh_crm_table_2
  * josh_crm_chart
  * josh_crm_donors
- * dja_get_data_donasi
+ * dja_get_data_donasi - nopriv
  * dja_handling_character
- * dja_get_provinsi
- * dja_get_kabkota
- * dja_get_kecamatan
- * djafunction_activate_apikey
- * djafunction_deactivate_apikey
+ * dja_get_provinsi - nopriv
+ * dja_get_kabkota - nopriv
+ * dja_get_kecamatan - nopriv
+ * djafunction_activate_apikey - nopriv
+ * djafunction_deactivate_apikey - nopriv
  * check_verified_campaign
  * check_verified_dashboard
  * dja_auto_login_new_user
@@ -260,7 +262,7 @@ require 'library/f_additional_function.php';
  * jh_update_pixel
  * jh_new_utm
  * jh_submit_cc_link
- * jh_non_referrer_test
+ * jh_non_referrer_test - nopriv
  */
 require_once ROOTDIR_DNA . 'plugins-data/data-8.php';
 
