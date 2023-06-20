@@ -2,12 +2,13 @@
 
 function djafunction_submit_donasi(){
 	global $wpdb;
-    $table_name 	= $wpdb->prefix . "dja_donate";
-    $table_name2 	= $wpdb->prefix . "dja_settings";
-    $table_name3 	= $wpdb->prefix . "dja_campaign";
+    $table_name 	= $wpdb->prefix . "dja_donate"; $table_donate = $table_name;
+    $table_name2 	= $wpdb->prefix . "dja_settings"; $table_settings = $table_name2;
+    $table_name3 	= $wpdb->prefix . "dja_campaign"; $table_campaign = $table_name3;
     $table_name4 	= $wpdb->prefix . "dja_payment_log";
     $table_name5 	= $wpdb->prefix . "dja_aff_submit";
     $table_name6 	= $wpdb->prefix . "dja_aff_code";
+	$table_cs_rotator = $wpdb->prefix . 'josh_cs_meta';
 
     // FROM INPUT
     $campaign_id 	= $_POST['datanya'][0];
@@ -191,7 +192,7 @@ function djafunction_submit_donasi(){
 	 * Return TRUE apabila sdh order lebih dari sehari
 	 * 		  FALSE apabila blm order lebih dari sehari
 	 */
-	$j_row2 = $wpdb->get_results(" SELECT invoice_id, created_at FROM `ympb2020_dja_donate` WHERE whatsapp='".$whatsapp."' AND campaign_id='".$campaign_id."' ORDER BY `ympb2020_dja_donate`.`created_at` DESC ")[0];
+	$j_row2 = $wpdb->get_row("SELECT invoice_id, created_at FROM {$table_donate} WHERE whatsapp='{$whatsapp}' AND campaign_id='{$campaign_id}' ORDER BY {$table_donate}.`created_at` DESC ");
 	$thistime = $j_row2->created_at;
 	if ( $thistime != '' ) {
 		$timeint = new TimeInterval();	//declare object
@@ -211,7 +212,7 @@ function djafunction_submit_donasi(){
             $table_now = $table_name;
             $sql_condition = " WHERE whatsapp='" . $whatsapp . "'";
         
-            $j_row = "SELECT repeat_no, cs_id FROM $table_now $sql_condition ORDER BY `ympb2020_dja_donate`.`id` DESC ";
+            $j_row = "SELECT repeat_no, cs_id FROM $table_now $sql_condition ORDER BY {$table_donate}.`id` DESC ";
             $j_query = $wpdb->get_row($j_row);
                 
     
@@ -229,15 +230,15 @@ function djafunction_submit_donasi(){
 
 				} else {
 
-					$get_cs = $wpdb->get_results("SELECT j_value FROM `ympb2020_josh_cs_meta` WHERE property='last_cs_rotate'");
+					$get_cs = $wpdb->get_results("SELECT j_value FROM {$table_cs_rotator} WHERE property='last_cs_rotate'");
 							
 					$last_cs_rotate = $get_cs[0]->j_value;           //last cs rotate ready
 					$take_cs = 'cs_id_' . $last_cs_rotate;
 							
 			
-					$req1 = "SELECT `j_value` FROM `ympb2020_josh_cs_meta` WHERE property='" . $take_cs . "' ";
-					$get_cs2 = $wpdb->get_results($req1);
-					$user_id_cs = $get_cs2[0]->j_value;   //id cs siap
+					$req1 = "SELECT `j_value` FROM {$table_cs_rotator} WHERE property='$take_cs'";
+					$get_cs2 = $wpdb->get_row($req1);
+					$user_id_cs = $get_cs2->j_value;   //id cs siap
 			
 					$cs_id = $user_id_cs;   //clear rotator cs!! == RESULT ==
 					$repeat_or_new = 'Baru';
@@ -260,7 +261,7 @@ function djafunction_submit_donasi(){
 			
 						$error_datetime = date('Y-m-d - H:i:s');
 						$wpdb->update(
-							'ympb2020_josh_cs_meta', //table
+							$table_cs_rotator, //table
 						array(
 							'j_value' 	=> $error_datetime,   //insert date of error
 						),
@@ -271,7 +272,7 @@ function djafunction_submit_donasi(){
 						}
 			
 					$update1 = $wpdb->update(
-						'ympb2020_josh_cs_meta', //table
+						$table_cs_rotator, //table
 					array(
 						'j_value' 	=> $last_cs_rotate,   //insert
 					),
