@@ -95,6 +95,11 @@
 		exit;
 	}
 
+    if($row->form_type == '5') {
+        $five = $row->plus_items;
+        $five_ = json_decode($five);
+    }
+
     // BEGIN SESSION BY Aktif Berbagi
 	require_once( ROOTDIR_DNA . 'core/api/abi-session.php' );
 	// echo '<pre>'; var_dump( $_SESSION ); echo '</pre>';
@@ -467,6 +472,36 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo plugin_dir_url( __FILE__ ) . 'assets/css/donasiaja.css';?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo plugin_dir_url( __FILE__ ) . 'assets/css/animate-4.1.1.min.css';?>"/>
 	<style type="text/css">
+            .d-flex {
+                display: flex !important;
+            }
+            .justify-content-between {
+                justify-content: space-between !important;
+            }
+            .align-items-center {
+                align-items: center !important;
+            }
+            .card-p-border {
+                border: 1px solid #c3c3c3 !important;
+            }
+            .card-p-rounded {
+                border-radius: 8px !important;
+            }
+            .w-100 {
+                width: 100% !important;
+            }
+            .cr-pointer {
+                cursor: pointer !important;
+            }
+            .item-image {
+                width: 100px;
+            }
+            .plus-input-box {
+                padding: 20px 10px;
+                margin-top: 30px;
+                margin-bottom: 15px;
+            }
+
         #simple-popup{position:fixed;top:0;bottom:0;left:0;right:0;z-index:100001}.simple-popup-content{border-radius:10px;position:absolute;left:50%;top:50%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);max-height:80%;max-width:100%;z-index:100002;padding:30px 0 30px 0;overflow:auto}.simple-popup-content .close{position:absolute;right:0;top:0}.simple-popup-content .close::before{display:inline-block;text-align:center;content:"\00d7";font-size:30px;color:#d3d3d3;width:40px;line-height:40px;padding:10px 10px 5px 5px}.simple-popup-content .close:hover{cursor:hand;cursor:pointer}.simple-popup-content .close:hover::before{color:#ffffff}#simple-popup-backdrop,.simple-popup-backdrop-content{position:fixed;top:0;bottom:0;left:0;right:0;z-index:100000}#simple-popup,#simple-popup-backdrop,#simple-popup-backdrop.hide-it,#simple-popup.hide-it{-webkit-transition-property:opacity;-moz-transition-property:opacity;-ms-transition-property:opacity;-o-transition-property:opacity;transition-property:opacity}#simple-popup-backdrop.hide-it,#simple-popup.hide-it{opacity:0}#simple-popup,#simple-popup-backdrop{opacity:1}a:active,a:focus,a:visited{box-shadow:none!important;outline:0;box-shadow:0 4px 15px 0 rgba(0,0,0,.1)}.form-group label{font-size:14px}.donasiaja-input{margin:0 0 16px 0}.donasiaja-input input,.donasiaja-input textarea{font-family:Roboto,sans-serif;outline:0;background:#fff;width:100%;padding:15px;box-sizing:border-box;font-size:14px;border:1px solid #e5e8ec!important;border-radius:4px;transition:all .2s ease}.donasiaja-input input[type=email],.donasiaja-input input[type=number],.donasiaja-input input[type=tel],.donasiaja-input input[type=text]{height:50px}.donasiaja-input input:focus,.donasiaja-input input:visited,.donasiaja-input textarea:focus,.donasiaja-input textarea:visited{border:1px solid #719eca!important}.donasiaja-input.anonim{padding-top:5px;padding-bottom:10px}.donasiaja-input.comment{padding-top:0;margin-top:-10px}.donasiaja-input .donation_button_now{margin-top:5px;margin-bottom:10px;height:50px}.donasiaja-input .choose_payment{background:#fff;color:#719eca;font-size:12px;padding:6px 10px 0 12px;width:60px;text-align:center;height:24px;float:right;border-radius:4px;border:1px solid #719eca;cursor:pointer;transition:all .4s ease;margin-top:-5px}.donasiaja-input .choose_payment:hover{background:#edf8ff}.donasiaja-input.payment{background:#edf7ff;border:none;padding:28px 12px;border-radius:4px;margin-bottom:25px}.donasiaja-input.payment img.img_payment_selected{position:absolute;width:70px;border:1px solid #c1daec;border-radius:4px;margin-top:-9px;padding:2px 5px;background:#fff;margin-left:4px}.donasiaja-input.payment .title_payment.selected{margin-left:99px;text-transform:capitalize}.anonim .toggle1{background:#ddd;width:60px;height:25px;border-radius:100px;display:block;appearance:none;-webkit-appearance:none;position:relative;cursor:pointer;float:right;margin-top:-5px}.anonim .toggle1:after{content:"";background:#999;display:block;height:30px;width:30px;border-radius:100%;position:absolute;left:0;transform:scale(.9);cursor:pointer;transition:all .4s ease;margin-top:-15px}.anonim .toggle1:checked{background:#c5e8ff;border:1px solid #acdeff!important}.anonim .toggle1:checked:after{background:#09f;left:28px}.comment textarea{margin-top:10px;line-height:1.2}.choose_payment.set_red,.form-control.set_red{border:1px solid #f15d5e!important;transition:all .1s ease}.card-group{margin-top:15px;min-height:175px}.donasiaja-input .card-body{display:flow-root}.card-radio-btn input[type=radio]{display:none;opacity:0;width:0}.card-radio-btn .content_head{color:#333;font-size:16px;line-height:30px;font-weight:500}.card-radio-btn .content_sub{color:#9e9e9e;font-size:11px}.card-radio-btn .content_head.no_desc{padding-top:9px}.card-radio-btn .content_sub.no_desc{display:none}.card-input-element+.card{width:28%;height:55px;margin:2%;justify-content:center;color:var(--primary);-webkit-box-shadow:none;box-shadow:none;border:2px solid transparent;border-radius:10px;text-align:center;-webkit-box-shadow:0 4px 25px 0 rgba(0,0,0,.1);box-shadow:0 4px 25px 0 rgba(0,0,0,.1);float:left;padding-top:5px}.additional_nominal_value input, .other_nominal_value input, .pendapatan_perbulan input, .pendapatan_lainnya input, .pengeluaran input, .total_zakat input, .total_summary input{text-align:right;font-size:24px;font-weight:700;color:#23374d}.total_zakat input, .total_summary input{border:1px solid #edf7ff !important;background:#edf7ff;cursor:default;color:#4484c1;}.additional_nominal_value.hide_input, .other_nominal_value.hide_input{display:none}.additional_nominal_value .currency, .other_nominal_value .currency, .pendapatan_perbulan .currency, .pendapatan_lainnya .currency, .pengeluaran .currency, .total_zakat .currency, .total_summary .currency{position:absolute;margin-top:-37px;margin-left:15px;font-weight:700;font-size:18px;color:#719eca}.additional_nominal_value input::-webkit-input-placeholder, .other_nominal_value input::-webkit-input-placeholder{font-size:16px;font-weight:400}.other_nominal_value input:-moz-placeholder{font-size:16px;font-weight:400}.additional_nominal_value input::placeholder, .other_nominal_value input::placeholder{font-size:16px;font-weight:400;margin-top:-4px}.pendapatan_perbulan input::-webkit-input-placeholder{font-size:16px;font-weight:400}.pendapatan_perbulan input:-moz-placeholder{font-size:16px;font-weight:400}.pendapatan_perbulan input::placeholder{font-size:16px;font-weight:400;margin-top:-4px}.pendapatan_lainnya input::-webkit-input-placeholder{font-size:16px;font-weight:400}.pendapatan_lainnya input:-moz-placeholder{font-size:16px;font-weight:400}.pendapatan_lainnya input::placeholder{font-size:16px;font-weight:400;margin-top:-4px}.pengeluaran input::-webkit-input-placeholder{font-size:16px;font-weight:400}.pengeluaran input:-moz-placeholder{font-size:16px;font-weight:400}.pengeluaran input::placeholder{font-size:16px;font-weight:400;margin-top:-4px}.total_zakat input::-webkit-input-placeholder, .total_summary input::-webkit-input-placeholder{font-size:16px;font-weight:400}.total_zakat input:-moz-placeholder, .total_summary input:-moz-placeholder{font-size:16px;font-weight:400}.total_zakat input::placeholder, .total_summary input::placeholder{font-size:16px;font-weight:400;margin-top:-4px}.donasiaja-input .filled{border:1px solid #c6d5e3!important}.card-input-element+.card:hover{cursor:pointer}.card-input-element:checked+.card{border:2px solid #719eca;-webkit-transition:border .3s;-o-transition:border .3s;transition:border .3s}.card-input-element:checked+.card .box-checklist{text-align:right;padding-right:4px;margin-top:-47px}.card-input-element:checked+.card .box-checklist.no_desc{text-align:right;padding-right:4px;margin-top:-42px}.card-input-element:checked+.card .box-checklist .checklist::after{content:"✓";color:#fff;font-style:normal;font-size:10px;font-weight:900;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-animation-name:fadeInCheckbox;animation-name:fadeInCheckbox;-webkit-animation-duration:.3s;animation-duration:.3s;-webkit-animation-timing-function:cubic-bezier(.4,0,.2,1);animation-timing-function:cubic-bezier(.4,0,.2,1);background:#719eca;padding:2px 4px;border-radius:12px}@-webkit-keyframes fadeInCheckbox{from{opacity:0;-webkit-transform:rotateZ(-20deg)}to{opacity:1;-webkit-transform:rotateZ(0)}}@keyframes fadeInCheckbox{from{opacity:0;transform:rotateZ(-20deg)}to{opacity:1;transform:rotateZ(0)}}.card_payment{max-width:100%;background-color:#fff;padding-top:1.5rem}.card_payment .card-text{font-size:14px}.card-title{width:100%;margin-top:0;text-align:center}.title-list{background:#edf7ff;border:none!important}.card-title2{width:100%;margin:0;text-align:left;font-size:14px;color:#485c71;font-weight:700}.card-label{display:flex;align-items:center;height:50px;border-top:1px solid #d7d7d7;padding:0 2rem;cursor:pointer}.card-icon{max-width:3rem;margin-right:2.5em;text-align:center}.card-icon img{width:70px}.card-icon svg{width:100%}.card-text{color:#3f4e5e}.card-radio{display:none;margin-left:auto}.card-radio:checked~.card-text{color:#09f;font-weight:700}.card-radio:checked~.card-check{display:inline-block}.card-check{display:none;margin-left:auto}.card-button{background-color:transparent;border:none;cursor:pointer;outline:0;padding:0;-webkit-appearance:none;-moz-appearance:none;appearance:none;display:block;width:100%;height:50px;background-color:#598bdd;color:#fff;text-transform:uppercase;letter-spacing:.1em}.card-button:hover{background-color:#6191df}.box-char{text-align:right;font-size:11px}.donate_now{/*position:fixed;bottom:0;*/width:481px;margin-bottom:0}.donate_now .donation_button_now2{width:100%}.img-box{width:89%;padding:80px 20px 20px 25px;min-height:100px}.img-box img{width:100%;border-radius:4px;box-shadow:0 8px 12px 0 rgba(0,0,0,.2)}.img-box div{font-size:12px;margin-left:180px;color:#aabdce}.img-box h1{font-size:16px;margin-left:180px;line-height:1.4}.donasi-loading{display:inline-block}.donasi-loading:after{content:" ";display:block;width:20px;height:20px;margin:0;border-radius:50%;border:4px solid #fff;border-color:#fff transparent #fff transparent;animation:donasi-loading 1.2s linear infinite;position:absolute;margin-top:-20px;margin-left:20px}@keyframes donasi-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.loading-hide{display:none}.profile-picture{float:left;margin-bottom:30px}.profile-picture img{border-radius:120px;border:1px solid #dde4ec;width:70px;margin-left:10px}.profile-name{margin-left:110px;padding-top:18px;margin-bottom:50px}.profile-name .user-name{font-size:15px;font-weight:700}.profile-name .user-email,.profile-name .user-wa{font-style:italic;font-size:13px;padding-top:5px;color:#99a6bd}.charnum{margin-top: -20px;margin-bottom: 23px;margin-right: 10px;font-size: 10px;color: #acb2ca;}.dropdown-select option {background:white;}.dropdown-select:hover {border:2px solid black;}
         @media only screen and (max-width:480px){
             #lala-alert-wrapper{
@@ -493,6 +528,15 @@
             }
             .anonim label {
                 font-size: 13px;
+            }
+            .item-name {
+                font-size: 14px;
+            }
+            .item-image {
+                width: 80px;
+            }
+            .plus-input-box {
+                margin-top: 15px;
             }
         }
     </style>
@@ -605,6 +649,7 @@
 	</div>
 	<div class="section-box">
 			<div class="form-group" id="form-group">
+                <!-- Begin Form 1 -->
 				<?php if($row->form_type==null || $row->form_type=='1') { ?>
 				<div class="donasiaja-input" style="margin-top: 10px;">
                     <?php echo $additional_info; if($additional_info!=''){echo'<br><br>';} ?>
@@ -679,6 +724,7 @@
 
 				<?php } // end form_type 1 ?>
 
+                <!-- Begin Form 2 -->
 				<?php if($row->form_type=='2') { ?>
 				<div class="donasiaja-input">
                     <?php echo $additional_info; if($additional_info!=''){echo'<br><br>';} ?>
@@ -724,6 +770,7 @@
 
 				<?php } // end form_type 2 ?>
 
+                <!-- Begin Form 3 -->
 				<?php if($row->form_type=='3') { ?>
 				<div class="donasiaja-input">
 					
@@ -819,6 +866,7 @@
 
 				<?php } // end form_type 3 ?>
 
+                <!-- Begin Form 4 -->
                 <?php if($row->form_type=='4') { ?>
 
                 <?php echo $additional_info; if($additional_info!=''){echo'<br><br>';} ?>
@@ -863,8 +911,54 @@
                 </div>
 
                 <?php } ?>
+                <!-- End Form 4 -->
 
+                <!-- Begin Form 5 -->
+                <div class="plus-input-box">
+                <?php if($row->form_type=='5') {
+                foreach($five_->items as $data) :
+                ?>
+                    <div class="plus-input" style="margin-bottom: 10px;">
+                        <div class="card-plus d-flex justify-content-between align-items-center card-p-border card-p-rounded" style="padding: 10px 15px;">
+                            <div class="content d-flex" style="gap: 8px;">
+                                <div class="image item-image">
+                                    <img class="w-100" src="<?= $data->pic; ?>" alt="kambing">
+                                </div>
 
+                                <div class="title d-flex" style="flex-direction: column; gap: 5px;">
+                                    <div class="item-name"><?= $data->name; ?></div>
+
+                                    <div style="font-weight: 500;"><?= 'Rp'.number_format($data->price, 0, ',', '.'); ?></div>
+                                </div>
+                            </div>
+                            <div class="amount">
+                                <div class="d-flex align-items-center card-p-border" style="gap: 8px; border-radius: 4px; padding: 5px;" five-id="<?= $data->id; ?>">
+                                    <div class="min-svg cr-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
+                                            <g id="Complete">
+                                            <g id="minus">
+                                            <line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="4" x2="20" y1="12" y2="12"/>
+                                            </g>
+                                            </g>
+                                        </svg>
+                                    </div>
+
+                                    <div class="number" style="font-size: 18px; font-weight: 700; margin-top: -3px;">0</div>
+
+                                    <div class="plus-svg cr-pointer">
+                                        <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 4C12.5523 4 13 4.44772 13 5V11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H13V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19V13H5C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11H11V5C11 4.44772 11.4477 4 12 4Z" fill="#000000"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php
+                endforeach;
+                }
+                ?>
+                </div>
 
 
 				<!-- <div class="donasiaja-input payment">
@@ -1194,9 +1288,13 @@
                     $minimal_donasi = $row->packaged;
                 }
 
-				if($row->form_type=="3"){
-					echo 'var min_donasi = '.$row->packaged.';';
+				if($row->form_type=="3"){ ?>
+
+					var min_donasi = <?= $row->packaged; ?>;
+                    
+                    <?php
                     /**
+                     * Form 3 => Packages
                      * 28 Mar 23, Josh insert for optimize nominal will correct in first visit this page
                      */
                     ?>
@@ -1206,14 +1304,18 @@
                     set_cookies_totalnya(jnominal)
                     // set_cookies_totalnya
                     var jcontent = jnominal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                    console.log( jcontent )
+                    // console.log( jcontent )
                     $('#nominal_value').text( jcontent )
                     <?php
-				}else{
-					echo 'var min_donasi = '.$minimal_donasi.';';
-				}
+				}else{ ?>
+					var min_donasi = <?= $minimal_donasi; ?>;
+				<?php }
+                
 
-			?>
+                /**
+                 * Begin Generate Unique Code
+                 */
+                ?>
 
 			function randomInRange(from, to) {
 			  var r = Math.random();
@@ -1224,10 +1326,11 @@
 
 			if($unique_number_setting=='1') {
 				if($unique_number_value['unique_number'][0]==''){
-					echo 'var unique_number=0;';
-				}else{
-					echo 'var unique_number='.$unique_number_value['unique_number'][0].';';
-				}
+                ?>
+					var unique_number=0;
+				<?php }else{ ?>
+					var unique_number=<?= $unique_number_value['unique_number'][0]; ?>;
+				<?php }
 			}else if($unique_number_setting=='2') {
                 $min_number = $unique_number_value['unique_number'][1];
                 $max_number = $unique_number_value['unique_number'][2];
@@ -1236,23 +1339,36 @@
                 }
                 if($max_number==''){
                     $max_number = 999;
-                }
-			echo 'var unique_number = randomInRange('.$min_number.','.$max_number.');';
-			}else{
-			echo 'var unique_number=0;';
-			}
+                } ?>
+
+			var unique_number = randomInRange(<?= $min_number; ?>,<?= $max_number; ?>);
+
+			<?php }else{ ?>
+
+			var unique_number=0;
+
+			<?php }
 
 			?>
 
-			var title_campaign = '<?php echo $campaign_title; ?>';
+			var title_campaign = '<?= $campaign_title; ?>';
             
             //Josh JS Hitung Donasi
             
             $(".donation_button_now2").on("click", function(e) {
+                <?php if($row->form_type != '5') { ?>
+
                 var nominalnya = parseInt(Cookies.get('nominal'));
                 var totalnya = parseInt(Cookies.get('totalnya'));
 
-                <?php if($row->form_type=='4') { ?>
+                <?php } else { ?>
+
+                var nominalnya = five_items.price;
+                var totalnya = five_items.price;
+
+                <?php }
+
+                if($row->form_type=='4') { ?>
 
                 main_donate = nominalnya;
                 total_nominalnya = unique_number + nominalnya;
@@ -1267,11 +1383,22 @@
                 main_donate = nominalnya;
                 total_nominalnya = unique_number + nominalnya;
 
-                <?php } ?>
-
-                console.log(main_donate);
+                <?php }
                 
-                if(main_donate>=min_donasi){
+                /**
+                 * JS condition based on form type
+                 * 
+                 */
+                if($row->form_type != '5') {
+                    $cond_ = 'main_donate >= min_donasi';
+                } else {
+                    $cond_ = 'five_items.number > 0';
+                }
+                
+                ?>
+                
+                // if(main_donate>=min_donasi){
+                if(<?= $cond_; ?>){
                 	var campaign_id = $('#campaign_id').val();
 	                var name = $('#name').val();
 	                var whatsapp = $('#whatsapp').val();
@@ -1418,7 +1545,7 @@
                         // var jdecode = JSON.parse(ganti);
                         var jdecode = response
                         // console.log(jdecode);
-                        console.log(response);
+                        // console.log(response);
                         var currentParam = "<?= (isset($get_parameters['jpass'])) ? $get_parameters['jpass'] : ''; ?>"
 
                         if (jdecode.statDb == 'true') {
@@ -1699,6 +1826,48 @@
         });
 
 
+        <?php if($row->form_type == '5') : ?>
+        var five_items = JSON.parse('<?= $five; ?>');
+
+        $('#form-group .plus-svg').click(function (e) { 
+            e.preventDefault();
+            let a = parseInt($(e.delegateTarget.parentElement.children[1]).text());
+            if(a <= 5) { // maks
+                a++;
+
+                let id_ = parseInt($(e.delegateTarget.parentElement).attr('five-id'));
+                let id__ = id_ - 1;
+    
+                five_items.items[id__].number++;
+                five_items.number++;
+                five_items.price += five_items.items[id__].price;
+                $(e.delegateTarget.parentElement.children[1]).text(a);
+            }
+
+            console.log(five_items);
+            $('#nominal_value').text('Rp'+numberWithDot(five_items.price));
+        });
+
+        $('#form-group .min-svg').click(function (e) {
+            e.preventDefault();
+            let a = $(e.delegateTarget.parentElement.children[1]).text();
+            if(a > 0) {
+                a--;
+
+                let id_ = parseInt($(e.delegateTarget.parentElement).attr('five-id'));
+                let id__ = id_ - 1;
+    
+                five_items.items[id__].number--;
+                five_items.number--;
+                five_items.price -= five_items.items[id__].price;
+                
+                $(e.delegateTarget.parentElement.children[1]).text(a);
+            }
+            console.log(five_items);
+            $('#nominal_value').text('Rp'+numberWithDot(five_items.price));
+        });
+
+        <?php endif; ?>
 
 
         

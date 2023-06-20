@@ -4784,6 +4784,10 @@ function donasiaja_data_campaign() { ?>
                                                     <input type="radio" id="inlineRadio3" value="3" name="form_type" <?php if($row->form_type=='3'){ echo 'checked=""'; }?>>
                                                     <label for="inlineRadio3"> Packaged </label>
                                                 </div>
+                                                <div class="radio radio-primary form-check-inline">
+                                                    <input type="radio" id="inlineRadio5" value="5" name="form_type" <?php if($row->form_type=='5'){ echo 'checked=""'; }?>>
+                                                    <label for="inlineRadio5"> Plus </label>
+                                                </div>
                                                 <?php } ?>
                                             </div>
 
@@ -5252,6 +5256,10 @@ function donasiaja_data_campaign() { ?>
                                                 <div class="radio radio-primary form-check-inline">
                                                     <input type="radio" id="inlineRadio3" value="3" name="form_type">
                                                     <label for="inlineRadio3"> Packaged </label>
+                                                </div>
+                                                <div class="radio radio-primary form-check-inline">
+                                                    <input type="radio" id="inlineRadio5" value="5" name="form_type">
+                                                    <label for="inlineRadio5"> Plus </label>
                                                 </div>
                                                 <?php } ?>
                                             </div>
