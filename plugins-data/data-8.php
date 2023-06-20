@@ -247,7 +247,7 @@ function donasiaja_url_handler_() {
 		}
 	} // end of isset($path[2])
 	else if(isset($path[0])) {
-		$program_quick = ['rumah-tahfizh', 'rumah-tahfidz', 'wakaf-quran', 'sedekah-subuh', 'jumat-berkah', 'tanggap-cianjur', 'bantuan-lebak', 'zakat', 'fidyah'];
+		$program_quick = ['rumah-tahfizh', 'rumah-tahfidz', 'wakaf-quran', 'sedekah-subuh', 'jumat-berkah', 'tanggap-cianjur', 'bantuan-lebak', 'zakat', 'fidyah', 'qurban'];
 		$donasi_id = (isset($path[1])) ? $path[1] : null;
 		$link_code = $path[0];
 		$affcode = '';
